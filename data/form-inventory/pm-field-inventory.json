@@ -1,0 +1,1631 @@
+{
+  "inventoryVersion": "0.1.2",
+  "phase": "Phase 1C",
+  "formType": "PM",
+  "formName": "DVI- Ölüm Sonrası (Post Mortem) Formu",
+  "sourcePdf": {
+    "pageCount": 16,
+    "imageBased": true,
+    "hasTextLayer": false,
+    "hasAcroForm": false,
+    "sha256": "6d521e1d26ea5edbeeef1e06244acd7c8603bc481ac567124066cbaacdb8593c"
+  },
+  "fieldModelPolicy": {
+    "canonicalFieldIdStable": true,
+    "pdfTechnologyIndependent": true,
+    "derivedAcroFormMasterAllowed": true,
+    "derivedAcroFormMasterPolicy": "Phase 5 içinde resmi görüntü tabanlı PDF arka planı korunarak türetilmiş doldurulabilir AcroForm master üretilebilir; bu master resmi kaynak değil, export adapter şablonudur.",
+    "choicePolicy": "Her resmi seçenek optionId ile temsil edilir; her option tek checkbox/radio işaretine karşılık gelir.",
+    "tablePolicy": "Her tablo rowTemplate/columns yapısıyla temsil edilir; runtime cell id biçimi canonicalFieldId.rows[row].columns[column].",
+    "relativeFieldIdPolicy": "fieldId yalnızca tekrar eden tablo satırı, yapılandırılmış alt blok, diyagram veya diş şeması gibi container içinde relative alan kimliğidir; runtime kimliği parent canonicalFieldId ile türetilir."
+  },
+  "commonBlocks": {
+    "bodyHeader": {
+      "appliesToPages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+      "fields": [
+        { "canonicalFieldId": "pm.header.disaster.type", "label": "Felaket türü", "type": "text" },
+        { "canonicalFieldId": "pm.header.disaster.place", "label": "Felaket yeri", "type": "text" },
+        { "canonicalFieldId": "pm.header.disaster.date.day", "label": "Felaket tarihi - Gün", "type": "datePart", "part": "day" },
+        { "canonicalFieldId": "pm.header.disaster.date.month", "label": "Felaket tarihi - Ay", "type": "datePart", "part": "month" },
+        { "canonicalFieldId": "pm.header.disaster.date.year", "label": "Felaket tarihi - Yıl", "type": "datePart", "part": "year" },
+        { "canonicalFieldId": "pm.header.bodyNumber", "label": "NO", "type": "text" },
+        {
+          "canonicalFieldId": "pm.header.sex",
+          "label": "Cinsiyet",
+          "type": "singleChoice",
+          "options": [
+            { "optionId": "unknown", "label": "Cinsiyeti belirsiz" },
+            { "optionId": "male", "label": "Erkek" },
+            { "optionId": "female", "label": "Kadın" }
+          ]
+        }
+      ]
+    },
+    "abcEvidenceStatus": {
+      "appliesToPages": [2, 3, 4, 5, 6, 7, 8],
+      "canonicalFieldId": "pm.common.abcEvidenceStatus",
+      "runtimeFieldIdPattern": "pm.common.abcEvidenceStatus.pages[pageNumber].items[itemId].options[optionId]",
+      "columns": [
+        { "optionId": "a", "label": "Veri yok/tanımlanamıyor", "type": "checkbox" },
+        { "optionId": "b", "label": "Fotoğraf", "type": "checkbox" },
+        { "optionId": "c", "label": "Sayfa G'de diğer bilgiler", "type": "checkbox" }
+      ]
+    },
+    "abcdInternalExamStatus": {
+      "appliesToPages": [10],
+      "canonicalFieldId": "pm.common.abcdInternalExamStatus",
+      "runtimeFieldIdPattern": "pm.common.abcdInternalExamStatus.pages[pageNumber].items[itemId].options[optionId]",
+      "columns": [
+        { "optionId": "a", "label": "Veri yok/tanımlanamıyor", "type": "checkbox" },
+        { "optionId": "b", "label": "Fotoğraf", "type": "checkbox" },
+        { "optionId": "c", "label": "Sayfa G'de diğer bilgiler", "type": "checkbox" },
+        { "optionId": "d", "label": "Vücut içi incelemesi ek işaret kolonu", "type": "checkbox" }
+      ]
+    },
+    "cOnlyEvidenceStatus": {
+      "appliesToPages": [13],
+      "canonicalFieldId": "pm.common.cOnlyEvidenceStatus",
+      "runtimeFieldIdPattern": "pm.common.cOnlyEvidenceStatus.pages[pageNumber].items[itemId].options[c]",
+      "columns": [
+        { "optionId": "c", "label": "Sayfa G'de diğer bilgiler", "type": "checkbox" }
+      ]
+    },
+    "approverFooter": {
+      "appliesToPages": [2, 3, 4, 5, 6, 7, 8, 10, 11, 13, 14],
+      "fields": [
+        { "canonicalFieldId": "pm.footer.approver.role", "label": "Onaylayan kişi - Görevi", "type": "text" },
+        { "canonicalFieldId": "pm.footer.approver.fullName", "label": "Onaylayan kişi - Adı Soyadı", "type": "text" },
+        { "canonicalFieldId": "pm.footer.approver.address", "label": "Onaylayan kişi - Adres", "type": "multilineText" },
+        { "canonicalFieldId": "pm.footer.approver.phoneEmail", "label": "Onaylayan kişi - Telefon / E-mail", "type": "contact" },
+        { "canonicalFieldId": "pm.footer.approver.signatureDate", "label": "İmza / Tarih", "type": "signatureDate" }
+      ]
+    }
+  },
+  "pages": [
+    {
+      "pageNumber": 1,
+      "officialCode": "B0",
+      "title": "Morg işlemleri kontrol listesi",
+      "sections": [
+        {
+          "sectionId": "b0.morgOperations",
+          "label": "Morg işlemleri kontrol listesi",
+          "tables": [
+            {
+              "canonicalFieldId": "pm.b0.morgOperations",
+              "label": "Morg işlemleri kontrol listesi",
+              "type": "structuredChecklist",
+              "columns": [
+                { "columnId": "status", "label": "Kontrol listesi", "type": "structuredChoice" },
+                { "columnId": "date", "label": "Tarih", "type": "date" },
+                { "columnId": "notes", "label": "Açıklamalar", "type": "multilineText" }
+              ],
+              "rowDefinitions": [
+                {
+                  "rowId": "photographs.fullBody",
+                  "label": "Fotoğraflar - Bütün beden, ön, arka",
+                  "options": [
+                    { "optionId": "clothed", "label": "Kıyafetli" },
+                    { "optionId": "unclothed", "label": "Kıyafetsiz" }
+                  ]
+                },
+                {
+                  "rowId": "photographs.head",
+                  "label": "Fotoğraflar - Baş",
+                  "options": [
+                    { "optionId": "front", "label": "Ön" },
+                    { "optionId": "left", "label": "Soldan" },
+                    { "optionId": "right", "label": "Sağdan" }
+                  ]
+                },
+                {
+                  "rowId": "fingerprints.finger",
+                  "label": "Parmak izleri - Parmak",
+                  "options": [
+                    { "optionId": "none", "label": "Yok" },
+                    { "optionId": "unobtainable", "label": "Alınamaz durumda" },
+                    { "optionId": "available", "label": "Var" }
+                  ]
+                },
+                {
+                  "rowId": "fingerprints.palm",
+                  "label": "Parmak izleri - Avuç",
+                  "options": [
+                    { "optionId": "none", "label": "Yok" },
+                    { "optionId": "unobtainable", "label": "Alınamaz durumda" },
+                    { "optionId": "available", "label": "Var" }
+                  ]
+                },
+                {
+                  "rowId": "autopsy.forensicExam",
+                  "label": "Otopsi - Adli tıp incelemeleri",
+                  "options": [
+                    { "optionId": "done", "label": "Yapıldı" },
+                    { "optionId": "notDone", "label": "Yapılmadı" }
+                  ]
+                },
+                {
+                  "rowId": "autopsy.fullAutopsy",
+                  "label": "Otopsi - Tam otopsi",
+                  "options": [
+                    { "optionId": "none", "label": "Yok" },
+                    { "optionId": "available", "label": "Var" },
+                    { "optionId": "xray", "label": "X-ray" },
+                    { "optionId": "photograph", "label": "Fotoğraf" }
+                  ],
+                  "fields": [
+                    { "fieldId": "pathologistFullName", "label": "Patoloğun Adı-Soyadı", "type": "text" },
+                    { "fieldId": "pathologistAddressPhone", "label": "Adres / telefon", "type": "contact" }
+                  ]
+                },
+                {
+                  "rowId": "dentalExam.completed",
+                  "label": "Diş incelemesi - Tamamlandı",
+                  "options": [
+                    { "optionId": "none", "label": "Yok" },
+                    { "optionId": "available", "label": "Var" },
+                    { "optionId": "xray", "label": "X-ray" },
+                    { "optionId": "photograph", "label": "Fotoğraf" }
+                  ]
+                },
+                {
+                  "rowId": "dentalExam.jawsTaken",
+                  "label": "Diş incelemesi - Çeneler alındı",
+                  "options": [
+                    { "optionId": "none", "label": "Yok" },
+                    { "optionId": "available", "label": "Var" },
+                    { "optionId": "xray", "label": "X-ray" },
+                    { "optionId": "photograph", "label": "Fotoğraf" }
+                  ],
+                  "fields": [
+                    { "fieldId": "odontologistFullName", "label": "Odontoloğun adı-soyadı", "type": "text" },
+                    { "fieldId": "odontologistAddressPhone", "label": "Adres/telefon", "type": "contact" }
+                  ]
+                },
+                {
+                  "rowId": "samples.processing",
+                  "label": "Örnekler",
+                  "options": [
+                    { "optionId": "taken", "label": "Alındı" },
+                    { "optionId": "sentToAnalysis", "label": "Analize gönderildi" },
+                    { "optionId": "resultsReceived", "label": "Sonuçlar alındı" },
+                    { "optionId": "dnaAnalysisRequested", "label": "DNA analizi istendi" },
+                    { "optionId": "dnaResultsReceived", "label": "DNA sonuçları alındı" }
+                  ],
+                  "references": ["E2 madde 73"]
+                }
+              ]
+            },
+            {
+              "canonicalFieldId": "pm.b0.collectedEvidenceChecklist",
+              "label": "Toplanan bulguların kontrol listesi",
+              "type": "table",
+              "rowDefinitions": [
+                "B Olay yerinden alınan",
+                "C1 Elbise ve ayakkabılar",
+                "C2 Kişisel eşyalar",
+                "C3 Takılar",
+                "D1 Fiziksel tanımlama",
+                "D2 Fiziksel tanımlama",
+                "D3 Fiziksel tanımlama",
+                "D4 Vücut diyagramı",
+                "E1 Vücut içi incelemesi",
+                "E2 Otopsi sonuçları",
+                "F1 Diş bulguları",
+                "F2 Diş bulguları",
+                "G Diğer bilgiler"
+              ],
+              "columns": [
+                { "columnId": "fullyPacked", "label": "Tamamı paketlendi", "type": "checkbox" },
+                { "columnId": "partlyPacked", "label": "Kısmen paketlendi", "type": "checkbox" },
+                { "columnId": "sentPlace", "label": "Gönderilen yer", "type": "text" },
+                { "columnId": "sentDate", "label": "Tarih", "type": "date" },
+                { "columnId": "returnDate", "label": "Dönüş Tarihi", "type": "date" },
+                { "columnId": "notes", "label": "Açıklamalar", "type": "text" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pageNumber": 2,
+      "officialCode": "B",
+      "title": "Olay yerinden alınan ceset",
+      "sections": [
+        {
+          "sectionId": "b.sceneBody",
+          "label": "Olay yerinden alınan ceset",
+          "fields": [
+            {
+              "canonicalFieldId": "pm.b.estimatedAge.range",
+              "officialItem": "20",
+              "label": "Tahmini yaş",
+              "type": "singleChoice",
+              "options": [
+                { "optionId": "0_1", "label": "0-1" },
+                { "optionId": "2_5", "label": "2-5" },
+                { "optionId": "6_15", "label": "6-15" },
+                { "optionId": "16_25", "label": "16-25" },
+                { "optionId": "26_50", "label": "26-50" },
+                { "optionId": "over_50", "label": ">50" },
+                { "optionId": "unknown", "label": "Bilinmiyor" }
+              ]
+            },
+            { "canonicalFieldId": "pm.b.found.date", "officialItem": "21", "label": "Cesedin bulunduğu tarih", "type": "date" },
+            { "canonicalFieldId": "pm.b.found.place", "officialItem": "21", "label": "Cesedin bulunduğu yer", "type": "multilineText" },
+            { "canonicalFieldId": "pm.b.found.gpsCoordinates", "officialItem": "21.01", "label": "Harita/GPS koordinatları", "type": "coordinates" },
+            {
+              "canonicalFieldId": "pm.b.found.photographs",
+              "officialItem": "21.02",
+              "label": "Fotoğraflar",
+              "type": "singleChoice",
+              "options": [
+                { "optionId": "no", "label": "Hayır" },
+                { "optionId": "yes", "label": "Evet" }
+              ]
+            },
+            { "canonicalFieldId": "pm.b.bodyCondition.partDescription", "officialItem": "22", "label": "Vücut parçası tanımlama", "type": "text" },
+            {
+              "canonicalFieldId": "pm.b.bodyFinder",
+              "officialItem": "23",
+              "label": "Cesedi bulan kişi",
+              "type": "structuredContact",
+              "fields": [
+                { "fieldId": "identificationTeam", "label": "Kimliklendirme Ekibi", "type": "multilineText" },
+                { "fieldId": "otherOfficerFullName", "label": "Diğer bir görevlinin Adı-soyadı", "type": "text" },
+                { "fieldId": "address", "label": "Adresi", "type": "multilineText" },
+                { "fieldId": "phoneEmail", "label": "Telefon / E-mail", "type": "contact" },
+                { "fieldId": "occupation", "label": "Meslek", "type": "text" }
+              ]
+            }
+          ],
+          "tables": [
+            {
+              "canonicalFieldId": "pm.b.bodyCondition.overall",
+              "officialItem": "22",
+              "label": "Cesedin durumu",
+              "type": "multiCheckbox",
+              "options": [
+                { "optionId": "whole", "label": "Bütün" },
+                { "optionId": "fragmented", "label": "Parçalanmış" },
+                { "optionId": "visuallyIdentifiableNo", "label": "Gözle kimliklendirilebilir - Hayır" },
+                { "optionId": "visuallyIdentifiableYes", "label": "Gözle kimliklendirilebilir - Evet" },
+                { "optionId": "bodyPart", "label": "Vücut parçası" }
+              ]
+            },
+            {
+              "canonicalFieldId": "pm.b.bodyCondition.parts",
+              "officialItem": "22",
+              "label": "Cesedin durumu - beden bölgeleri",
+              "type": "table",
+              "rowDefinitions": [
+                "01 Baş",
+                "1A Boyun / Boğaz",
+                "02 Sağ kol",
+                "03 Sol kol",
+                "04 Sağ el",
+                "05 Sol el",
+                "06 Karın / göğüs",
+                "07 Sırt",
+                "08 Sağ bacak",
+                "09 Sol bacak",
+                "10 Sağ ayak",
+                "11 Sol ayak"
+              ],
+              "columns": [
+                { "columnId": "damaged", "label": "Zarar görmüş", "type": "checkbox" },
+                { "columnId": "burned", "label": "Yanmış", "type": "checkbox" },
+                { "columnId": "decomposed", "label": "Çürümüş", "type": "checkbox" },
+                { "columnId": "skeleton", "label": "İskelet", "type": "checkbox" },
+                { "columnId": "missing", "label": "Kayıp", "type": "checkbox" },
+                { "columnId": "scattered", "label": "Dağılmış", "type": "checkbox" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pageNumber": 3,
+      "officialCode": "C1",
+      "title": "Giysiler ve ayakkabı",
+      "sections": [
+        {
+          "sectionId": "c1.clothingAndShoes",
+          "label": "Giysiler ve ayakkabı",
+          "tables": [
+            {
+              "canonicalFieldId": "pm.c1.clothing",
+              "officialItem": "24",
+              "label": "Giyim eşyaları",
+              "type": "table",
+              "rowDefinitionGroups": [
+                {
+                  "groupId": "headNeck",
+                  "label": "Baş ve boyun",
+                  "rows": ["0101 Şapka", "0102 Eşarp", "0103 Kravat", "0104 Diğer"]
+                },
+                {
+                  "groupId": "upperBodyArms",
+                  "label": "Vücudun üst bölümü ve kollar",
+                  "rows": ["0201 Palto", "0202 Ceket", "0203 Kazak", "0204 Gömlek", "0205 Yelek", "0206 Fanila", "0207 Kadın elbisesi", "0208 Hırka", "0209 Bluz", "0210 İç etekliği", "0211 Kadın iç gömleği", "0212 Sütyen", "0213 Pantolon askısı", "0114 Eldivenler", "0215 Diğer"]
+                },
+                {
+                  "groupId": "lowerBodyLegs",
+                  "label": "Vücudun alt bölümü ve bacaklar",
+                  "rows": ["0301 Erkek pantolonu", "0302 Külot", "0303 Kadın pantolonu", "0304 Etek", "0305 Bayan külotu", "0306 Kuşak", "0307 Korse", "0308 Naylon çorap", "0309 Tayt", "0310 Kısa çorap", "0311 Kemer", "0312 Kemer tokası", "0399 Diğer"]
+                }
+              ],
+              "columns": [
+                { "columnId": "number", "label": "No", "type": "text" },
+                { "columnId": "material", "label": "Malzeme", "type": "text" },
+                { "columnId": "color", "label": "Renk", "type": "text" },
+                { "columnId": "type", "label": "Tip", "type": "text" },
+                { "columnId": "label", "label": "Etiket", "type": "text" },
+                { "columnId": "size", "label": "Ölçü", "type": "text" }
+              ]
+            },
+            {
+              "canonicalFieldId": "pm.c1.shoes",
+              "officialItem": "25",
+              "label": "Ayakkabı",
+              "type": "table",
+              "rowDefinitions": ["01 Hafif ayakkabılar", "02 Ağır ayakkabılar", "03 Botlar", "99 Diğer"],
+              "columns": [
+                { "columnId": "number", "label": "No", "type": "text" },
+                { "columnId": "material", "label": "Malzeme", "type": "text" },
+                { "columnId": "color", "label": "Renk", "type": "text" },
+                { "columnId": "type", "label": "Tip", "type": "text" },
+                { "columnId": "label", "label": "Etiket", "type": "text" },
+                { "columnId": "size", "label": "Ölçü", "type": "text" }
+              ],
+              "instruction": "Ayakkabıları tip sütununda spor, sandalet vb. şeklinde tanımlayın."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pageNumber": 4,
+      "officialCode": "C2",
+      "title": "Kişisel eşyalar",
+      "sections": [
+        {
+          "sectionId": "c2.personalEffects",
+          "label": "Kişisel eşyalar",
+          "fields": [
+            {
+              "canonicalFieldId": "pm.c2.watch.present",
+              "officialItem": "26.00",
+              "label": "Saat",
+              "type": "singleChoice",
+              "options": [
+                { "optionId": "none", "label": "Yok" },
+                { "optionId": "available", "label": "Var" }
+              ]
+            },
+            {
+              "canonicalFieldId": "pm.c2.watch.wristSide",
+              "officialItem": "26.04",
+              "label": "Kol saati varsa",
+              "type": "multiCheckbox",
+              "options": [
+                { "optionId": "left", "label": "Sol" },
+                { "optionId": "right", "label": "Sağ" },
+                { "optionId": "outside", "label": "Dışarı" },
+                { "optionId": "inside", "label": "İçeri" }
+              ]
+            },
+            {
+              "canonicalFieldId": "pm.c2.watch.strapChain",
+              "officialItem": "26.05",
+              "label": "Saat kayışı / zincir",
+              "type": "multiCheckboxWithOther",
+              "options": [
+                { "optionId": "leather", "label": "Deri" },
+                { "optionId": "metal", "label": "Metal" },
+                { "optionId": "other", "label": "Diğer" }
+              ],
+              "otherField": { "fieldId": "otherDescription", "label": "Diğer belirtin", "type": "text" }
+            },
+            {
+              "canonicalFieldId": "pm.c2.glasses.alwaysUses",
+              "officialItem": "27.00",
+              "label": "Gözlük - Sürekli kullanır",
+              "type": "singleChoice",
+              "options": [
+                { "optionId": "no", "label": "Hayır" },
+                { "optionId": "yes", "label": "Evet" }
+              ]
+            },
+            {
+              "canonicalFieldId": "pm.c2.glasses.lensGlass",
+              "officialItem": "27.02",
+              "label": "Lens (cam)",
+              "type": "singleChoiceWithDetails",
+              "options": [
+                { "optionId": "no", "label": "Hayır" },
+                { "optionId": "yes", "label": "Evet" }
+              ],
+              "fields": [
+                { "fieldId": "color", "label": "Renkli", "type": "text" },
+                { "fieldId": "leftDegree", "label": "Derecesi Sol", "type": "number" },
+                { "fieldId": "rightDegree", "label": "Derecesi Sağ", "type": "number" }
+              ]
+            },
+            {
+              "canonicalFieldId": "pm.c2.glasses.lensShape",
+              "officialItem": "27.03",
+              "label": "Lens (şekli)",
+              "type": "singleChoice",
+              "options": [
+                { "optionId": "round", "label": "Yuvarlak" },
+                { "optionId": "oval", "label": "Oval" },
+                { "optionId": "square", "label": "Kare" },
+                { "optionId": "half", "label": "Yarım" },
+                { "optionId": "rimless", "label": "Çerçevesiz" }
+              ]
+            },
+            {
+              "canonicalFieldId": "pm.c2.glasses.contactLens",
+              "officialItem": "27.04",
+              "label": "Kontak lens",
+              "type": "singleChoiceWithDetails",
+              "options": [
+                { "optionId": "none", "label": "Yok" },
+                { "optionId": "available", "label": "Var" }
+              ],
+              "fields": [
+                { "fieldId": "color", "label": "Renk", "type": "text" },
+                { "fieldId": "leftDegree", "label": "Derecesi Sol", "type": "number" },
+                { "fieldId": "rightDegree", "label": "Derecesi Sağ", "type": "number" }
+              ]
+            },
+            {
+              "canonicalFieldId": "pm.c2.identityDocuments.present",
+              "officialItem": "28.00",
+              "label": "Kimlik belgesi taşıyor",
+              "type": "singleChoice",
+              "options": [
+                { "optionId": "none", "label": "Yok" },
+                { "optionId": "available", "label": "Var" }
+              ]
+            },
+            {
+              "canonicalFieldId": "pm.c2.personalItems.present",
+              "officialItem": "29.00",
+              "label": "Kişisel eşya taşıyor",
+              "type": "singleChoice",
+              "options": [
+                { "optionId": "no", "label": "Hayır" },
+                { "optionId": "yes", "label": "Evet" }
+              ]
+            }
+          ],
+          "tables": [
+            {
+              "canonicalFieldId": "pm.c2.watch.items",
+              "officialItem": "26",
+              "label": "Saat tablosu",
+              "type": "table",
+              "rowDefinitions": ["01 Dijital", "02 Analog", "03 Dijital/analog"],
+              "columns": [
+                { "columnId": "number", "label": "No", "type": "text" },
+                { "columnId": "material", "label": "Malzeme", "type": "text" },
+                { "columnId": "color", "label": "Renk", "type": "text" },
+                { "columnId": "shape", "label": "Şekil", "type": "text" },
+                { "columnId": "brand", "label": "Marka", "type": "text" },
+                { "columnId": "inscriptions", "label": "Yazılar", "type": "text" }
+              ]
+            },
+            {
+              "canonicalFieldId": "pm.c2.glasses.frames",
+              "officialItem": "27.01",
+              "label": "Çerçeveli gözlük",
+              "type": "table",
+              "rowDefinitions": ["Çerçeveli gözlük"],
+              "columns": [
+                { "columnId": "material", "label": "Malzeme", "type": "text" },
+                { "columnId": "color", "label": "Renk", "type": "text" },
+                { "columnId": "shape", "label": "Şekil", "type": "text" },
+                { "columnId": "brand", "label": "Marka", "type": "text" },
+                { "columnId": "inscriptions", "label": "Yazılar", "type": "text" }
+              ]
+            },
+            {
+              "canonicalFieldId": "pm.c2.identityDocuments.items",
+              "officialItem": "28",
+              "label": "Kimlik belgeleri",
+              "type": "repeatableChecklist",
+              "rowDefinitions": ["01 Pasaport", "02 Sürücü belgesi", "03 Kredi kartları", "04 Kimlik kartları", "05 Organ bağış kartı", "06 Seyahat çekleri", "07 Kişisel çekler", "08 Sağlık kartları", "99 Diğer"],
+              "columns": [
+                { "columnId": "number", "label": "No", "type": "text" },
+                { "columnId": "description", "label": "Açıklama", "type": "multilineText" }
+              ]
+            },
+            {
+              "canonicalFieldId": "pm.c2.personalItems.items",
+              "officialItem": "29",
+              "label": "Kişisel eşyalar",
+              "type": "repeatableChecklist",
+              "rowDefinitions": ["01 Cüzdan", "02 Para çantası", "03 Para taşıma kuşağı", "04 Rozet / anahtar", "05 Para", "99 Diğer"],
+              "columns": [
+                { "columnId": "number", "label": "No", "type": "text" },
+                { "columnId": "description", "label": "Açıklama", "type": "multilineText" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pageNumber": 5,
+      "officialCode": "C3",
+      "title": "Takılar",
+      "sections": [
+        {
+          "sectionId": "c3.jewelry",
+          "officialItem": "30",
+          "label": "Yüzükler, zincir vs.",
+          "tables": [
+            {
+              "canonicalFieldId": "pm.c3.jewelry.items",
+              "label": "Takılar",
+              "type": "table",
+              "rowDefinitions": ["01 Nikah yüzüğü", "02 Diğer parmak yüzükleri", "03 Küpeler", "04 Kulak hızması (klipsli)", "05 Boyun zinciri", "06 Kolye gerdanlık", "07 Bilezikler", "08 Diğer zincirler", "09 Zincir ucundaki süs", "10 Hızma", "11 Burun halkası", "12 Halhal", "99 Diğer"],
+              "columns": [
+                { "columnId": "number", "label": "No", "type": "text" },
+                { "columnId": "material", "label": "Materyal", "type": "text" },
+                { "columnId": "color", "label": "Renk", "type": "text" },
+                { "columnId": "shape", "label": "Şekil", "type": "text" },
+                { "columnId": "inscriptions", "label": "Yazılar", "type": "text" },
+                { "columnId": "takenFrom", "label": "Alındığı yer", "type": "text" }
+              ],
+              "blankRows": 28
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pageNumber": 6,
+      "officialCode": "D1",
+      "title": "Fiziksel tanımlama (morgda)",
+      "sections": [
+        {
+          "sectionId": "d1.bodyCondition",
+          "officialItem": "31",
+          "label": "Cesedin durumu",
+          "fields": [
+            {
+              "canonicalFieldId": "pm.d1.bodyCondition.overall",
+              "label": "Cesedin durumu",
+              "type": "multiCheckbox",
+              "options": [
+                { "optionId": "whole", "label": "Bütün" },
+                { "optionId": "incomplete", "label": "Eksik" },
+                { "optionId": "visualIdentificationNo", "label": "Görsel tanıma yapılabilir - Hayır" },
+                { "optionId": "visualIdentificationYes", "label": "Görsel tanıma yapılabilir - Evet" },
+                { "optionId": "bodyPart", "label": "Vücut parçası" }
+              ]
+            },
+            { "canonicalFieldId": "pm.d1.bodyCondition.bodyPartDescription", "label": "Vücut parçası tanımlayın", "type": "text" }
+          ],
+          "tables": [
+            {
+              "canonicalFieldId": "pm.d1.bodyCondition.parts",
+              "label": "Cesedin durumu - beden bölgeleri",
+              "type": "table",
+              "rowDefinitions": ["01 Baş", "1A Boyun", "02 Sağ kol", "03 Sol kol", "04 Sağ el", "05 Sol el", "06 Vücut ön", "07 Vücut arka", "08 Sağ bacak", "09 Sol bacak", "10 Sağ ayak", "11 Sol ayak"],
+              "columns": [
+                { "columnId": "damaged", "label": "Hasarlı", "type": "checkbox" },
+                { "columnId": "burned", "label": "Yanmış", "type": "checkbox" },
+                { "columnId": "decomposed", "label": "Bozulmuş", "type": "checkbox" },
+                { "columnId": "skeletonized", "label": "İskeletleşmiş", "type": "checkbox" },
+                { "columnId": "missing", "label": "Eksik", "type": "checkbox" },
+                { "columnId": "scattered", "label": "Dağılmış", "type": "checkbox" }
+              ],
+              "instruction": "Detayları D4 teki diyagramda belirtiniz."
+            }
+          ]
+        },
+        {
+          "sectionId": "d1.measurementsAndAppearance",
+          "label": "Ölçüler ve genel görünüm",
+          "fields": [
+            { "canonicalFieldId": "pm.d1.estimatedAge.years", "officialItem": "31A", "label": "Tahmini yaş - yıl", "type": "number" },
+            { "canonicalFieldId": "pm.d1.estimatedAge.method", "officialItem": "31A", "label": "Tahmini yaş - Kullanılan metod", "type": "text" },
+            { "canonicalFieldId": "pm.d1.height.measuredCm", "officialItem": "32", "label": "Boy uzunluk", "type": "number", "unit": "cm" },
+            { "canonicalFieldId": "pm.d1.height.estimatedCm", "officialItem": "32", "label": "Tahmini boy", "type": "number", "unit": "cm" },
+            { "canonicalFieldId": "pm.d1.height.method", "officialItem": "32", "label": "Boy - Kullanılan metod", "type": "text" },
+            { "canonicalFieldId": "pm.d1.weight.measuredKg", "officialItem": "33", "label": "Ağırlık", "type": "number", "unit": "kg" },
+            { "canonicalFieldId": "pm.d1.weight.estimatedKg", "officialItem": "33", "label": "Tahmini kilo", "type": "number", "unit": "kg" },
+            { "canonicalFieldId": "pm.d1.weight.method", "officialItem": "33", "label": "Ağırlık - Kullanılan metod", "type": "text" },
+            {
+              "canonicalFieldId": "pm.d1.trunk.bodyBuild",
+              "officialItem": "34.01",
+              "label": "Vücut yapısı",
+              "type": "singleChoice",
+              "options": [
+                { "optionId": "thin", "label": "Zayıf" },
+                { "optionId": "normal", "label": "Normal" },
+                { "optionId": "overweight", "label": "Kilolu" }
+              ]
+            },
+            {
+              "canonicalFieldId": "pm.d1.trunk.headShapeFront",
+              "officialItem": "34.02",
+              "label": "Baş biçimi, ön",
+              "type": "singleChoice",
+              "options": [
+                { "optionId": "oval", "label": "Oval" },
+                { "optionId": "triangle", "label": "Üçgen" },
+                { "optionId": "pyramidal", "label": "Piramidal" },
+                { "optionId": "round", "label": "Yuvarlak" },
+                { "optionId": "rectangular", "label": "Dikdörtgen" },
+                { "optionId": "square", "label": "Kare" }
+              ]
+            },
+            {
+              "canonicalFieldId": "pm.d1.trunk.headShapeProfile",
+              "officialItem": "34.03",
+              "label": "Baş biçimi, profil",
+              "type": "singleChoice",
+              "options": [
+                { "optionId": "shallow", "label": "Dışığ" },
+                { "optionId": "medium", "label": "Orta" },
+                { "optionId": "deep", "label": "Derin" }
+              ]
+            },
+            {
+              "canonicalFieldId": "pm.d1.race.skinAppearance",
+              "officialItem": "35.01",
+              "label": "Grup, görünüm, ten",
+              "type": "multiCheckbox",
+              "options": [
+                { "optionId": "white", "label": "Beyaz" },
+                { "optionId": "farEast", "label": "Uzak doğu" },
+                { "optionId": "black", "label": "Siyah" },
+                { "optionId": "light", "label": "Açık" },
+                { "optionId": "normal", "label": "Normal" },
+                { "optionId": "dark", "label": "Koyu" }
+              ]
+            },
+            { "canonicalFieldId": "pm.d1.race.typeDescription", "officialItem": "35.02", "label": "Irk - Tip tanımla", "type": "text" }
+          ],
+          "tables": [
+            {
+              "canonicalFieldId": "pm.d1.hair",
+              "officialItem": "36",
+              "label": "Saç",
+              "type": "choiceGroup",
+              "fields": [
+                {
+                  "fieldId": "type",
+                  "label": "Tip",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "natural", "label": "Doğal" },
+                    { "optionId": "artificial", "label": "Yapay" },
+                    { "optionId": "hairpiece", "label": "Postiş" },
+                    { "optionId": "wig", "label": "Peruk" },
+                    { "optionId": "braided", "label": "Örgülü" }
+                  ]
+                },
+                {
+                  "fieldId": "length",
+                  "label": "Uzunluk",
+                  "type": "singleChoice",
+                  "options": [
+                    { "optionId": "short", "label": "Kısa" },
+                    { "optionId": "medium", "label": "Orta" },
+                    { "optionId": "long", "label": "Uzun" },
+                    { "optionId": "shaved", "label": "Tıraşlı" }
+                  ]
+                },
+                {
+                  "fieldId": "color",
+                  "label": "Renk",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "blond", "label": "Sarışın" },
+                    { "optionId": "brown", "label": "Kahverengi" },
+                    { "optionId": "black", "label": "Siyah" },
+                    { "optionId": "red", "label": "Kırmızı" },
+                    { "optionId": "gray", "label": "Gri" },
+                    { "optionId": "white", "label": "Beyaz" }
+                  ]
+                },
+                {
+                  "fieldId": "shade",
+                  "label": "Renk gölgesi",
+                  "type": "singleChoice",
+                  "options": [
+                    { "optionId": "light", "label": "Açık" },
+                    { "optionId": "medium", "label": "Orta" },
+                    { "optionId": "dark", "label": "Koyu" },
+                    { "optionId": "bleached", "label": "Kırlaşmış" },
+                    { "optionId": "dyed", "label": "Boyalı" },
+                    { "optionId": "shade", "label": "Gölge" }
+                  ]
+                },
+                {
+                  "fieldId": "thickness",
+                  "label": "Kalınlık",
+                  "type": "singleChoice",
+                  "options": [
+                    { "optionId": "thin", "label": "İnce" },
+                    { "optionId": "medium", "label": "Orta" },
+                    { "optionId": "thick", "label": "Kalın" }
+                  ]
+                },
+                {
+                  "fieldId": "style",
+                  "label": "Stil",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "straight", "label": "Düz" },
+                    { "optionId": "wavy", "label": "Dalgalı" },
+                    { "optionId": "curly", "label": "Kıvırcık" },
+                    { "optionId": "partedLeft", "label": "Ayrılmış Soldan" },
+                    { "optionId": "partedRight", "label": "Ayrılmış Sağdan" },
+                    { "optionId": "partedMiddle", "label": "Ayrılmış Ortadan" }
+                  ]
+                },
+                {
+                  "fieldId": "baldness",
+                  "label": "Kellik",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "beginning", "label": "Başlangıç" },
+                    { "optionId": "advanced", "label": "İlerlemiş" },
+                    { "optionId": "full", "label": "Tam" },
+                    { "optionId": "front", "label": "Ön" },
+                    { "optionId": "sides", "label": "Yanlar" },
+                    { "optionId": "top", "label": "Tepe" }
+                  ]
+                },
+                { "fieldId": "other", "label": "Diğer", "type": "text" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pageNumber": 7,
+      "officialCode": "D2",
+      "title": "Fiziksel tanımlama devamı",
+      "sections": [
+        {
+          "sectionId": "d2.faceAndHead",
+          "label": "Fiziksel tanımlama devamı",
+          "tables": [
+            {
+              "canonicalFieldId": "pm.d2.faceAndHead",
+              "label": "Yüz ve baş özellikleri",
+              "type": "choiceGroupCollection",
+              "fields": [
+                {
+                  "fieldId": "forehead.heightWidth",
+                  "officialItem": "37.01",
+                  "label": "Alın - Yükseklik/genişlik",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "low", "label": "Düşük" },
+                    { "optionId": "normalHeight", "label": "Normal" },
+                    { "optionId": "high", "label": "Yüksek" },
+                    { "optionId": "narrow", "label": "Dar" },
+                    { "optionId": "normalWidth", "label": "Normal" },
+                    { "optionId": "wide", "label": "Geniş" }
+                  ]
+                },
+                {
+                  "fieldId": "forehead.slope",
+                  "officialItem": "37.02",
+                  "label": "Alın - Eğim",
+                  "type": "singleChoice",
+                  "options": [
+                    { "optionId": "protruding", "label": "Çıkık" },
+                    { "optionId": "vertical", "label": "Dikey" },
+                    { "optionId": "receding", "label": "Geriye kaçık" },
+                    { "optionId": "open", "label": "Açık" }
+                  ]
+                },
+                {
+                  "fieldId": "eyebrows.shapeThickness",
+                  "officialItem": "38.01",
+                  "label": "Kaşlar - Şekil/kalınlık",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "straight", "label": "Düz" },
+                    { "optionId": "arched", "label": "Kemerli" },
+                    { "optionId": "joined", "label": "Birleşik" },
+                    { "optionId": "thin", "label": "İnce" },
+                    { "optionId": "normal", "label": "Normal" },
+                    { "optionId": "thick", "label": "Kalın" }
+                  ]
+                },
+                {
+                  "fieldId": "eyes.color",
+                  "officialItem": "39.01",
+                  "label": "Gözler - Renk",
+                  "type": "singleChoice",
+                  "options": [
+                    { "optionId": "blue", "label": "Mavi" },
+                    { "optionId": "gray", "label": "Gri" },
+                    { "optionId": "green", "label": "Yeşil" },
+                    { "optionId": "brown", "label": "Kahverengi" },
+                    { "optionId": "black", "label": "Siyah" }
+                  ]
+                },
+                {
+                  "fieldId": "eyes.tone",
+                  "officialItem": "39.02",
+                  "label": "Gözler - Ton",
+                  "type": "singleChoice",
+                  "options": [
+                    { "optionId": "light", "label": "Açık" },
+                    { "optionId": "normal", "label": "Normal" },
+                    { "optionId": "dark", "label": "Koyu" },
+                    { "optionId": "mixed", "label": "Karışık" }
+                  ]
+                },
+                {
+                  "fieldId": "eyes.distance",
+                  "officialItem": "39.03",
+                  "label": "Gözler arası mesafe",
+                  "type": "singleChoice",
+                  "options": [
+                    { "optionId": "narrow", "label": "Dar" },
+                    { "optionId": "normal", "label": "Normal" },
+                    { "optionId": "wide", "label": "Geniş" }
+                  ]
+                },
+                {
+                  "fieldId": "eyes.anomalies",
+                  "officialItem": "39.04",
+                  "label": "Gözler - Anomaliler",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "strabismus", "label": "Şaşı" },
+                    { "optionId": "crossEyed", "label": "Kısık" },
+                    { "optionId": "artificialLeft", "label": "Yapay Sol" },
+                    { "optionId": "artificialRight", "label": "Yapay Sağ" }
+                  ]
+                },
+                {
+                  "fieldId": "nose.sizeShape",
+                  "officialItem": "40.01",
+                  "label": "Burun - Ölçü/şekil",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "small", "label": "Küçük" },
+                    { "optionId": "normal", "label": "Normal" },
+                    { "optionId": "wide", "label": "Geniş" },
+                    { "optionId": "pointed", "label": "Sivri uçlu" },
+                    { "optionId": "roman", "label": "Romalı burnu" },
+                    { "optionId": "alcoholic", "label": "Alkolik burun" }
+                  ]
+                },
+                {
+                  "fieldId": "nose.anomalies",
+                  "officialItem": "40.02",
+                  "label": "Burun - Anomaliler",
+                  "type": "singleChoiceWithOther",
+                  "options": [
+                    { "optionId": "glassesMarkNo", "label": "Gözlük izi Yok" },
+                    { "optionId": "glassesMarkYes", "label": "Gözlük izi Var" },
+                    { "optionId": "other", "label": "Diğeri" }
+                  ],
+                  "otherField": { "fieldId": "otherDescription", "label": "Tanımla", "type": "text" }
+                },
+                {
+                  "fieldId": "nose.slopeAngle",
+                  "officialItem": "40.03",
+                  "label": "Burun - Eğik/açılı",
+                  "type": "singleChoice",
+                  "options": [
+                    { "optionId": "concave", "label": "Konkav" },
+                    { "optionId": "straight", "label": "Düz" },
+                    { "optionId": "convex", "label": "Konveks" },
+                    { "optionId": "downward", "label": "Aşağı doğru" },
+                    { "optionId": "horizontal", "label": "Yatay" },
+                    { "optionId": "upward", "label": "Yukarı doğru" }
+                  ],
+                  "instruction": "Vücut diyagramına bakınız."
+                },
+                {
+                  "fieldId": "facialHair.type",
+                  "officialItem": "41.01",
+                  "label": "Yüz kılı - Tip",
+                  "type": "singleChoice",
+                  "options": [
+                    { "optionId": "cleanShaven", "label": "Sakalsız" },
+                    { "optionId": "moustache", "label": "Bıyık" },
+                    { "optionId": "goatee", "label": "Top sakal" },
+                    { "optionId": "stubble", "label": "Kirli sakal" },
+                    { "optionId": "fullBeard", "label": "Bütün sakal" }
+                  ]
+                },
+                {
+                  "fieldId": "facialHair.color",
+                  "officialItem": "41.02",
+                  "label": "Yüz kılı - Renk",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "blond", "label": "Sarı" },
+                    { "optionId": "brown", "label": "Kahverengi" },
+                    { "optionId": "black", "label": "Siyah" },
+                    { "optionId": "red", "label": "Kırmızı" },
+                    { "optionId": "gray", "label": "Gri" },
+                    { "optionId": "white", "label": "Beyaz" }
+                  ]
+                },
+                {
+                  "fieldId": "ears.sizeAngle",
+                  "officialItem": "42.01",
+                  "label": "Kulaklar - Ölçü/açı",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "small", "label": "Küçük" },
+                    { "optionId": "normalSize", "label": "Normal" },
+                    { "optionId": "large", "label": "Büyük" },
+                    { "optionId": "attached", "label": "Yapışık" },
+                    { "optionId": "normalAngle", "label": "Normal" },
+                    { "optionId": "protruding", "label": "Kepçe" }
+                  ]
+                },
+                {
+                  "fieldId": "ears.lobePiercing",
+                  "officialItem": "42.02",
+                  "label": "Kulak memesi / delinmiş",
+                  "type": "multiCheckboxWithDetails",
+                  "options": [
+                    { "optionId": "attached", "label": "Bitişik" },
+                    { "optionId": "none", "label": "Yok" },
+                    { "optionId": "available", "label": "Var" },
+                    { "optionId": "left", "label": "Sol" },
+                    { "optionId": "right", "label": "Sağ" }
+                  ],
+                  "fields": [
+                    { "fieldId": "leftHoleCount", "label": "Sol delik sayısı", "type": "number" },
+                    { "fieldId": "rightHoleCount", "label": "Sağ delik sayısı", "type": "number" }
+                  ],
+                  "instruction": "Vücut diyagramına bakınız."
+                },
+                {
+                  "fieldId": "mouth.sizeOther",
+                  "officialItem": "43.01",
+                  "label": "Ağız - Ölçü/diğer",
+                  "type": "singleChoiceWithOther",
+                  "options": [
+                    { "optionId": "small", "label": "Küçük" },
+                    { "optionId": "normal", "label": "Normal" },
+                    { "optionId": "wide", "label": "Geniş" },
+                    { "optionId": "other", "label": "Diğer" }
+                  ],
+                  "otherField": { "fieldId": "otherDescription", "label": "Belirtin", "type": "text" }
+                },
+                {
+                  "fieldId": "lips.shapeOther",
+                  "officialItem": "44.01",
+                  "label": "Dudaklar - Şekil/diğer",
+                  "type": "singleChoiceWithOther",
+                  "options": [
+                    { "optionId": "thin", "label": "İnce" },
+                    { "optionId": "normal", "label": "Normal" },
+                    { "optionId": "thick", "label": "Kalın" },
+                    { "optionId": "madeUp", "label": "Makyajlı" },
+                    { "optionId": "other", "label": "Diğer" }
+                  ],
+                  "otherField": { "fieldId": "otherDescription", "label": "Belirtin", "type": "text" }
+                },
+                {
+                  "fieldId": "teeth.condition",
+                  "officialItem": "45.01",
+                  "label": "Dişler - Durum",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "natural", "label": "Doğal" },
+                    { "optionId": "untreated", "label": "Tedavi görmemiş" },
+                    { "optionId": "treated", "label": "Tedavi görmüş" },
+                    { "optionId": "filling", "label": "Dolgu" },
+                    { "optionId": "bridge", "label": "Köprü" },
+                    { "optionId": "implant", "label": "İmplant" }
+                  ],
+                  "reference": "F1/F2"
+                },
+                {
+                  "fieldId": "teeth.gapsMissing",
+                  "officialItem": "45.02",
+                  "label": "Boşluk/kayıp dişler",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "frontGapMuch", "label": "Ön dişler arası boşluk Çok" },
+                    { "optionId": "frontGapLittle", "label": "Ön dişler arası boşluk Az" },
+                    { "optionId": "missingUpper", "label": "Eksik diş Üstte" },
+                    { "optionId": "missingLower", "label": "Eksik diş Altta" },
+                    { "optionId": "toothlessUpper", "label": "Dişsiz Üstte" },
+                    { "optionId": "toothlessLower", "label": "Dişsiz Altta" }
+                  ]
+                },
+                {
+                  "fieldId": "teeth.dentures",
+                  "officialItem": "45.03",
+                  "label": "Takma dişler",
+                  "type": "multiCheckboxWithOther",
+                  "options": [
+                    { "optionId": "upperPartial", "label": "Üst dişler kısım" },
+                    { "optionId": "lowerPartial", "label": "Alt dişler kısım" },
+                    { "optionId": "upperFull", "label": "Üst dişler tamamen" },
+                    { "optionId": "lowerFull", "label": "Alt dişler tamamen" },
+                    { "optionId": "noDentures", "label": "Diş No" }
+                  ],
+                  "otherField": { "fieldId": "description", "label": "Takma diş açıklaması", "type": "text" }
+                },
+                {
+                  "fieldId": "smokingHabits.stains",
+                  "officialItem": "46.01",
+                  "label": "Sigara alışkanlığı - Bulunan lekeler",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "none", "label": "Yok" },
+                    { "optionId": "tooth", "label": "Diş" },
+                    { "optionId": "lip", "label": "Dudak" },
+                    { "optionId": "moustache", "label": "Bıyık" },
+                    { "optionId": "fingerLeft", "label": "Parmak/el Sol" },
+                    { "optionId": "fingerRight", "label": "Parmak/el Sağ" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pageNumber": 8,
+      "officialCode": "D3",
+      "title": "Fiziksel tanımlama devamı",
+      "sections": [
+        {
+          "sectionId": "d3.bodyFeatures",
+          "label": "Fiziksel tanımlama devamı",
+          "fields": [
+            {
+              "canonicalFieldId": "pm.d3.circumcision",
+              "officialItem": "54",
+              "label": "Sünnet",
+              "type": "singleChoice",
+              "options": [
+                { "optionId": "no", "label": "Yok" },
+                { "optionId": "yes", "label": "Var" }
+              ]
+            },
+            { "canonicalFieldId": "pm.d3.otherFeatures", "officialItem": "55", "label": "Diğer özellikler", "type": "multilineText" }
+          ],
+          "tables": [
+            {
+              "canonicalFieldId": "pm.d3.features",
+              "label": "Çene, boyun, el, ayak ve kıl özellikleri",
+              "type": "choiceGroupCollection",
+              "fields": [
+                {
+                  "fieldId": "chin.sizeSlope",
+                  "officialItem": "47.01",
+                  "label": "Çene - Ölçü/eğim",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "short", "label": "Kısa" },
+                    { "optionId": "normalLength", "label": "Normal" },
+                    { "optionId": "long", "label": "Uzun" },
+                    { "optionId": "receding", "label": "Geriye çekik" },
+                    { "optionId": "normalSlope", "label": "Normal" },
+                    { "optionId": "protruding", "label": "Çıkık" }
+                  ]
+                },
+                {
+                  "fieldId": "chin.shape",
+                  "officialItem": "47.02",
+                  "label": "Çene - Şekil",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "pointed", "label": "Sivri" },
+                    { "optionId": "round", "label": "Yuvarlak" },
+                    { "optionId": "angular", "label": "Köşeli" },
+                    { "optionId": "cleft", "label": "Ayrık" },
+                    { "optionId": "dimpled", "label": "Oluklu" }
+                  ]
+                },
+                {
+                  "fieldId": "neck.lengthShape",
+                  "officialItem": "48.01",
+                  "label": "Boyun - Uzunluk/şekil",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "short", "label": "Kısa" },
+                    { "optionId": "normalLength", "label": "Normal" },
+                    { "optionId": "long", "label": "Uzun" },
+                    { "optionId": "thin", "label": "İnce" },
+                    { "optionId": "normalShape", "label": "Normal" },
+                    { "optionId": "thick", "label": "Kalın" }
+                  ]
+                },
+                {
+                  "fieldId": "neck.features",
+                  "officialItem": "48.02",
+                  "label": "Boyun - Özellikler",
+                  "type": "multiCheckboxWithDetails",
+                  "options": [
+                    { "optionId": "goiter", "label": "Guatr" },
+                    { "optionId": "prominentAdamsApple", "label": "Çıkık adem elması" },
+                    { "optionId": "collarShirtNumber", "label": "Yaka/gömlek no" },
+                    { "optionId": "circumferenceCm", "label": "Çevresi cm" }
+                  ],
+                  "fields": [
+                    { "fieldId": "collarShirtNumber", "label": "Yaka/gömlek no", "type": "text" },
+                    { "fieldId": "circumferenceCm", "label": "Çevresi", "type": "number", "unit": "cm" }
+                  ]
+                },
+                {
+                  "fieldId": "hands.shapeSize",
+                  "officialItem": "49.01",
+                  "label": "Eller - Şekil/ölçü",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "thin", "label": "İnce" },
+                    { "optionId": "normalThickness", "label": "Normal" },
+                    { "optionId": "thick", "label": "Kalın" },
+                    { "optionId": "small", "label": "Küçük" },
+                    { "optionId": "normalSize", "label": "Normal" },
+                    { "optionId": "large", "label": "Geniş" }
+                  ]
+                },
+                {
+                  "fieldId": "hands.nailLength",
+                  "officialItem": "49.02",
+                  "label": "Tırnak uzunluğu",
+                  "type": "singleChoice",
+                  "options": [
+                    { "optionId": "short", "label": "Kısa" },
+                    { "optionId": "normal", "label": "Normal" },
+                    { "optionId": "long", "label": "Uzun" }
+                  ]
+                },
+                {
+                  "fieldId": "hands.features",
+                  "officialItem": "49.03",
+                  "label": "Eller - Özellikler",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "burned", "label": "Kısa/yenmiş" },
+                    { "optionId": "manicured", "label": "Manikürlü" },
+                    { "optionId": "painted", "label": "Boyalı" },
+                    { "optionId": "artificial", "label": "Yapay" },
+                    { "optionId": "nicotineLeft", "label": "Nikotinli Sol" },
+                    { "optionId": "nicotineRight", "label": "Nikotinli Sağ" }
+                  ]
+                },
+                {
+                  "fieldId": "feet.shapeSize",
+                  "officialItem": "50.01",
+                  "label": "Ayaklar - Şekil/ölçü",
+                  "type": "multiCheckboxWithDetails",
+                  "options": [
+                    { "optionId": "thin", "label": "İnce" },
+                    { "optionId": "normal", "label": "Normal" },
+                    { "optionId": "wide", "label": "Taraklı" },
+                    { "optionId": "flat", "label": "Düz taban" },
+                    { "optionId": "arched", "label": "Kemerli" },
+                    { "optionId": "lengthCm", "label": "Uzunluk cm" }
+                  ],
+                  "fields": [
+                    { "fieldId": "lengthCm", "label": "Uzunluk", "type": "number", "unit": "cm" }
+                  ]
+                },
+                {
+                  "fieldId": "feet.conditionNail",
+                  "officialItem": "50.02",
+                  "label": "Ayaklar - Durum/tırnak",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "swollen", "label": "Şiş" },
+                    { "optionId": "callused", "label": "Nasırlı" },
+                    { "optionId": "painted", "label": "Boyalı" },
+                    { "optionId": "defective", "label": "Kusurlu" }
+                  ]
+                },
+                { "fieldId": "feet.features", "officialItem": "50.03", "label": "Ayaklar - Özellikler", "type": "text" },
+                {
+                  "fieldId": "bodyHair.length",
+                  "officialItem": "51.01",
+                  "label": "Vücut kılları - Uzunluk",
+                  "type": "singleChoice",
+                  "options": [
+                    { "optionId": "none", "label": "Yok" },
+                    { "optionId": "little", "label": "Az" },
+                    { "optionId": "normal", "label": "Normal" },
+                    { "optionId": "prominent", "label": "Belirgin" }
+                  ]
+                },
+                {
+                  "fieldId": "bodyHair.color",
+                  "officialItem": "51.02",
+                  "label": "Vücut kılları - Renk",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "blond", "label": "Sarı" },
+                    { "optionId": "brown", "label": "Kahverengi" },
+                    { "optionId": "black", "label": "Siyah" },
+                    { "optionId": "red", "label": "Kırmızı" },
+                    { "optionId": "gray", "label": "Gri" },
+                    { "optionId": "white", "label": "Beyaz" }
+                  ]
+                },
+                {
+                  "fieldId": "pubicHair.length",
+                  "officialItem": "52.01",
+                  "label": "Kasık kılları - Uzunluk",
+                  "type": "singleChoice",
+                  "options": [
+                    { "optionId": "none", "label": "Yok" },
+                    { "optionId": "little", "label": "Az" },
+                    { "optionId": "medium", "label": "Orta" },
+                    { "optionId": "prominent", "label": "Belirgin" },
+                    { "optionId": "shaved", "label": "Tıraşlı" }
+                  ]
+                },
+                {
+                  "fieldId": "pubicHair.color",
+                  "officialItem": "52.02",
+                  "label": "Kasık kılları - Renk",
+                  "type": "multiCheckbox",
+                  "options": [
+                    { "optionId": "blond", "label": "Sarı" },
+                    { "optionId": "brown", "label": "Kahverengi" },
+                    { "optionId": "black", "label": "Siyah" },
+                    { "optionId": "red", "label": "Kırmızı" },
+                    { "optionId": "gray", "label": "Gri" },
+                    { "optionId": "white", "label": "Beyaz" }
+                  ]
+                }
+              ]
+            },
+            {
+              "canonicalFieldId": "pm.d3.distinguishingDetails",
+              "officialItem": "53",
+              "label": "Detaylar",
+              "type": "table",
+              "rowDefinitions": ["01 Baş", "1A Boyun/boğaz", "02 Sağ kol", "03 Sol kol", "04 Sağ el", "05 Sol el", "06 Vücut ön", "07 Vücut arka", "08 Sağ bacak", "09 Sol bacak", "10 Sağ ayak", "11 Sol ayak"],
+              "columns": [
+                { "columnId": "woundHole", "label": "Yara/delik", "type": "checkbox" },
+                { "columnId": "skinMarks", "label": "Ciltteki izler", "type": "checkbox" },
+                { "columnId": "tattoo", "label": "Dövme", "type": "checkbox" },
+                { "columnId": "malformation", "label": "Malformasyon", "type": "checkbox" },
+                { "columnId": "amputation", "label": "Amputasyon", "type": "checkbox" }
+              ],
+              "instruction": "Vücut üzerindeki özel detayları D4 formunda gösteriniz."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pageNumber": 9,
+      "officialCode": "D4",
+      "title": "Vücut diyagramı",
+      "sections": [
+        {
+          "sectionId": "d4.bodyDiagram",
+          "label": "Vücut diyagramı",
+          "fields": [
+            {
+              "canonicalFieldId": "pm.d4.diagramMarks",
+              "label": "Vücut diyagramı işaretleri",
+              "type": "drawingLayer",
+              "references": ["22", "31", "53"],
+              "drawableRegions": ["baş profilleri", "ön beden", "arka beden", "sağ el", "sol el", "ayaklar"],
+              "legend": [
+                { "markerId": "damaged", "label": "Hasarlı", "type": "shadedArea" },
+                { "markerId": "burned", "label": "Yanmış", "type": "outlinedArea" },
+                { "markerId": "decomposed", "label": "Çürümüş", "type": "hatchedArea" },
+                { "markerId": "skeleton", "label": "İskelet", "type": "shadedArea" },
+                { "markerId": "missing", "label": "Eksik", "type": "shadedArea" },
+                { "markerId": "severed", "label": "Kopuk", "type": "freehand" },
+                { "markerId": "woundHole", "label": "Yara / delik", "type": "freehand" },
+                { "markerId": "skinMarks", "label": "Ciltteki izler", "type": "freehand" },
+                { "markerId": "tattooMarks", "label": "Dövme izleri", "type": "freehand" },
+                { "markerId": "malformation", "label": "Malformasyon", "type": "freehand" },
+                { "markerId": "amputation", "label": "Amputasyon", "type": "shadedArea" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pageNumber": 10,
+      "officialCode": "E1",
+      "title": "Vücut içi incelemesi - Tam otopsi",
+      "sections": [
+        {
+          "sectionId": "e1.internalExam",
+          "label": "Vücut içi incelemesi - Tam otopsi",
+          "fields": [
+            {
+              "canonicalFieldId": "pm.e1.fullAutopsy.performed",
+              "label": "Tam otopsi",
+              "type": "singleChoice",
+              "options": [
+                { "optionId": "done", "label": "Yapıldı" },
+                { "optionId": "notDone", "label": "Yapılmadı" }
+              ]
+            },
+            { "canonicalFieldId": "pm.e1.fullAutopsy.number", "label": "Tam otopsi No", "type": "text" }
+          ],
+          "tables": [
+            {
+              "canonicalFieldId": "pm.e1.internalFindings",
+              "label": "Vücut içi incelemesi bulguları",
+              "type": "table",
+              "rowDefinitionGroups": [
+                { "groupId": "head", "officialItem": "60", "label": "Baş", "rows": ["01 Baş", "1A Kafatası", "1B Beyin", "02 Boyun"] },
+                { "groupId": "thorax", "officialItem": "61", "label": "Göğüs kafesi", "rows": ["01 Göğüs/kaburga/Göğüs kemiği", "02 Akciğer", "03 Kalp/damarlar"] },
+                { "groupId": "abdomen", "officialItem": "62", "label": "Karın", "rows": ["01 Mide", "02 Bağırsak", "03 Apandis"] },
+                { "groupId": "otherOrgans", "officialItem": "63", "label": "Diğer iç organlar", "rows": ["01 Adrenal pankreas/dalak", "02 Karaciğer/safra kesesi", "03 Böbrekler/Ureter mesane", "04 Erkek genital", "05 Kadın genital", "06 Histerektomi"] },
+                { "groupId": "skeletonSoftTissue", "officialItem": "64", "label": "İskelet/yumuşak doku", "rows": ["01 Omurga", "02 Pelvis", "03 Omuz sağ kol", "04 Omuz sol kol", "05 Kalça sağ bacak", "06 Kalça sol bacak", "07 Diğer kemikler", "08 Yumuşak dokular, diğer lokalizasyonlar"] },
+                { "groupId": "misc", "officialItem": "65", "label": "Muhtelif", "rows": ["01 Gebelik", "02 İyileşmiş kırıklar", "03 Ameliyatlar", "04 Protez Kalp pili, kalça vs."] }
+              ],
+              "columns": [
+                { "columnId": "number", "label": "No", "type": "text" },
+                { "columnId": "description", "label": "Bulgular", "type": "multilineText" }
+              ],
+              "note": "Devamı 71. Maddededir. 66-70 maddeler sadece ölüm öncesi ile ilgilidir."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pageNumber": 11,
+      "officialCode": "E2",
+      "title": "Otopsi sonuçları",
+      "sections": [
+        {
+          "sectionId": "e2.autopsyResults",
+          "label": "Otopsi sonuçları",
+          "fields": [
+            {
+              "canonicalFieldId": "pm.e2.sex",
+              "officialItem": "71",
+              "label": "Cinsiyet",
+              "type": "singleChoice",
+              "options": [
+                { "optionId": "male", "label": "Erkek" },
+                { "optionId": "female", "label": "Kadın" },
+                { "optionId": "unknown", "label": "Belirsiz" }
+              ]
+            },
+            { "canonicalFieldId": "pm.e2.sex.reason", "officialItem": "71", "label": "Cinsiyet karar sebebi", "type": "multilineText" },
+            { "canonicalFieldId": "pm.e2.estimatedAge.years", "officialItem": "72", "label": "Tahmin edilen yaş - yıl", "type": "number" },
+            {
+              "canonicalFieldId": "pm.e2.estimatedAge.tolerance",
+              "officialItem": "72",
+              "label": "Tahmin edilen yaş toleransı",
+              "type": "singleChoice",
+              "options": [
+                { "optionId": "plusMinus5", "label": "+/- 5" },
+                { "optionId": "plusMinus10", "label": "+/- 10" }
+              ]
+            },
+            { "canonicalFieldId": "pm.e2.estimatedAge.method", "officialItem": "72", "label": "Kullanılan yöntem", "type": "text" },
+            {
+              "canonicalFieldId": "pm.e2.otherIdentificationClues.available",
+              "officialItem": "74",
+              "label": "Kimliklendirme için diğer ipuçları",
+              "type": "singleChoiceWithDetails",
+              "options": [
+                { "optionId": "none", "label": "Yok" },
+                { "optionId": "available", "label": "Var" }
+              ],
+              "fields": [
+                { "fieldId": "description", "label": "Tanımla", "type": "multilineText" }
+              ]
+            },
+            { "canonicalFieldId": "pm.e2.otherMedicalFindings", "officialItem": "75", "label": "Diğer tıbbi bulgular", "type": "multilineText" }
+          ],
+          "tables": [
+            {
+              "canonicalFieldId": "pm.e2.samplesTaken",
+              "officialItem": "73",
+              "label": "Alınan örnekler",
+              "type": "table",
+              "rowDefinitions": ["01 Mide içeriği", "02 İdrar", "03 Kalp kanı", "04 Perifer kanı", "05 Kan/diğer", "06 Safra", "07 Vitröz humor sol", "08 Vitröz humor sağ", "09 Diğer sıvılar", "10 Symphysis pubis", "11 Kıl", "12 Kuru doku", "13 doku(formalinde)", "14 DNA örneği"],
+              "columns": [
+                { "columnId": "none", "label": "Yok", "type": "checkbox" },
+                { "columnId": "available", "label": "Var", "type": "checkbox" },
+                { "columnId": "purpose", "label": "Amaç", "type": "text" },
+                { "columnId": "storagePlace", "label": "Depolama yeri", "type": "text" },
+                { "columnId": "result", "label": "Sonuç", "type": "text" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pageNumber": 12,
+      "officialCode": "E3",
+      "title": "İskelet diyagramı",
+      "sections": [
+        {
+          "sectionId": "e3.skeletonDiagram",
+          "label": "İskelet diyagramı",
+          "fields": [
+            {
+              "canonicalFieldId": "pm.e3.skeletonDiagramMarks",
+              "label": "İskelet diyagramı işaretleri",
+              "type": "drawingLayer",
+              "drawableRegions": ["tam iskelet", "kafatası profilleri", "göğüs kafesi", "el kemikleri", "ayak kemikleri"],
+              "intendedUse": "İç inceleme ve iskelet/yumuşak doku bulgularının görsel referansı"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pageNumber": 13,
+      "officialCode": "E4",
+      "title": "DNA",
+      "sections": [
+        {
+          "sectionId": "e4.dna",
+          "label": "DNA",
+          "fields": [
+            { "canonicalFieldId": "pm.e4.sample.collectionDate", "officialItem": "93.01", "label": "Örnek - Alınış tarihi", "type": "date" },
+            { "canonicalFieldId": "pm.e4.sample.label", "officialItem": "93.02", "label": "Örneğin etiketi", "type": "multilineText" },
+            { "canonicalFieldId": "pm.e4.sample.type", "officialItem": "93.03", "label": "Örnek tipi", "type": "multilineText" },
+            { "canonicalFieldId": "pm.e4.sample.condition", "officialItem": "93.04", "label": "Örneğin durumu", "type": "multilineText" }
+          ],
+          "tables": [
+            {
+              "canonicalFieldId": "pm.e4.dnaProfile",
+              "officialItem": "94",
+              "label": "DNA profili",
+              "type": "table",
+              "rowDefinitions": ["D3S1358", "VWA", "D16S539", "D2S1338", "Amelogenin", "D8S1179", "D21S11", "D18S51", "D19S433", "TH01", "FGA", "TPOX", "CSF1PO", "D13S317", "D7S820", "D5S818", "Penta D", "Penta E", "FES", "F13A1", "F13B", "SE33", "CD4", "GABA"],
+              "columns": [
+                { "columnId": "bodyAllele1", "label": "CESET 1", "type": "text" },
+                { "columnId": "bodyAllele2", "label": "CESET 2", "type": "text" }
+              ]
+            }
+          ],
+          "fieldsAfterTables": [
+            { "canonicalFieldId": "pm.e4.checkedBy", "officialItem": "95", "label": "Kontrol eden", "type": "text" },
+            { "canonicalFieldId": "pm.e4.checkedDate", "officialItem": "95", "label": "Tarih", "type": "date" },
+            { "canonicalFieldId": "pm.e4.checkedSignature", "officialItem": "95", "label": "İmza", "type": "signature" }
+          ]
+        }
+      ]
+    },
+    {
+      "pageNumber": 14,
+      "officialCode": "F1",
+      "title": "Diş bulguları",
+      "sections": [
+        {
+          "sectionId": "f1.dentalFindings",
+          "label": "Diş bulguları",
+          "fields": [
+            {
+              "canonicalFieldId": "pm.f1.singleCases",
+              "officialItem": "83",
+              "label": "Tek olaylarda",
+              "type": "structuredBlock",
+              "fields": [
+                { "fieldId": "scenePlace", "label": "Olay yeri", "type": "text" },
+                { "fieldId": "sceneNumber", "label": "Olay numarası", "type": "text" },
+                { "fieldId": "date", "label": "Tarih", "type": "date" },
+                { "fieldId": "policeUnit", "label": "Zabıta birimi", "type": "text" },
+                { "fieldId": "address", "label": "Adres", "type": "multilineText" },
+                { "fieldId": "phoneEmail", "label": "Telefon/e-mail", "type": "contact" },
+                { "fieldId": "dentalExamRequestedDate", "label": "Diş incelemesi istenilen inc. tarihi", "type": "date" },
+                { "fieldId": "resultDate", "label": "Sonuç tarihi", "type": "date" }
+              ]
+            },
+            {
+              "canonicalFieldId": "pm.f1.additionalInformation",
+              "officialItem": "85",
+              "label": "Ek bilgiler",
+              "type": "structuredBlock",
+              "fields": [
+                { "fieldId": "bodyPosition", "label": "Cesedin konumu", "type": "multilineText" },
+                { "fieldId": "jawsPosition", "label": "Çenelerin konumu", "type": "multilineText" },
+                { "fieldId": "softTissueInjuries", "label": "Ağızdaki yumuşak dokularda yaralanmalar", "type": "multilineText" },
+                { "fieldId": "jawInjuries", "label": "Çenelerde yaralanmalar", "type": "multilineText" },
+                { "fieldId": "toothInjuries", "label": "Dişlerde yaralanmalar", "type": "multilineText" },
+                { "fieldId": "probableInjuryCauses", "label": "Muhtemel yaralanma sebepleri", "type": "multilineText" },
+                { "fieldId": "otherInformation", "label": "Diğer bilgiler", "type": "multilineText" }
+              ]
+            }
+          ],
+          "tables": [
+            {
+              "canonicalFieldId": "pm.f1.material",
+              "officialItem": "84",
+              "label": "Materyal",
+              "type": "table",
+              "rowDefinitions": ["1 Çeneler", "2 Parça kalıntıları", "3 Tek diş", "4 Diğer", "5 Numune bölgesi"],
+              "columns": [
+                { "columnId": "upper", "label": "Üst", "type": "checkbox" },
+                { "columnId": "lower", "label": "Alt", "type": "checkbox" },
+                { "columnId": "sampleTaken", "label": "Alınan numune?", "type": "checkbox" },
+                { "columnId": "description", "label": "Açıklama", "type": "multilineText" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pageNumber": 15,
+      "officialCode": "F2",
+      "title": "Diş bulguları kalıcı dişlerdeki",
+      "sections": [
+        {
+          "sectionId": "f2.dentalChart",
+          "label": "Diş bulguları",
+          "tables": [
+            {
+              "canonicalFieldId": "pm.f2.dentalChart.permanentTeeth",
+              "officialItem": "86",
+              "label": "Diş bulguları (kalıcı dişlerdeki)",
+              "type": "odontogram",
+              "teeth": ["18", "17", "16", "15", "14", "13", "12", "11", "21", "22", "23", "24", "25", "26", "27", "28", "48", "47", "46", "45", "44", "43", "42", "41", "31", "32", "33", "34", "35", "36", "37", "38"],
+              "deciduousRows": ["11/21", "12/22", "13/23", "14/24", "15/25", "16/26", "17/27", "18/28", "48/38", "47/37", "46/36", "45/35", "44/34", "43/33", "42/32", "41/31"],
+              "perToothFields": [
+                { "fieldId": "status", "label": "Diş durumu/işaretleme", "type": "odontogramMark" },
+                { "fieldId": "notes", "label": "Diş notu", "type": "text" }
+              ],
+              "specialOption": {
+                "fieldId": "temporaryTeeth",
+                "label": "Geçici dişleri belirtiniz",
+                "type": "text"
+              }
+            }
+          ],
+          "fields": [
+            { "canonicalFieldId": "pm.f2.specificDescriptions", "officialItem": "87", "label": "Spesifik tanımlamalar - Kronlar, köprüler, takma dişler ve dolgular", "type": "multilineText" },
+            { "canonicalFieldId": "pm.f2.otherFindings", "officialItem": "88", "label": "Diğer bulgular - Occlusion, aşınma, anomaliler, sigara içen periodontal durumlar vs.", "type": "multilineText" },
+            { "canonicalFieldId": "pm.f2.radiographsTaken", "officialItem": "89", "label": "Çekilen röntgenler - Tip ve bölge", "type": "multilineText" },
+            { "canonicalFieldId": "pm.f2.additionalExaminations", "officialItem": "90", "label": "Ek incelemeler", "type": "multilineText" },
+            { "canonicalFieldId": "pm.f2.estimatedAge", "officialItem": "91", "label": "Tahmini yaş", "type": "number" },
+            { "canonicalFieldId": "pm.f2.estimatedAge.method", "officialItem": "91", "label": "Tahmini yaş - Metod", "type": "text" }
+          ]
+        }
+      ]
+    },
+    {
+      "pageNumber": 16,
+      "officialCode": "G",
+      "title": "Diğer bilgiler",
+      "sections": [
+        {
+          "sectionId": "g.otherInformation",
+          "officialItem": "92",
+          "label": "Diğer bilgiler",
+          "fields": [
+            {
+              "canonicalFieldId": "pm.g.otherInformation",
+              "label": "Diğer bilgiler",
+              "type": "repeatablePageNotes",
+              "instruction": "Başvurulan bilgi önceki sayfalarda ise lütfen madde numarasını belirtiniz."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

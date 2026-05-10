@@ -14,7 +14,7 @@ const formStatuses = [
   {
     title: 'Ölüm Sonrası Formu',
     code: 'PM',
-    detail: '16 sayfa doğrulandı; ayrıntılı alan envanteri Faz 1C içinde tamamlanacak.',
+    detail: '16 sayfa doğrulandı; tam alan envanteri kalıcı alan kimlikleriyle çıkarıldı.',
   },
 ];
 
@@ -27,7 +27,7 @@ export default function App() {
           <Text style={styles.eyebrow}>Türkçe INTERPOL DVI iş akışı</Text>
           <Text style={styles.title}>DVI Mobil</Text>
           <Text style={styles.subtitle}>
-            Resmi Türkçe formlar için çevrimdışı çalışma, tam alan envanteri ve
+            Resmi Türkçe formlar için çevrimdışı çalışma, tam AM/PM alan envanteri ve
             denetlenebilir sürüm temeli.
           </Text>
         </View>
@@ -58,11 +58,11 @@ export default function App() {
         </View>
 
         <View style={styles.notice}>
-          <Text style={styles.noticeTitle}>Faz 1B AM alan envanteri</Text>
+          <Text style={styles.noticeTitle}>Faz 1C AM/PM alan envanteri</Text>
           <Text style={styles.noticeBody}>
-            AM form alanları PDF teknolojisinden bağımsız kalıcı alan kimlikleriyle
-            kaydedildi. Görüntü tabanlı dışa aktarım ve ileride AcroForm eşlemesi ayrı
-            adapter katmanlarında tutulacaktır.
+            AM ve PM form alanları PDF teknolojisinden bağımsız kalıcı alan kimlikleriyle
+            kaydedildi. İleride resmi formlara doldurulabilir çıktı üretimi ayrı dışa
+            aktarım katmanında ele alınacaktır.
           </Text>
         </View>
       </ScrollView>

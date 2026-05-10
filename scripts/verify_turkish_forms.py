@@ -81,7 +81,7 @@ def inspect_form(definition: dict) -> dict:
     total_text_chars = 0
     inventory_status = (
         "alan envanteri tamamlandı"
-        if definition["formType"] == "AM"
+        if definition["formType"] in {"AM", "PM"}
         else "sayfa doğrulandı; alan envanteri bekliyor"
     )
     planned_inventory_phase = "Phase 1B" if definition["formType"] == "AM" else "Phase 1C"
@@ -154,14 +154,14 @@ def main() -> int:
         )
 
     summary = {
-        "phase": "Phase 1B",
-        "version": "0.1.1",
-        "buildId": "phase-1b-v0.1.1-20260510",
+        "phase": "Phase 1C",
+        "version": "0.1.2",
+        "buildId": "phase-1c-v0.1.2-20260510",
         "forms": inspected,
         "failures": failures,
     }
 
-    summary_path = OUTPUT_DIR / "phase-1b-pdf-forensics.json"
+    summary_path = OUTPUT_DIR / "phase-1c-pdf-forensics.json"
     summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 

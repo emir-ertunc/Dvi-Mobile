@@ -1,189 +1,257 @@
 const { readFileSync } = require('node:fs');
 const { join } = require('node:path');
 
-const inventoryPath = join('data', 'form-inventory', 'am-field-inventory.json');
-const inventory = JSON.parse(readFileSync(inventoryPath, 'utf8'));
-
-const failures = [];
-const ids = new Set();
-let fieldCount = 0;
-let optionCount = 0;
-let tableCount = 0;
-
-const requiredPageCodes = [
-  'A0',
-  'A1',
-  'A2',
-  'C1',
-  'C2',
-  'C3',
-  'D1',
-  'D2',
-  'D3',
-  'D4',
-  'E1',
-  'E2',
-  'E4',
-  'F1',
-  'F2',
-  'G',
-  'Silüet Taslağı',
-  'Kimlik tespit onayı',
+const INVENTORIES = [
+  {
+    formType: 'AM',
+    path: join('data', 'form-inventory', 'am-field-inventory.json'),
+    inventoryVersion: '0.1.1',
+    requiredPageCodes: [
+      'A0',
+      'A1',
+      'A2',
+      'C1',
+      'C2',
+      'C3',
+      'D1',
+      'D2',
+      'D3',
+      'D4',
+      'E1',
+      'E2',
+      'E4',
+      'F1',
+      'F2',
+      'G',
+      'Silüet Taslağı',
+      'Kimlik tespit onayı',
+    ],
+    expectedPages: 18,
+    minimumFields: 180,
+    minimumOptions: 180,
+    minimumTables: 15,
+  },
+  {
+    formType: 'PM',
+    path: join('data', 'form-inventory', 'pm-field-inventory.json'),
+    inventoryVersion: '0.1.2',
+    requiredPageCodes: ['B0', 'B', 'C1', 'C2', 'C3', 'D1', 'D2', 'D3', 'D4', 'E1', 'E2', 'E3', 'E4', 'F1', 'F2', 'G'],
+    expectedPages: 16,
+    minimumFields: 150,
+    minimumOptions: 240,
+    minimumTables: 15,
+    requiresDerivedAcroFormMasterPolicy: true,
+  },
 ];
 
-function registerField(field, context) {
+function createContext(definition) {
+  return {
+    definition,
+    failures: [],
+    ids: new Set(),
+    fieldCount: 0,
+    optionCount: 0,
+    tableCount: 0,
+  };
+}
+
+function registerOptions(ctx, options, context) {
+  if (!Array.isArray(options)) {
+    return;
+  }
+  options.forEach((option, index) => {
+    if (!option || typeof option !== 'object' || !option.optionId || !option.label) {
+      ctx.failures.push(`${context}.options[${index}]: optionId/label eksik`);
+    }
+  });
+  ctx.optionCount += options.length;
+}
+
+function registerField(ctx, field, context) {
   if (!field || typeof field !== 'object') {
     return;
   }
 
   const id = field.canonicalFieldId || field.fieldId;
   if (field.canonicalFieldId) {
-    if (ids.has(field.canonicalFieldId)) {
-      failures.push(`Tekrarlanan canonicalFieldId: ${field.canonicalFieldId}`);
+    if (ctx.ids.has(field.canonicalFieldId)) {
+      ctx.failures.push(`Tekrarlanan canonicalFieldId: ${field.canonicalFieldId}`);
     }
-    ids.add(field.canonicalFieldId);
+    ctx.ids.add(field.canonicalFieldId);
   }
 
   if (!id) {
-    failures.push(`${context}: alan kimliği eksik`);
+    ctx.failures.push(`${context}: alan kimliği eksik`);
   }
   if (!field.label) {
-    failures.push(`${context}: alan etiketi eksik`);
+    ctx.failures.push(`${context}: alan etiketi eksik`);
   }
   if (!field.type && !Array.isArray(field.options)) {
-    failures.push(`${context}: alan tipi eksik`);
+    ctx.failures.push(`${context}: alan tipi eksik`);
   }
 
-  fieldCount += 1;
+  ctx.fieldCount += 1;
+  registerOptions(ctx, field.options, context);
 
-  if (Array.isArray(field.options)) {
-    field.options.forEach((option, index) => {
-      if (!option || typeof option !== 'object' || !option.optionId || !option.label) {
-        failures.push(`${context}.options[${index}]: optionId/label eksik`);
-      }
-    });
-    optionCount += field.options.length;
+  (field.fields || []).forEach((nested, index) => registerField(ctx, nested, `${context}.fields[${index}]`));
+  (field.subfields || []).forEach((nested, index) => registerField(ctx, nested, `${context}.subfields[${index}]`));
+  if (field.otherField) {
+    registerField(ctx, field.otherField, `${context}.otherField`);
   }
-  if (Array.isArray(field.fields)) {
-    field.fields.forEach((nested, index) => registerField(nested, `${context}.fields[${index}]`));
-  }
-  if (Array.isArray(field.subfields)) {
-    field.subfields.forEach((nested, index) => registerField(nested, `${context}.subfields[${index}]`));
+  if (field.specialOption) {
+    registerField(ctx, field.specialOption, `${context}.specialOption`);
   }
 }
 
-function registerTable(table, context) {
-  tableCount += 1;
+function registerTable(ctx, table, context) {
+  ctx.tableCount += 1;
   if (!table.canonicalFieldId) {
-    failures.push(`${context}: tablo canonicalFieldId eksik`);
-  } else if (ids.has(table.canonicalFieldId)) {
-    failures.push(`Tekrarlanan canonicalFieldId: ${table.canonicalFieldId}`);
+    ctx.failures.push(`${context}: tablo canonicalFieldId eksik`);
+  } else if (ctx.ids.has(table.canonicalFieldId)) {
+    ctx.failures.push(`Tekrarlanan canonicalFieldId: ${table.canonicalFieldId}`);
   } else {
-    ids.add(table.canonicalFieldId);
+    ctx.ids.add(table.canonicalFieldId);
   }
   if (!table.type) {
-    failures.push(`${context}: tablo tipi eksik`);
+    ctx.failures.push(`${context}: tablo tipi eksik`);
   }
   if (!table.label) {
-    failures.push(`${context}: tablo etiketi eksik`);
+    ctx.failures.push(`${context}: tablo etiketi eksik`);
   }
-  if (Array.isArray(table.columns)) {
-    table.columns.forEach((column) => {
-      if (!column.columnId || !column.label || !column.type) {
-        failures.push(`${context}: tablo sütun tanımı eksik`);
-      }
-    });
+
+  (table.columns || []).forEach((column, index) => {
+    if (!column.columnId || !column.label || !column.type) {
+      ctx.failures.push(`${context}.columns[${index}]: tablo sütun tanımı eksik`);
+    }
+  });
+
+  (table.rowDefinitions || []).forEach((row, index) => {
+    if (row && typeof row === 'object') {
+      registerOptions(ctx, row.options, `${context}.rowDefinitions[${index}]`);
+      (row.fields || []).forEach((field, fieldIndex) =>
+        registerField(ctx, field, `${context}.rowDefinitions[${index}].fields[${fieldIndex}]`),
+      );
+    }
+  });
+
+  (table.fields || []).forEach((field, index) => registerField(ctx, field, `${context}.fields[${index}]`));
+  (table.embeddedChoices || []).forEach((field, index) =>
+    registerField(ctx, field, `${context}.embeddedChoices[${index}]`),
+  );
+  (table.perToothFields || []).forEach((field, index) =>
+    registerField(ctx, field, `${context}.perToothFields[${index}]`),
+  );
+  if (table.specialOption) {
+    registerField(ctx, table.specialOption, `${context}.specialOption`);
   }
-  if (Array.isArray(table.fields)) {
-    table.fields.forEach((field, index) => registerField(field, `${context}.fields[${index}]`));
-  }
-  if (Array.isArray(table.embeddedChoices)) {
-    table.embeddedChoices.forEach((field, index) =>
-      registerField(field, `${context}.embeddedChoices[${index}]`),
-    );
-  }
+  (table.legend || []).forEach((marker, index) => {
+    if (!marker.markerId || !marker.label || !marker.type) {
+      ctx.failures.push(`${context}.legend[${index}]: diyagram işaret tanımı eksik`);
+    }
+  });
 }
 
-function registerCommonChoiceBlock(block, context) {
+function registerCommonChoiceBlock(ctx, block, context) {
   if (!block.canonicalFieldId) {
-    failures.push(`${context}: ortak seçim bloğu canonicalFieldId eksik`);
-  } else if (ids.has(block.canonicalFieldId)) {
-    failures.push(`Tekrarlanan canonicalFieldId: ${block.canonicalFieldId}`);
+    ctx.failures.push(`${context}: ortak seçim bloğu canonicalFieldId eksik`);
+  } else if (ctx.ids.has(block.canonicalFieldId)) {
+    ctx.failures.push(`Tekrarlanan canonicalFieldId: ${block.canonicalFieldId}`);
   } else {
-    ids.add(block.canonicalFieldId);
+    ctx.ids.add(block.canonicalFieldId);
   }
   if (!block.runtimeFieldIdPattern) {
-    failures.push(`${context}: runtime alan kimliği kalıbı eksik`);
+    ctx.failures.push(`${context}: runtime alan kimliği kalıbı eksik`);
   }
   (block.columns || []).forEach((column, index) => {
     if (!column.optionId || !column.label || column.type !== 'checkbox') {
-      failures.push(`${context}.columns[${index}]: ortak seçim tanımı eksik`);
+      ctx.failures.push(`${context}.columns[${index}]: ortak seçim tanımı eksik`);
     }
   });
-  optionCount += (block.columns || []).length * (block.appliesToPages || []).length;
+  ctx.optionCount += (block.columns || []).length * (block.appliesToPages || []).length;
 }
 
-if (inventory.formType !== 'AM') {
-  failures.push('formType AM değil');
-}
-if (inventory.inventoryVersion !== '0.1.1') {
-  failures.push('inventoryVersion 0.1.1 değil');
-}
-if (!inventory.fieldModelPolicy?.pdfTechnologyIndependent) {
-  failures.push('PDF teknolojisinden bağımsız model politikası işaretlenmemiş');
-}
-if (!inventory.fieldModelPolicy?.relativeFieldIdPolicy) {
-  failures.push('Relative fieldId politikası eksik');
-}
-if (!Array.isArray(inventory.pages) || inventory.pages.length !== 18) {
-  failures.push('AM envanteri 18 sayfa içermiyor');
-}
+function verifyInventory(definition) {
+  const inventory = JSON.parse(readFileSync(definition.path, 'utf8'));
+  const ctx = createContext(definition);
 
-const pageCodes = new Set((inventory.pages || []).map((page) => page.officialCode));
-for (const code of requiredPageCodes) {
-  if (!pageCodes.has(code)) {
-    failures.push(`Sayfa kodu eksik: ${code}`);
+  if (inventory.formType !== definition.formType) {
+    ctx.failures.push(`formType ${definition.formType} değil`);
   }
-}
-
-for (const [blockId, block] of Object.entries(inventory.commonBlocks || {})) {
-  (block.fields || []).forEach((field, index) =>
-    registerField(field, `commonBlocks.${blockId}.fields[${index}]`),
-  );
-  if (Array.isArray(block.columns)) {
-    registerCommonChoiceBlock(block, `commonBlocks.${blockId}`);
+  if (inventory.inventoryVersion !== definition.inventoryVersion) {
+    ctx.failures.push(`inventoryVersion ${definition.inventoryVersion} değil`);
   }
-}
-
-(inventory.pages || []).forEach((page) => {
-  if (!page.pageNumber || !page.officialCode || !page.title) {
-    failures.push(`Sayfa üst bilgisi eksik: ${JSON.stringify(page)}`);
+  if (!inventory.fieldModelPolicy?.pdfTechnologyIndependent) {
+    ctx.failures.push('PDF teknolojisinden bağımsız model politikası işaretlenmemiş');
   }
-  (page.sections || []).forEach((section, sectionIndex) => {
-    (section.fields || []).forEach((field, fieldIndex) =>
-      registerField(field, `pages[${page.pageNumber}].sections[${sectionIndex}].fields[${fieldIndex}]`),
+  if (!inventory.fieldModelPolicy?.relativeFieldIdPolicy) {
+    ctx.failures.push('Relative fieldId politikası eksik');
+  }
+  if (definition.requiresDerivedAcroFormMasterPolicy && !inventory.fieldModelPolicy?.derivedAcroFormMasterAllowed) {
+    ctx.failures.push('Türetilmiş AcroForm master politikası eksik');
+  }
+  if (!Array.isArray(inventory.pages) || inventory.pages.length !== definition.expectedPages) {
+    ctx.failures.push(`${definition.formType} envanteri ${definition.expectedPages} sayfa içermiyor`);
+  }
+
+  const pageCodes = new Set((inventory.pages || []).map((page) => page.officialCode));
+  for (const code of definition.requiredPageCodes) {
+    if (!pageCodes.has(code)) {
+      ctx.failures.push(`Sayfa kodu eksik: ${code}`);
+    }
+  }
+
+  for (const [blockId, block] of Object.entries(inventory.commonBlocks || {})) {
+    (block.fields || []).forEach((field, index) =>
+      registerField(ctx, field, `commonBlocks.${blockId}.fields[${index}]`),
     );
-    (section.fieldsAfterTables || []).forEach((field, fieldIndex) =>
-      registerField(
-        field,
-        `pages[${page.pageNumber}].sections[${sectionIndex}].fieldsAfterTables[${fieldIndex}]`,
-      ),
-    );
-    (section.tables || []).forEach((table, tableIndex) =>
-      registerTable(table, `pages[${page.pageNumber}].sections[${sectionIndex}].tables[${tableIndex}]`),
-    );
+    if (Array.isArray(block.columns)) {
+      registerCommonChoiceBlock(ctx, block, `commonBlocks.${blockId}`);
+    }
+  }
+
+  (inventory.pages || []).forEach((page) => {
+    if (!page.pageNumber || !page.officialCode || !page.title) {
+      ctx.failures.push(`Sayfa üst bilgisi eksik: ${JSON.stringify(page)}`);
+    }
+    (page.sections || []).forEach((section, sectionIndex) => {
+      (section.fields || []).forEach((field, fieldIndex) =>
+        registerField(ctx, field, `pages[${page.pageNumber}].sections[${sectionIndex}].fields[${fieldIndex}]`),
+      );
+      (section.fieldsAfterTables || []).forEach((field, fieldIndex) =>
+        registerField(
+          ctx,
+          field,
+          `pages[${page.pageNumber}].sections[${sectionIndex}].fieldsAfterTables[${fieldIndex}]`,
+        ),
+      );
+      (section.tables || []).forEach((table, tableIndex) =>
+        registerTable(ctx, table, `pages[${page.pageNumber}].sections[${sectionIndex}].tables[${tableIndex}]`),
+      );
+    });
   });
-});
 
-if (fieldCount < 180) {
-  failures.push(`Alan sayısı beklenenden düşük: ${fieldCount}`);
+  if (ctx.fieldCount < definition.minimumFields) {
+    ctx.failures.push(`Alan sayısı beklenenden düşük: ${ctx.fieldCount}`);
+  }
+  if (ctx.optionCount < definition.minimumOptions) {
+    ctx.failures.push(`Seçenek/checkbox sayısı beklenenden düşük: ${ctx.optionCount}`);
+  }
+  if (ctx.tableCount < definition.minimumTables) {
+    ctx.failures.push(`Tablo sayısı beklenenden düşük: ${ctx.tableCount}`);
+  }
+
+  return {
+    formType: definition.formType,
+    pageCount: inventory.pages?.length || 0,
+    fieldCount: ctx.fieldCount,
+    optionCount: ctx.optionCount,
+    tableCount: ctx.tableCount,
+    failures: ctx.failures,
+  };
 }
-if (optionCount < 180) {
-  failures.push(`Seçenek/checkbox sayısı beklenenden düşük: ${optionCount}`);
-}
-if (tableCount < 15) {
-  failures.push(`Tablo sayısı beklenenden düşük: ${tableCount}`);
-}
+
+const results = INVENTORIES.map(verifyInventory);
+const failures = results.flatMap((result) => result.failures.map((failure) => `${result.formType}: ${failure}`));
 
 if (failures.length > 0) {
   console.error(failures.join('\n'));
@@ -191,5 +259,10 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `AM envanter kontrolü geçti. Sayfa=${inventory.pages.length}, alan=${fieldCount}, seçenek=${optionCount}, tablo=${tableCount}`,
+  results
+    .map(
+      (result) =>
+        `${result.formType} envanter kontrolü geçti. Sayfa=${result.pageCount}, alan=${result.fieldCount}, seçenek=${result.optionCount}, tablo=${result.tableCount}`,
+    )
+    .join('\n'),
 );
