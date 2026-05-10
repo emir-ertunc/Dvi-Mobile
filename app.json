@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "DVI Mobil",
+    "slug": "dvi-mobile",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "newArchEnabled": false,
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.emirertunc.dvimobile"
+    },
+    "android": {
+      "package": "com.emirertunc.dvimobile",
+      "versionCode": 1,
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
+    },
+    "plugins": []
+  }
+}

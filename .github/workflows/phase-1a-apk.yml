@@ -1,0 +1,50 @@
+name: Phase 1A APK
+
+on:
+  push:
+    branches:
+      - feature/turkish-dvi-mobile
+  workflow_dispatch:
+
+jobs:
+  android-apk:
+    name: Android APK üretimi
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kaynak kodu al
+        uses: actions/checkout@v4
+
+      - name: Node.js hazırla
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Bağımlılıkları kur
+        run: npm ci
+
+      - name: TypeScript kontrolü
+        run: npm run typecheck
+
+      - name: Türkçe metin kontrolü
+        run: npm run text:verify-tr
+
+      - name: Android proje dosyalarını üret
+        run: CI=1 npx expo prebuild --platform android --clean
+
+      - name: Release APK üret
+        run: |
+          cd android
+          chmod +x ./gradlew
+          ./gradlew assembleRelease
+
+      - name: APK dosyasını adlandır
+        run: |
+          mkdir -p artifacts
+          cp android/app/build/outputs/apk/release/app-release.apk artifacts/DviMobile-phase-1a-v0.1.0-20260510.apk
+
+      - name: APK artifact yükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: DviMobile-phase-1a-v0.1.0-20260510.apk
+          path: artifacts/DviMobile-phase-1a-v0.1.0-20260510.apk
