@@ -60,10 +60,10 @@ export default function App() {
         </View>
 
         <View style={styles.notice}>
-          <Text style={styles.noticeTitle}>Faz 1D envanter denetimi</Text>
+          <Text style={styles.noticeTitle}>Faz 2A ortak alan katmanı</Text>
           <Text style={styles.noticeBody}>
-            Bu derleme AM ve PM envanterlerini birlikte denetler; coverage, export binding,
-            checkbox state, sayfa kimliği ve summary dosyaları için ortak kalite kapısı uygular.
+            Bu derleme AM ve PM envanterlerini ortak field primitive, değer tipi ve PDF binding
+            sözleşmesine bağlar; schema fazları için typed domain temelini hazırlar.
           </Text>
         </View>
       </ScrollView>

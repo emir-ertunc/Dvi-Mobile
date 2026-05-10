@@ -1,0 +1,135 @@
+{
+  "phase": "Phase 2A",
+  "version": "0.2.0",
+  "buildId": "phase-2a-v0.2.0-20260510",
+  "passed": true,
+  "failures": [],
+  "primitiveRegistry": {
+    "controlToPrimitive": {
+      "checkbox": "checkbox",
+      "date-part": "datePart",
+      "email": "email",
+      "number": "number",
+      "phone": "phone",
+      "text": "text"
+    },
+    "primitiveValueTypes": {
+      "attachmentReference": [
+        "attachment"
+      ],
+      "bodyChartReference": [
+        "chartReference"
+      ],
+      "checkbox": [
+        "boolean"
+      ],
+      "date": [
+        "date"
+      ],
+      "datePart": [
+        "datePart"
+      ],
+      "decimal": [
+        "decimal"
+      ],
+      "dentalChartReference": [
+        "chartReference"
+      ],
+      "email": [
+        "email"
+      ],
+      "multiChoice": [
+        "enumArray"
+      ],
+      "multilineText": [
+        "string"
+      ],
+      "number": [
+        "number"
+      ],
+      "phone": [
+        "phone"
+      ],
+      "repeatedGroup": [
+        "objectArray"
+      ],
+      "signatureBlock": [
+        "object"
+      ],
+      "singleChoice": [
+        "enum"
+      ],
+      "tableRow": [
+        "object"
+      ],
+      "text": [
+        "string"
+      ]
+    }
+  },
+  "forms": [
+    {
+      "formType": "AM",
+      "passed": true,
+      "failures": [],
+      "metrics": {
+        "fieldCount": 1687,
+        "controlTypeCounts": {
+          "text": 984,
+          "email": 62,
+          "checkbox": 610,
+          "date-part": 24,
+          "phone": 6,
+          "number": 1
+        },
+        "primitiveCounts": {
+          "text": 984,
+          "email": 62,
+          "checkbox": 610,
+          "datePart": 24,
+          "phone": 6,
+          "number": 1
+        },
+        "valueTypeCounts": {
+          "string": 984,
+          "email": 62,
+          "boolean": 610,
+          "datePart": 24,
+          "phone": 6,
+          "number": 1
+        },
+        "exportStrategy": "acroformFieldNames"
+      }
+    },
+    {
+      "formType": "PM",
+      "passed": true,
+      "failures": [],
+      "metrics": {
+        "fieldCount": 1693,
+        "controlTypeCounts": {
+          "checkbox": 755,
+          "text": 879,
+          "email": 47,
+          "phone": 4,
+          "date-part": 8
+        },
+        "primitiveCounts": {
+          "checkbox": 755,
+          "text": 879,
+          "email": 47,
+          "phone": 4,
+          "datePart": 8
+        },
+        "valueTypeCounts": {
+          "boolean": 755,
+          "string": 879,
+          "email": 47,
+          "phone": 4,
+          "datePart": 8
+        },
+        "exportStrategy": "acroformFieldNames"
+      }
+    }
+  ]
+}

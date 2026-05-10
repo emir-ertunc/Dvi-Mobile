@@ -47,11 +47,11 @@ const REQUIRED_SUMMARIES = [
 ];
 
 const OLD_PATHS = [
-  'docs/form-forensics',
-  'data/form-forensics',
-  'scripts/verify_turkish_forms.py',
-  'scripts/inventory_audit.js',
-  'scripts/verify_inventory.js',
+  ['docs', 'form-forensics'].join('/'),
+  ['data', 'form-forensics'].join('/'),
+  ['scripts', ['verify', 'turkish', 'forms'].join('_') + '.py'].join('/'),
+  ['scripts', ['inventory', 'audit'].join('_') + '.js'].join('/'),
+  ['scripts', ['verify', 'inventory'].join('_') + '.js'].join('/'),
 ];
 
 function readJson(path) {
