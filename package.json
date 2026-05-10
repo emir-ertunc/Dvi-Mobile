@@ -1,6 +1,6 @@
 {
   "name": "dvi-mobile",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "private": true,
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,8 @@
     "inventory:am:verify": "node scripts/build_am_inventory.js",
     "inventory:pm": "node scripts/build_pm_inventory.js --write",
     "inventory:pm:verify": "node scripts/build_pm_inventory.js",
+    "inventory:audit": "node scripts/audit_form_inventories.js --write",
+    "inventory:audit:verify": "node scripts/audit_form_inventories.js",
     "rebaseline:verify": "node scripts/verify_rebaseline.js",
     "text:verify-tr": "node scripts/verify_ui_text_tr.js",
     "ios": "expo run:ios"

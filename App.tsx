@@ -60,10 +60,10 @@ export default function App() {
         </View>
 
         <View style={styles.notice}>
-          <Text style={styles.noticeTitle}>Faz 1C PM envanteri</Text>
+          <Text style={styles.noticeTitle}>Faz 1D envanter denetimi</Text>
           <Text style={styles.noticeBody}>
-            Bu derleme AM ve PM fillable PDF alanlarını canonical envanter kayıtlarına bağlar;
-            header, checkbox, duplicate field ve sayfa bazlı coverage bilgilerini denetlenebilir tutar.
+            Bu derleme AM ve PM envanterlerini birlikte denetler; coverage, export binding,
+            checkbox state, sayfa kimliği ve summary dosyaları için ortak kalite kapısı uygular.
           </Text>
         </View>
       </ScrollView>

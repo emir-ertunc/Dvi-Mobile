@@ -15,10 +15,8 @@ const forbiddenTokens = [
   ['görüntü', 'PDF'].join(' '),
   ['AcroForm', 'alanı yok'].join(' '),
   ['phase', '1d', 'v0.1.3'].join('-'),
-  ['verify', 'turkish', 'forms'].join('_'),
   ['am', 'field', 'inventory.json'].join('-'),
   ['pm', 'field', 'inventory.json'].join('-'),
-  ['inventory', 'audit.json'].join('-'),
 ];
 
 const failures = [];
