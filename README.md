@@ -2,10 +2,10 @@
 
 DVI Mobil, Türkçe kullanıcı arayüzüne sahip çevrimdışı öncelikli bir mobil uygulama olarak geliştirilecektir. Resmi PDF aktarımı için kaynak şablonlar 2018 INTERPOL fillable AM ve PM formlarıdır.
 
-## Faz 2B
+## Faz 2C
 
-- Uygulama sürümü: `0.2.1`
-- Uygulama içinde görünür build kimliği: `phase-2b-v0.2.1-20260510`
+- Uygulama sürümü: `0.2.2`
+- Uygulama içinde görünür build kimliği: `phase-2c-v0.2.2-20260510`
 - Resmi form kaynağı artık fillable INTERPOL AM/PM PDF dosyalarıdır.
 - AM fillable PDF: 18 sayfa, 2006 widget, 1687 unique field name.
 - PM fillable PDF: 19 sayfa, 2026 widget, 1693 unique field name.
@@ -14,6 +14,7 @@ DVI Mobil, Türkçe kullanıcı arayüzüne sahip çevrimdışı öncelikli bir 
 - Ortak AM/PM envanter denetimi `data/form-inventory/inventory-audit.json` içindedir.
 - Ortak field primitive coverage raporu `data/schema/field-primitive-coverage.json` içindedir.
 - AM canonical schema `data/schema/am-schema.json` içindedir.
+- PM canonical schema `data/schema/pm-schema.json` içindedir.
 - Widget manifestleri `data/acroform-forensics/generated` altında tutulur.
 - Ana proje planı `docs/project-plan.md` içindedir.
 
@@ -36,12 +37,14 @@ npm run schema:primitives
 npm run schema:primitives:verify
 npm run schema:am
 npm run schema:am:verify
+npm run schema:pm
+npm run schema:pm:verify
 ```
 
-Android APK GitHub Actions üzerinde `Phase 2B APK` workflow'u ile üretilir. Beklenen artifact adı:
+Android APK GitHub Actions üzerinde `Phase 2C APK` workflow'u ile üretilir. Beklenen artifact adı:
 
 ```text
-DviMobile-phase-2b-v0.2.1-20260510.apk
+DviMobile-phase-2c-v0.2.2-20260510.apk
 ```
 
 ## Kaynak Sınırı

@@ -60,9 +60,9 @@ export default function App() {
         </View>
 
         <View style={styles.notice}>
-          <Text style={styles.noticeTitle}>Faz 2B AM şeması</Text>
+          <Text style={styles.noticeTitle}>Faz 2C PM şeması</Text>
           <Text style={styles.noticeBody}>
-            Bu derleme AM envanterini canonical schema kayıtlarına dönüştürür; default değer,
+            Bu derleme PM envanterini canonical schema kayıtlarına dönüştürür; default değer,
             validasyon kuralı, readiness ve PDF binding sözleşmesini birlikte denetler.
           </Text>
         </View>
