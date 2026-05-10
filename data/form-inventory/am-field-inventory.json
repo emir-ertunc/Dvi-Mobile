@@ -1411,7 +1411,7 @@
                   "label": "Zayıf"
                 },
                 {
-                  "optionId": "normal",
+                  "optionId": "normalHeight",
                   "label": "Normal"
                 },
                 {
@@ -1733,7 +1733,7 @@
                   "label": "Düşük"
                 },
                 {
-                  "optionId": "normal",
+                  "optionId": "normalHeight",
                   "label": "Normal"
                 },
                 {
@@ -1745,7 +1745,7 @@
                   "label": "Dar"
                 },
                 {
-                  "optionId": "normal",
+                  "optionId": "normalWidth",
                   "label": "Normal"
                 },
                 {
@@ -1801,7 +1801,7 @@
                   "label": "İnce"
                 },
                 {
-                  "optionId": "normal",
+                  "optionId": "normalAngle",
                   "label": "Normal"
                 },
                 {
@@ -1849,7 +1849,7 @@
                   "label": "Açık"
                 },
                 {
-                  "optionId": "normal",
+                  "optionId": "normalLength",
                   "label": "Normal"
                 },
                 {
@@ -1873,7 +1873,7 @@
                   "label": "Dar"
                 },
                 {
-                  "optionId": "normal",
+                  "optionId": "normalShape",
                   "label": "Normal"
                 },
                 {
@@ -1921,7 +1921,7 @@
                   "label": "Küçük"
                 },
                 {
-                  "optionId": "normal",
+                  "optionId": "normalThickness",
                   "label": "Normal"
                 },
                 {
@@ -2065,7 +2065,7 @@
                   "label": "Küçük"
                 },
                 {
-                  "optionId": "normal",
+                  "optionId": "normalSize",
                   "label": "Normal"
                 },
                 {
@@ -2077,7 +2077,7 @@
                   "label": "Yapışık"
                 },
                 {
-                  "optionId": "normal",
+                  "optionId": "normalAngle",
                   "label": "Normal"
                 },
                 {
@@ -2374,7 +2374,7 @@
                   "label": "Kısa"
                 },
                 {
-                  "optionId": "normal",
+                  "optionId": "normalLength",
                   "label": "Normal"
                 },
                 {
@@ -2386,7 +2386,7 @@
                   "label": "İnce"
                 },
                 {
-                  "optionId": "normal",
+                  "optionId": "normalShape",
                   "label": "Normal"
                 },
                 {
@@ -2430,7 +2430,7 @@
                   "label": "İnce"
                 },
                 {
-                  "optionId": "normal",
+                  "optionId": "normalThickness",
                   "label": "Normal"
                 },
                 {
@@ -2442,7 +2442,7 @@
                   "label": "Küçük"
                 },
                 {
-                  "optionId": "normal",
+                  "optionId": "normalSize",
                   "label": "Normal"
                 },
                 {

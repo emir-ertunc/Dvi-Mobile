@@ -154,14 +154,14 @@ def main() -> int:
         )
 
     summary = {
-        "phase": "Phase 1C",
-        "version": "0.1.2",
-        "buildId": "phase-1c-v0.1.2-20260510",
+        "phase": "Phase 1D",
+        "version": "0.1.3",
+        "buildId": "phase-1d-v0.1.3-20260510",
         "forms": inspected,
         "failures": failures,
     }
 
-    summary_path = OUTPUT_DIR / "phase-1c-pdf-forensics.json"
+    summary_path = OUTPUT_DIR / "phase-1d-pdf-forensics.json"
     summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 

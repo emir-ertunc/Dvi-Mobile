@@ -58,11 +58,11 @@ export default function App() {
         </View>
 
         <View style={styles.notice}>
-          <Text style={styles.noticeTitle}>Faz 1C AM/PM alan envanteri</Text>
+          <Text style={styles.noticeTitle}>Faz 1D envanter denetimi</Text>
           <Text style={styles.noticeBody}>
-            AM ve PM form alanları PDF teknolojisinden bağımsız kalıcı alan kimlikleriyle
-            kaydedildi. İleride resmi formlara doldurulabilir çıktı üretimi ayrı dışa
-            aktarım katmanında ele alınacaktır.
+            AM ve PM envanterleri sayfa, alan kimliği, seçenek, tablo, footer ve özel
+            çizim alanı kurallarıyla denetlenir. Bu temel, sonraki şema ve doğrulama
+            fazları için kaynak kabul edilir.
           </Text>
         </View>
       </ScrollView>
