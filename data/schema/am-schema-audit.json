@@ -1,0 +1,42 @@
+{
+  "phase": "Phase 2B",
+  "version": "0.2.1",
+  "buildId": "phase-2b-v0.2.1-20260510",
+  "formType": "AM",
+  "passed": true,
+  "failures": [],
+  "metrics": {
+    "fieldCount": 1687,
+    "widgetInstanceCount": 2006,
+    "requiredFieldCount": 0,
+    "optionalFieldCount": 1687,
+    "primitiveCounts": {
+      "text": 984,
+      "email": 62,
+      "checkbox": 610,
+      "datePart": 24,
+      "phone": 6,
+      "number": 1
+    },
+    "valueTypeCounts": {
+      "string": 984,
+      "email": 62,
+      "boolean": 610,
+      "datePart": 24,
+      "phone": 6,
+      "number": 1
+    },
+    "validationRuleCounts": {
+      "optional": 1687,
+      "string": 984,
+      "email": 62,
+      "boolean": 610,
+      "datePart.day": 6,
+      "datePart.month": 6,
+      "datePart.year": 12,
+      "phone": 6,
+      "number": 1
+    },
+    "defaultValueValidatedCount": 1687
+  }
+}

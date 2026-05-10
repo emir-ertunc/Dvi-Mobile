@@ -60,10 +60,10 @@ export default function App() {
         </View>
 
         <View style={styles.notice}>
-          <Text style={styles.noticeTitle}>Faz 2A ortak alan katmanı</Text>
+          <Text style={styles.noticeTitle}>Faz 2B AM şeması</Text>
           <Text style={styles.noticeBody}>
-            Bu derleme AM ve PM envanterlerini ortak field primitive, değer tipi ve PDF binding
-            sözleşmesine bağlar; schema fazları için typed domain temelini hazırlar.
+            Bu derleme AM envanterini canonical schema kayıtlarına dönüştürür; default değer,
+            validasyon kuralı, readiness ve PDF binding sözleşmesini birlikte denetler.
           </Text>
         </View>
       </ScrollView>
