@@ -7,7 +7,6 @@ const ignoredFiles = new Set(['package-lock.json']);
 const requiredFiles = ['docs/project-plan.md', 'README.md', 'src/config/buildInfo.ts'];
 const removedPaths = [
   'data/form-forensics',
-  'data/form-inventory',
   'docs/form-forensics',
 ];
 const forbiddenTokens = [

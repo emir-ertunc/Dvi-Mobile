@@ -1,6 +1,6 @@
 {
   "name": "dvi-mobile",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "private": true,
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,8 @@
     "typecheck": "tsc --noEmit",
     "forensics:inspect": "node scripts/run-python.js scripts/inspect_fillable_pdfs.py",
     "forensics:verify": "node scripts/run-python.js scripts/inspect_fillable_pdfs.py --verify-generated",
+    "inventory:am": "node scripts/build_am_inventory.js --write",
+    "inventory:am:verify": "node scripts/build_am_inventory.js",
     "rebaseline:verify": "node scripts/verify_rebaseline.js",
     "text:verify-tr": "node scripts/verify_ui_text_tr.js",
     "ios": "expo run:ios"

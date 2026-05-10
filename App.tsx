@@ -10,7 +10,7 @@ const kaynakDurumlari = [
     title: 'Ölüm Öncesi Formu',
     code: 'AM',
     detail:
-      '18 sayfa, 2006 alan bileşeni ve metin katmanı doğrulandı. Tam alan envanteri sonraki fazda yapılacaktır.',
+      '18 sayfa ve 2006 alan bileşeni canonical AM envanterine bağlandı. Her widget instance ayrı korunur.',
   },
   {
     title: 'Ölüm Sonrası Formu',
@@ -60,10 +60,10 @@ export default function App() {
         </View>
 
         <View style={styles.notice}>
-          <Text style={styles.noticeTitle}>Faz 1A forensics iskelesi</Text>
+          <Text style={styles.noticeTitle}>Faz 1B AM envanteri</Text>
           <Text style={styles.noticeBody}>
-            Bu derleme AM ve PM fillable PDF dosyalarının sayfa, alan bileşeni, alan adı,
-            checkbox durumu ve metin katmanı özetlerini committed JSON çıktılarıyla doğrular.
+            Bu derleme AM fillable PDF alanlarını canonical envanter kayıtlarına bağlar; header,
+            checkbox, duplicate field ve sayfa bazlı coverage bilgilerini denetlenebilir tutar.
           </Text>
         </View>
       </ScrollView>
