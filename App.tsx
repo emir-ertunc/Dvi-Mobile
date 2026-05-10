@@ -16,7 +16,7 @@ const kaynakDurumlari = [
     title: 'Ölüm Sonrası Formu',
     code: 'PM',
     detail:
-      '19 sayfa, 2026 alan bileşeni ve metin katmanı doğrulandı. Tam alan envanteri sonraki fazlarda ayrıştırılacaktır.',
+      '19 sayfa ve 2026 alan bileşeni canonical PM envanterine bağlandı. Her widget instance ayrı korunur.',
   },
 ];
 
@@ -60,10 +60,10 @@ export default function App() {
         </View>
 
         <View style={styles.notice}>
-          <Text style={styles.noticeTitle}>Faz 1B AM envanteri</Text>
+          <Text style={styles.noticeTitle}>Faz 1C PM envanteri</Text>
           <Text style={styles.noticeBody}>
-            Bu derleme AM fillable PDF alanlarını canonical envanter kayıtlarına bağlar; header,
-            checkbox, duplicate field ve sayfa bazlı coverage bilgilerini denetlenebilir tutar.
+            Bu derleme AM ve PM fillable PDF alanlarını canonical envanter kayıtlarına bağlar;
+            header, checkbox, duplicate field ve sayfa bazlı coverage bilgilerini denetlenebilir tutar.
           </Text>
         </View>
       </ScrollView>

@@ -1,4 +1,4 @@
-name: Phase 1B APK
+name: Phase 1C APK
 
 on:
   push:
@@ -38,6 +38,9 @@ jobs:
       - name: AM envanter doğrulaması
         run: npm run inventory:am:verify
 
+      - name: PM envanter doğrulaması
+        run: npm run inventory:pm:verify
+
       - name: Android proje dosyalarını üret
         run: CI=1 npx expo prebuild --platform android --clean
 
@@ -50,10 +53,10 @@ jobs:
       - name: APK dosyasını adlandır
         run: |
           mkdir -p artifacts
-          cp android/app/build/outputs/apk/release/app-release.apk artifacts/DviMobile-phase-1b-v0.1.6-20260510.apk
+          cp android/app/build/outputs/apk/release/app-release.apk artifacts/DviMobile-phase-1c-v0.1.7-20260510.apk
 
       - name: APK artifact yükle
         uses: actions/upload-artifact@v4
         with:
-          name: DviMobile-phase-1b-v0.1.6-20260510.apk
-          path: artifacts/DviMobile-phase-1b-v0.1.6-20260510.apk
+          name: DviMobile-phase-1c-v0.1.7-20260510.apk
+          path: artifacts/DviMobile-phase-1c-v0.1.7-20260510.apk
