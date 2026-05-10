@@ -2,7 +2,7 @@
   "expo": {
     "name": "DVI Mobil",
     "slug": "dvi-mobile",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "orientation": "portrait",
     "newArchEnabled": false,
     "assetBundlePatterns": [

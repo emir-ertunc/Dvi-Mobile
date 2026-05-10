@@ -5,16 +5,18 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { BUILD_INFO } from './src/config/buildInfo';
 import { StatusPanel } from './src/components/StatusPanel';
 
-const formStatuses = [
+const kaynakDurumlari = [
   {
     title: 'Ölüm Öncesi Formu',
     code: 'AM',
-    detail: '18 sayfa doğrulandı; tam alan envanteri kalıcı alan kimlikleriyle çıkarıldı.',
+    detail:
+      'Yeni resmi kaynak, 2018 INTERPOL fillable formudur. Alan envanteri sonraki fazda AcroForm alanlarından çıkarılacaktır.',
   },
   {
     title: 'Ölüm Sonrası Formu',
     code: 'PM',
-    detail: '16 sayfa doğrulandı; tam alan envanteri kalıcı alan kimlikleriyle çıkarıldı.',
+    detail:
+      'Yeni resmi kaynak, 2018 INTERPOL fillable formudur. PM yapısı 19 sayfalık yeni şablona göre ele alınacaktır.',
   },
 ];
 
@@ -24,16 +26,16 @@ export default function App() {
       <StatusBar style="dark" />
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.eyebrow}>Türkçe INTERPOL DVI iş akışı</Text>
+          <Text style={styles.eyebrow}>Türkçe DVI mobil iş akışı</Text>
           <Text style={styles.title}>DVI Mobil</Text>
           <Text style={styles.subtitle}>
-            Resmi Türkçe formlar için çevrimdışı çalışma, tam AM/PM alan envanteri ve
-            denetlenebilir sürüm temeli.
+            Uygulama dili Türkçe kalır. Resmi PDF aktarımı, İngilizce fillable INTERPOL DVI
+            formlarındaki alan adları üzerinden ilerleyecektir.
           </Text>
         </View>
 
         <StatusPanel
-          title="Faz durumu"
+          title="Derleme durumu"
           rows={[
             ['Faz', BUILD_INFO.phase],
             ['Sürüm', BUILD_INFO.version],
@@ -43,8 +45,8 @@ export default function App() {
         />
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Form doğrulama</Text>
-          {formStatuses.map((form) => (
+          <Text style={styles.sectionTitle}>Kaynak form kararı</Text>
+          {kaynakDurumlari.map((form) => (
             <View key={form.code} style={styles.formRow}>
               <View style={styles.formBadge}>
                 <Text style={styles.formBadgeText}>{form.code}</Text>
@@ -58,11 +60,10 @@ export default function App() {
         </View>
 
         <View style={styles.notice}>
-          <Text style={styles.noticeTitle}>Faz 1D envanter denetimi</Text>
+          <Text style={styles.noticeTitle}>Faz 0R yeniden baz alma</Text>
           <Text style={styles.noticeBody}>
-            AM ve PM envanterleri sayfa, alan kimliği, seçenek, tablo, footer ve özel
-            çizim alanı kurallarıyla denetlenir. Bu temel, sonraki şema ve doğrulama
-            fazları için kaynak kabul edilir.
+            Bu derleme proje planını yeni fillable PDF stratejisine göre günceller ve sonraki
+            envanter fazları için temiz bir başlangıç sağlar.
           </Text>
         </View>
       </ScrollView>

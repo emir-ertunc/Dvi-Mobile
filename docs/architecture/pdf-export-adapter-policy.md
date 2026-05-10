@@ -1,18 +1,17 @@
-# PDF Export Adapter Politikası
-
-Phase 1C itibarıyla uygulama alan modeli PDF teknolojisinden bağımsız tutulur.
+# PDF Aktarım Adaptörü Politikası
 
 ## Karar
 
-- `canonicalFieldId` uygulama, şema, validasyon, taslak kayıt ve eşleştirme için tek kalıcı alan kimliğidir.
-- Mevcut resmi Türkçe PDF'ler görüntü tabanlıdır; metin katmanı ve AcroForm alanı yoktur.
-- Phase 5 içinde bu resmi görüntü PDF'leri arka plan olarak korunarak türetilmiş doldurulabilir AcroForm master şablonları üretilebilir.
-- Türetilmiş AcroForm master resmi kaynak değil, export adapter şablonudur.
-- Türetilmiş master binding'i ayrı tutulur: `canonicalFieldId -> acroFormFieldName/buttonState`.
-- Doğrudan koordinat tabanlı export gerekirse ayrı binding tutulur: `canonicalFieldId -> page/rect/style`.
-- Kurumdan gerçek doldurulabilir AcroForm PDF gelirse üçüncü binding katmanı eklenir; uygulama alan modeli değişmez.
-- UI, validasyon ve yerel saklama hiçbir PDF koordinatı veya AcroForm alan adı bilmeyecektir.
+PDF aktarım hattı fillable INTERPOL DVI formlarındaki alan adlarını temel alacaktır. Uygulama alan modeli Türkçe kullanıcı deneyiminden sorumludur; PDF alan adları ise şablon bağlama ayrıntısı olarak kalır.
 
-## Sonuç
+## İlkeler
 
-Image-based PDF üzerinden türetilmiş AcroForm master kullanmak export kalitesini artırabilir, fakat resmi doğruluk kaynağı yine resmi Türkçe formlar ve committed inventory dosyalarıdır. Gerçek AcroForm kaynakları geldiğinde uygulama yeniden yazılmayacak; yalnızca export adapter ve manifest katmanı değişecektir.
+- Canonical alan kimliği uygulama içinde stabil kalır.
+- PDF field name ve button state değerleri export binding dosyalarında tutulur.
+- Türkçe ekran etiketi canonical alan kimliğine bağlanır, PDF field name doğrudan kullanıcıya gösterilmez.
+- Metin çizim koordinatları yalnızca zorunlu durumlarda fallback olarak kullanılabilir.
+- Export deterministik, nonblank, checkbox state açısından doğru ve flatten sonrası okunabilir olmalıdır.
+
+## Sonraki Faz Bağımlılığı
+
+Phase 1A içinde fillable PDF forensics çıktısı üretilecek. Phase 1B ve Phase 1C içinde her widget canonical inventory kararına bağlanmadan schema veya export fazına geçilmeyecektir.

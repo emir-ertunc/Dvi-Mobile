@@ -1,28 +1,30 @@
 # DVI Mobil
 
-Türkçe INTERPOL DVI iş akışları için geliştirilen mobil uygulama.
+DVI Mobil, Türkçe kullanıcı arayüzüne sahip çevrimdışı öncelikli bir mobil uygulama olarak geliştirilecektir. Resmi PDF aktarımı için kaynak şablonlar 2018 INTERPOL fillable AM ve PM formlarıdır.
 
-Bu depo Phase 1D itibarıyla temiz bir Expo React Native temelini, resmi Türkçe PDF doğrulama hattını, AM/PM tam alan envanterlerini, sertleştirilmiş envanter denetimini ve Android APK üretim workflow'unu içerir.
+## Faz 0R
 
-## Phase 1D
-
-- Uygulama dili yalnızca Türkçedir.
-- Uygulama içinde görünür build kimliği: `phase-1d-v0.1.3-20260510`
-- Resmi Türkçe PDF'ler görüntü tabanlıdır; metin katmanı ve AcroForm alanı yoktur.
-- Tam AM alan envanteri `data/form-inventory/am-field-inventory.json` içindedir.
-- Tam PM alan envanteri `data/form-inventory/pm-field-inventory.json` içindedir.
-- Envanter denetim raporu `docs/form-forensics/phase-1d-inventory-audit.md` içindedir.
-- Export adapter politikası, mevcut image-based PDF'lerden türetilmiş doldurulabilir AcroForm master üretimini ve ileride gerçek AcroForm'a geçişi destekleyecek şekilde ayrılmıştır.
+- Uygulama sürümü: `0.1.4`
+- Uygulama içinde görünür build kimliği: `phase-0r-v0.1.4-20260510`
+- Resmi form kaynağı artık fillable INTERPOL AM/PM PDF dosyalarıdır.
+- Eski kaynak envanterleri, forensics çıktıları ve coverage raporları kaldırılmıştır.
+- Ana proje planı `docs/project-plan.md` içindedir.
 
 ## Komutlar
 
 ```bash
-npm install
+npm ci
 npm run typecheck
 npm run text:verify-tr
-npm run inventory:verify
-npm run inventory:audit
-npm run forensics:verify
+npm run rebaseline:verify
 ```
 
-Android APK GitHub Actions üzerinde `Phase 1D APK` workflow'u ile üretilir.
+Android APK GitHub Actions üzerinde `Phase 0R APK` workflow'u ile üretilir. Beklenen artifact adı:
+
+```text
+DviMobile-phase-0r-v0.1.4-20260510.apk
+```
+
+## Kaynak Sınırı
+
+Uygulama çalışma zamanı Türkçedir. PDF şablon alanları, resmi fillable formlardaki alan adlarıyla takip edilir. Türkçe ekran metni ile PDF alan adı eşleşmeleri ayrı katmanda tutulacaktır.
