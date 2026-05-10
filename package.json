@@ -1,6 +1,6 @@
 {
   "name": "dvi-mobile",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "main": "index.js",
   "scripts": {
@@ -8,6 +8,7 @@
     "android": "expo run:android",
     "typecheck": "tsc --noEmit",
     "forensics:verify": "node scripts/run-python.js scripts/verify_turkish_forms.py",
+    "inventory:verify": "node scripts/verify_inventory.js",
     "text:verify-tr": "node scripts/verify_turkish_text.js",
     "ios": "expo run:ios"
   },

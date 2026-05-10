@@ -18,8 +18,8 @@ FORMS = [
         "name": "Ölüm Öncesi Formu",
         "patterns": [
             "DVI-*Ante Mortem*Formu.pdf",
-            "DVI-*Ölüm öncesi*Formu.pdf",
             "DVI-*Ölüm öncesi*Formu.pdf",
+            "DVI-*Ölüm öncesi*Formu.pdf",
         ],
         "expectedPages": 18,
         "manifestFile": "am-page-manifest.json",
@@ -29,8 +29,8 @@ FORMS = [
         "name": "Ölüm Sonrası Formu",
         "patterns": [
             "DVI-*Post Mortem*Formu.pdf",
-            "DVI-*Ölüm Sonrası*Formu.pdf",
             "DVI-*Ölüm Sonrası*Formu.pdf",
+            "DVI-*Ölüm Sonrası*Formu.pdf",
         ],
         "expectedPages": 16,
         "manifestFile": "pm-page-manifest.json",
@@ -79,6 +79,12 @@ def inspect_form(definition: dict) -> dict:
     pages = []
     total_widgets = 0
     total_text_chars = 0
+    inventory_status = (
+        "alan envanteri tamamlandı"
+        if definition["formType"] == "AM"
+        else "sayfa doğrulandı; alan envanteri bekliyor"
+    )
+    planned_inventory_phase = "Phase 1B" if definition["formType"] == "AM" else "Phase 1C"
 
     for index, page in enumerate(document):
         text = page.get_text("text") or ""
@@ -94,10 +100,8 @@ def inspect_form(definition: dict) -> dict:
                 "height": round(page.rect.height, 2),
                 "textCharCount": text_chars,
                 "widgetCount": page_widgets,
-                "inventoryStatus": "sayfa doğrulandı; alan envanteri bekliyor",
-                "plannedInventoryPhase": "Phase 1B"
-                if definition["formType"] == "AM"
-                else "Phase 1C",
+                "inventoryStatus": inventory_status,
+                "plannedInventoryPhase": planned_inventory_phase,
             }
         )
 
@@ -150,14 +154,14 @@ def main() -> int:
         )
 
     summary = {
-        "phase": "Phase 1A",
-        "version": "0.1.0",
-        "buildId": "phase-1a-v0.1.0-20260510",
+        "phase": "Phase 1B",
+        "version": "0.1.1",
+        "buildId": "phase-1b-v0.1.1-20260510",
         "forms": inspected,
         "failures": failures,
     }
 
-    summary_path = OUTPUT_DIR / "phase-1a-pdf-forensics.json"
+    summary_path = OUTPUT_DIR / "phase-1b-pdf-forensics.json"
     summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 

@@ -9,12 +9,12 @@ const formStatuses = [
   {
     title: 'Ölüm Öncesi Formu',
     code: 'AM',
-    detail: '18 sayfa doğrulandı; ayrıntılı alan envanteri Phase 1B içinde tamamlanacak.',
+    detail: '18 sayfa doğrulandı; tam alan envanteri kalıcı alan kimlikleriyle çıkarıldı.',
   },
   {
     title: 'Ölüm Sonrası Formu',
     code: 'PM',
-    detail: '16 sayfa doğrulandı; ayrıntılı alan envanteri Phase 1C içinde tamamlanacak.',
+    detail: '16 sayfa doğrulandı; ayrıntılı alan envanteri Faz 1C içinde tamamlanacak.',
   },
 ];
 
@@ -58,11 +58,11 @@ export default function App() {
         </View>
 
         <View style={styles.notice}>
-          <Text style={styles.noticeTitle}>Faz 1A envanter altyapısı</Text>
+          <Text style={styles.noticeTitle}>Faz 1B AM alan envanteri</Text>
           <Text style={styles.noticeBody}>
-            Bu yapı yalnızca PDF teknik doğrulaması, sayfa manifestleri, Türkçe uygulama
-            kabuğu ve APK üretim hattını kapsar. Veri girişi, şema, dışa aktarım
-            ve eşleştirme sonraki fazlarda eklenecektir.
+            AM form alanları PDF teknolojisinden bağımsız kalıcı alan kimlikleriyle
+            kaydedildi. Görüntü tabanlı dışa aktarım ve ileride AcroForm eşlemesi ayrı
+            adapter katmanlarında tutulacaktır.
           </Text>
         </View>
       </ScrollView>
