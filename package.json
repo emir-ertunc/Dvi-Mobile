@@ -1,12 +1,14 @@
 {
   "name": "dvi-mobile",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": true,
   "main": "index.js",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
     "typecheck": "tsc --noEmit",
+    "forensics:inspect": "node scripts/run-python.js scripts/inspect_fillable_pdfs.py",
+    "forensics:verify": "node scripts/run-python.js scripts/inspect_fillable_pdfs.py --verify-generated",
     "rebaseline:verify": "node scripts/verify_rebaseline.js",
     "text:verify-tr": "node scripts/verify_ui_text_tr.js",
     "ios": "expo run:ios"

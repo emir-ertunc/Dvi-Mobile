@@ -10,20 +10,35 @@ if (!script) {
   process.exit(1);
 }
 
-const candidates = [
-  process.env.DVI_PYTHON,
+const bundledPython = join(
+  process.env.USERPROFILE || '',
+  '.cache',
+  'codex-runtimes',
+  'codex-primary-runtime',
+  'dependencies',
   'python',
-  'python3',
-  'py',
-].filter(Boolean);
+  'python.exe',
+);
+
+const candidates = [process.env.DVI_PYTHON, 'python3', 'python', 'py', bundledPython].filter(Boolean);
 
 const python = candidates.find((candidate) => {
-  if (candidate === 'python' || candidate === 'python3') {
-    return true;
+  if (candidate.includes('\\') && !existsSync(candidate)) {
+    return false;
   }
 
-  return existsSync(candidate);
+  const probe = spawnSync(candidate, ['--version'], {
+    shell: false,
+    stdio: 'ignore',
+  });
+
+  return probe.status === 0;
 });
+
+if (!python) {
+  console.error('Python çalıştırılamadı: uygun yorumlayıcı bulunamadı.');
+  process.exit(1);
+}
 
 const result = spawnSync(python, [script, ...scriptArgs], {
   env: {

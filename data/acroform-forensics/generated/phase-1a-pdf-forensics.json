@@ -1,0 +1,714 @@
+{
+  "phase": "Phase 1A",
+  "version": "0.1.5",
+  "buildId": "phase-1a-v0.1.5-20260510",
+  "sourceStrategy": "fillable INTERPOL AcroForm PDF",
+  "forms": [
+    {
+      "formType": "AM",
+      "formName": "Ölüm Öncesi Formu",
+      "sourceFileName": "Ante Mortem (yellow) INTERPOL DVI form (2018, fillable) - Missing person.pdf",
+      "sha256": "0a20690e3510ae844a34cee725a80f54817ead3ba385172d3c7b7c5e492fe171",
+      "pageCount": 18,
+      "textCharCount": 37985,
+      "hasTextLayer": true,
+      "widgetCount": 2006,
+      "hasWidgets": true,
+      "uniqueFieldNameCount": 1687,
+      "duplicateFieldNameCount": 57,
+      "widgetTypeCounts": {
+        "CheckBox": 718,
+        "Text": 1288
+      },
+      "pageWidgetCounts": [
+        {
+          "pageNumber": 1,
+          "widgetCount": 112
+        },
+        {
+          "pageNumber": 2,
+          "widgetCount": 102
+        },
+        {
+          "pageNumber": 3,
+          "widgetCount": 225
+        },
+        {
+          "pageNumber": 4,
+          "widgetCount": 212
+        },
+        {
+          "pageNumber": 5,
+          "widgetCount": 286
+        },
+        {
+          "pageNumber": 6,
+          "widgetCount": 168
+        },
+        {
+          "pageNumber": 7,
+          "widgetCount": 162
+        },
+        {
+          "pageNumber": 8,
+          "widgetCount": 145
+        },
+        {
+          "pageNumber": 9,
+          "widgetCount": 59
+        },
+        {
+          "pageNumber": 10,
+          "widgetCount": 103
+        },
+        {
+          "pageNumber": 11,
+          "widgetCount": 104
+        },
+        {
+          "pageNumber": 12,
+          "widgetCount": 90
+        },
+        {
+          "pageNumber": 13,
+          "widgetCount": 19
+        },
+        {
+          "pageNumber": 14,
+          "widgetCount": 19
+        },
+        {
+          "pageNumber": 15,
+          "widgetCount": 19
+        },
+        {
+          "pageNumber": 16,
+          "widgetCount": 19
+        },
+        {
+          "pageNumber": 17,
+          "widgetCount": 146
+        },
+        {
+          "pageNumber": 18,
+          "widgetCount": 16
+        }
+      ],
+      "duplicateFieldGroups": [
+        {
+          "fieldName": "120.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "125.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "245.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "315.2.2",
+          "count": 2
+        },
+        {
+          "fieldName": "320.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "325.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "325.2.1",
+          "count": 2
+        },
+        {
+          "fieldName": "330.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "404.1.0",
+          "count": 2
+        },
+        {
+          "fieldName": "404.2.0",
+          "count": 2
+        },
+        {
+          "fieldName": "404.3.0",
+          "count": 2
+        },
+        {
+          "fieldName": "404.4.0",
+          "count": 2
+        },
+        {
+          "fieldName": "404.5.0",
+          "count": 2
+        },
+        {
+          "fieldName": "404.6.0",
+          "count": 2
+        },
+        {
+          "fieldName": "404.7.0",
+          "count": 2
+        },
+        {
+          "fieldName": "420.2.1",
+          "count": 4
+        },
+        {
+          "fieldName": "424.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "432.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "440.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "440.2.1",
+          "count": 2
+        },
+        {
+          "fieldName": "444.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "448.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "452.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "456.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "460.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "464.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "468.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "472.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "520.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "525.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "530.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "705.1.1",
+          "count": 4
+        },
+        {
+          "fieldName": "705.1.2",
+          "count": 4
+        },
+        {
+          "fieldName": "CklK1",
+          "count": 2
+        },
+        {
+          "fieldName": "CklK2",
+          "count": 2
+        },
+        {
+          "fieldName": "CklK3",
+          "count": 2
+        },
+        {
+          "fieldName": "CklK4",
+          "count": 2
+        },
+        {
+          "fieldName": "CklK5",
+          "count": 2
+        },
+        {
+          "fieldName": "CklK6",
+          "count": 2
+        },
+        {
+          "fieldName": "CklK7",
+          "count": 2
+        },
+        {
+          "fieldName": "CklK8",
+          "count": 2
+        },
+        {
+          "fieldName": "Hdr1",
+          "count": 18
+        },
+        {
+          "fieldName": "Hdr2",
+          "count": 18
+        },
+        {
+          "fieldName": "HdrAge",
+          "count": 18
+        },
+        {
+          "fieldName": "HdrCkbFemale",
+          "count": 18
+        },
+        {
+          "fieldName": "HdrCkbMale",
+          "count": 18
+        },
+        {
+          "fieldName": "HdrCkbOther",
+          "count": 18
+        },
+        {
+          "fieldName": "HdrCkbUnknown",
+          "count": 18
+        },
+        {
+          "fieldName": "HdrDD1",
+          "count": 18
+        },
+        {
+          "fieldName": "HdrDD2",
+          "count": 18
+        },
+        {
+          "fieldName": "HdrFileNumber",
+          "count": 18
+        },
+        {
+          "fieldName": "HdrMM1",
+          "count": 18
+        },
+        {
+          "fieldName": "HdrMM2",
+          "count": 18
+        },
+        {
+          "fieldName": "HdrYYYY1",
+          "count": 18
+        },
+        {
+          "fieldName": "HdrYYYY2",
+          "count": 18
+        },
+        {
+          "fieldName": "HdrYYYY3",
+          "count": 18
+        },
+        {
+          "fieldName": "HdrYYYY4",
+          "count": 18
+        }
+      ]
+    },
+    {
+      "formType": "PM",
+      "formName": "Ölüm Sonrası Formu",
+      "sourceFileName": "Post Mortem (pink) INTERPOL DVI form (2018, fillable) - Unidentified human remains.pdf",
+      "sha256": "203a9d52189f07219b4e64c7c767eaf252d40b2d0d6e8cd9e814b91face83a02",
+      "pageCount": 19,
+      "textCharCount": 39230,
+      "hasTextLayer": true,
+      "widgetCount": 2026,
+      "hasWidgets": true,
+      "uniqueFieldNameCount": 1693,
+      "duplicateFieldNameCount": 72,
+      "widgetTypeCounts": {
+        "CheckBox": 883,
+        "Text": 1143
+      },
+      "pageWidgetCounts": [
+        {
+          "pageNumber": 1,
+          "widgetCount": 122
+        },
+        {
+          "pageNumber": 2,
+          "widgetCount": 224
+        },
+        {
+          "pageNumber": 3,
+          "widgetCount": 211
+        },
+        {
+          "pageNumber": 4,
+          "widgetCount": 285
+        },
+        {
+          "pageNumber": 5,
+          "widgetCount": 172
+        },
+        {
+          "pageNumber": 6,
+          "widgetCount": 148
+        },
+        {
+          "pageNumber": 7,
+          "widgetCount": 94
+        },
+        {
+          "pageNumber": 8,
+          "widgetCount": 137
+        },
+        {
+          "pageNumber": 9,
+          "widgetCount": 127
+        },
+        {
+          "pageNumber": 10,
+          "widgetCount": 91
+        },
+        {
+          "pageNumber": 11,
+          "widgetCount": 96
+        },
+        {
+          "pageNumber": 12,
+          "widgetCount": 18
+        },
+        {
+          "pageNumber": 13,
+          "widgetCount": 16
+        },
+        {
+          "pageNumber": 14,
+          "widgetCount": 16
+        },
+        {
+          "pageNumber": 15,
+          "widgetCount": 16
+        },
+        {
+          "pageNumber": 16,
+          "widgetCount": 144
+        },
+        {
+          "pageNumber": 17,
+          "widgetCount": 15
+        },
+        {
+          "pageNumber": 18,
+          "widgetCount": 15
+        },
+        {
+          "pageNumber": 19,
+          "widgetCount": 79
+        }
+      ],
+      "duplicateFieldGroups": [
+        {
+          "fieldName": "150.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "155.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "160.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "165.1.1",
+          "count": 3
+        },
+        {
+          "fieldName": "165.2.1",
+          "count": 3
+        },
+        {
+          "fieldName": "165.3.1",
+          "count": 3
+        },
+        {
+          "fieldName": "170.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "170.2.1",
+          "count": 2
+        },
+        {
+          "fieldName": "170.3.1",
+          "count": 2
+        },
+        {
+          "fieldName": "175.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "180.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "180.2.1",
+          "count": 2
+        },
+        {
+          "fieldName": "315.2.2",
+          "count": 2
+        },
+        {
+          "fieldName": "320.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "325.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "325.2.1",
+          "count": 2
+        },
+        {
+          "fieldName": "330.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "402.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "404.1.0",
+          "count": 2
+        },
+        {
+          "fieldName": "404.2.0",
+          "count": 2
+        },
+        {
+          "fieldName": "404.3.0",
+          "count": 2
+        },
+        {
+          "fieldName": "404.4.0",
+          "count": 2
+        },
+        {
+          "fieldName": "404.5.0",
+          "count": 2
+        },
+        {
+          "fieldName": "404.6.0",
+          "count": 2
+        },
+        {
+          "fieldName": "404.7.0",
+          "count": 2
+        },
+        {
+          "fieldName": "420.2.1",
+          "count": 4
+        },
+        {
+          "fieldName": "424.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "432.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "440.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "440.2.1",
+          "count": 2
+        },
+        {
+          "fieldName": "444.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "448.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "452.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "456.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "460.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "464.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "468.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "472.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "520.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "525.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "535.1.1",
+          "count": 3
+        },
+        {
+          "fieldName": "705.1",
+          "count": 2
+        },
+        {
+          "fieldName": "854.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "858.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "860.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "862.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "864.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "866.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "868.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "872.1.1",
+          "count": 2
+        },
+        {
+          "fieldName": "CklK1",
+          "count": 2
+        },
+        {
+          "fieldName": "CklK3",
+          "count": 2
+        },
+        {
+          "fieldName": "CklK4",
+          "count": 2
+        },
+        {
+          "fieldName": "CklK5",
+          "count": 2
+        },
+        {
+          "fieldName": "CklK6",
+          "count": 2
+        },
+        {
+          "fieldName": "CklK7",
+          "count": 2
+        },
+        {
+          "fieldName": "CklK8",
+          "count": 2
+        },
+        {
+          "fieldName": "Hdr1",
+          "count": 19
+        },
+        {
+          "fieldName": "Hdr2",
+          "count": 19
+        },
+        {
+          "fieldName": "HdrCkbFemale",
+          "count": 19
+        },
+        {
+          "fieldName": "HdrCkbMale",
+          "count": 19
+        },
+        {
+          "fieldName": "HdrCkbOther",
+          "count": 19
+        },
+        {
+          "fieldName": "HdrCkbUnknown",
+          "count": 19
+        },
+        {
+          "fieldName": "HdrDD1",
+          "count": 19
+        },
+        {
+          "fieldName": "HdrDD2",
+          "count": 19
+        },
+        {
+          "fieldName": "HdrFileNumber",
+          "count": 19
+        },
+        {
+          "fieldName": "HdrMM1",
+          "count": 19
+        },
+        {
+          "fieldName": "HdrMM2",
+          "count": 19
+        },
+        {
+          "fieldName": "HdrYYYY1",
+          "count": 19
+        },
+        {
+          "fieldName": "HdrYYYY2",
+          "count": 19
+        },
+        {
+          "fieldName": "HdrYYYY3",
+          "count": 19
+        },
+        {
+          "fieldName": "HdrYYYY4",
+          "count": 19
+        }
+      ]
+    }
+  ]
+}

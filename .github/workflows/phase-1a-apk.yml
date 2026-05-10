@@ -1,4 +1,4 @@
-name: Phase 0R APK
+name: Phase 1A APK
 
 on:
   push:
@@ -32,6 +32,9 @@ jobs:
       - name: Yeniden baz alma kontrolü
         run: npm run rebaseline:verify
 
+      - name: Fillable PDF forensics doğrulaması
+        run: npm run forensics:verify
+
       - name: Android proje dosyalarını üret
         run: CI=1 npx expo prebuild --platform android --clean
 
@@ -44,10 +47,10 @@ jobs:
       - name: APK dosyasını adlandır
         run: |
           mkdir -p artifacts
-          cp android/app/build/outputs/apk/release/app-release.apk artifacts/DviMobile-phase-0r-v0.1.4-20260510.apk
+          cp android/app/build/outputs/apk/release/app-release.apk artifacts/DviMobile-phase-1a-v0.1.5-20260510.apk
 
       - name: APK artifact yükle
         uses: actions/upload-artifact@v4
         with:
-          name: DviMobile-phase-0r-v0.1.4-20260510.apk
-          path: artifacts/DviMobile-phase-0r-v0.1.4-20260510.apk
+          name: DviMobile-phase-1a-v0.1.5-20260510.apk
+          path: artifacts/DviMobile-phase-1a-v0.1.5-20260510.apk

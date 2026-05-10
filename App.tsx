@@ -10,13 +10,13 @@ const kaynakDurumlari = [
     title: 'Ölüm Öncesi Formu',
     code: 'AM',
     detail:
-      'Yeni resmi kaynak, 2018 INTERPOL fillable formudur. Alan envanteri sonraki fazda AcroForm alanlarından çıkarılacaktır.',
+      '18 sayfa, 2006 alan bileşeni ve metin katmanı doğrulandı. Tam alan envanteri sonraki fazda yapılacaktır.',
   },
   {
     title: 'Ölüm Sonrası Formu',
     code: 'PM',
     detail:
-      'Yeni resmi kaynak, 2018 INTERPOL fillable formudur. PM yapısı 19 sayfalık yeni şablona göre ele alınacaktır.',
+      '19 sayfa, 2026 alan bileşeni ve metin katmanı doğrulandı. Tam alan envanteri sonraki fazlarda ayrıştırılacaktır.',
   },
 ];
 
@@ -45,7 +45,7 @@ export default function App() {
         />
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Kaynak form kararı</Text>
+          <Text style={styles.sectionTitle}>Fillable PDF doğrulaması</Text>
           {kaynakDurumlari.map((form) => (
             <View key={form.code} style={styles.formRow}>
               <View style={styles.formBadge}>
@@ -60,10 +60,10 @@ export default function App() {
         </View>
 
         <View style={styles.notice}>
-          <Text style={styles.noticeTitle}>Faz 0R yeniden baz alma</Text>
+          <Text style={styles.noticeTitle}>Faz 1A forensics iskelesi</Text>
           <Text style={styles.noticeBody}>
-            Bu derleme proje planını yeni fillable PDF stratejisine göre günceller ve sonraki
-            envanter fazları için temiz bir başlangıç sağlar.
+            Bu derleme AM ve PM fillable PDF dosyalarının sayfa, alan bileşeni, alan adı,
+            checkbox durumu ve metin katmanı özetlerini committed JSON çıktılarıyla doğrular.
           </Text>
         </View>
       </ScrollView>
