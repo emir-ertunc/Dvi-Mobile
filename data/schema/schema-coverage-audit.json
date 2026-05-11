@@ -30,30 +30,30 @@
         "exactValidationRuleCount": 1687,
         "defaultValueValidatedCount": 1687,
         "primitiveCounts": {
-          "text": 984,
-          "email": 62,
+          "text": 1029,
+          "phone": 12,
+          "email": 11,
           "checkbox": 610,
           "datePart": 24,
-          "phone": 6,
           "number": 1
         },
         "valueTypeCounts": {
-          "string": 984,
-          "email": 62,
+          "string": 1029,
+          "phone": 12,
+          "email": 11,
           "boolean": 610,
           "datePart": 24,
-          "phone": 6,
           "number": 1
         },
         "validationRuleCounts": {
           "optional": 1687,
-          "string": 984,
-          "email": 62,
+          "string": 1029,
+          "phone": 12,
+          "email": 11,
           "boolean": 610,
           "datePart.day": 6,
           "datePart.month": 6,
           "datePart.year": 12,
-          "phone": 6,
           "number": 1
         }
       }
@@ -77,24 +77,24 @@
         "defaultValueValidatedCount": 1693,
         "primitiveCounts": {
           "checkbox": 755,
-          "text": 879,
-          "email": 47,
-          "phone": 4,
+          "text": 919,
+          "phone": 6,
+          "email": 5,
           "datePart": 8
         },
         "valueTypeCounts": {
           "boolean": 755,
-          "string": 879,
-          "email": 47,
-          "phone": 4,
+          "string": 919,
+          "phone": 6,
+          "email": 5,
           "datePart": 8
         },
         "validationRuleCounts": {
           "optional": 1693,
           "boolean": 755,
-          "string": 879,
-          "email": 47,
-          "phone": 4,
+          "string": 919,
+          "phone": 6,
+          "email": 5,
           "datePart.day": 2,
           "datePart.month": 2,
           "datePart.year": 4

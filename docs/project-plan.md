@@ -703,6 +703,39 @@ Kapsam dışı:
 - `DviMobile-phase-5a-fix5-v0.5.5-20260512.apk` üretilmeli.
 - Commit ve push tamamlanmalı.
 
+### Phase 5A-Fix6 - PDF Sıralı Alan Etiketi Yeniden İnceleme
+
+Phase 5A-Fix5 veri girişini kalıcı hale getirdi; ancak alan başlıkları hâlâ bazı fillable PDF satırlarını yanlış yorumlayabiliyordu. Özellikle iletişim bloklarında `Street / No.`, `Postcode / Town`, `State / Country`, `Phone / Email` satırları yakın metin sırasına göre karışıyor; bazı alanlar gereksiz e-posta veya belirsiz seçim kutusu gibi görünebiliyordu.
+
+Hedef:
+
+- AM ve PM fillable PDF'leri tekrar okunur.
+- Widget koordinatları ile görünür PDF metni sayfa üzerinde yukarıdan aşağıya yeniden eşleştirilir.
+- İletişim bloklarında satırlar açık ayrılır:
+  - cadde/sokak ve kapı numarası
+  - posta kodu, il veya ilçe
+  - eyalet, bölge veya ülke
+  - telefon numarası
+  - e-posta adresi
+- `a/b/c` seçenekleri kullanıcıya `veri mevcut değil`, `ek belge var`, `ek bilgi sayfasında devam` olarak görünür.
+- Alan kartlarında otomatik sıra numarası ve teknik eşleşme metni gösterilmez.
+- `Ne doldurulacak?` benzeri ekstra açıklama başlığı veya gereksiz yardım satırı gösterilmez; kart doğrudan PDF'deki fillable alanın Türkçe karşılığını ister.
+- Form içi alan sırası her bölümde PDF widget koordinatına göre yukarıdan aşağıya verilir.
+
+Kapsam dışı:
+
+- PDF export motoru başlatılmaz.
+- Resmi PDF şablonları değiştirilmez.
+- Tüm alanlar için manuel adli terminoloji redaksiyonu yapılmaz; bu faz PDF prompt hizalamasını ve bariz yanlış field type/label sorunlarını düzeltir.
+
+Çıkış kriterleri:
+
+- `npm run pdf:prompts:verify` geçmeli.
+- AM/PM inventory ve schema yeniden üretilip doğrulanmalı.
+- UI label doğrulaması, field contract, UI coverage, form renderer ve form input doğrulamaları geçmeli.
+- `DviMobile-phase-5a-fix6-v0.5.6-20260512.apk` üretilmeli.
+- Commit ve push tamamlanmalı.
+
 ### Phase 5B - Binding Manifest
 
 Canonical field id ile PDF field name/button state eşleşmeleri manifest içinde tutulur.

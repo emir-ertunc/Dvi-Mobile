@@ -86,10 +86,8 @@ export function FormFieldControl({ editable, field, index, onValueChange, value 
     <View style={[styles.fieldCard, editable && styles.editableFieldCard]}>
       <View style={styles.fieldHeader}>
         <View style={styles.fieldTitleGroup}>
-          <Text style={styles.fieldIndex}>{index + 1}</Text>
           <View style={styles.fieldLabelGroup}>
             <Text style={styles.fieldLabel}>{uiText.labelTr}</Text>
-            <Text style={styles.fieldHelp}>{uiText.helpTextTr}</Text>
             <Text style={styles.fieldMeta}>Sayfa {fieldPageSummary(field)} · {controlLabel}</Text>
           </View>
         </View>
@@ -111,7 +109,7 @@ export function FormFieldControl({ editable, field, index, onValueChange, value 
             {checked && <Text style={styles.checkmark}>✓</Text>}
           </View>
           <View style={styles.checkboxTextGroup}>
-            <Text style={styles.checkboxOptionText}>Seçenek: {checkboxLabel}</Text>
+            <Text style={styles.checkboxOptionText}>{checkboxLabel}</Text>
             <Text style={[styles.checkboxStateText, checked && styles.checkedStateText]}>
               {checked ? 'Seçili' : 'Seçili değil'}
             </Text>
@@ -143,7 +141,6 @@ export function FormFieldControl({ editable, field, index, onValueChange, value 
           </Text>
         ))}
       {!editable && <Text style={styles.lockedText}>Bu bölüm sonraki alt fazda düzenlemeye açılacak.</Text>}
-      <Text style={styles.bindingText}>Resmi form eşleşmesi: {field.exportBinding.widgetInstanceCount} bileşen</Text>
     </View>
   );
 }

@@ -95,6 +95,15 @@ function inputKind(fieldName, widgets) {
   if (/Age/i.test(fieldName)) return 'number';
 
   const labels = labelsFor(widgets).join(' ').toLowerCase();
+  const suffix = fieldName.split('.').pop();
+  if ((suffix === '305' || suffix === '306') && /country|state|town|postcode/.test(labels)) return 'text';
+  if (suffix === '307' && labels.includes('phone')) return 'phone';
+  if (suffix === '308' && (labels.includes('email') || labels.includes('e-mail'))) return 'email';
+  if (labels.includes('phone') && (labels.includes('email') || labels.includes('e-mail'))) {
+    if (suffix === '307') return 'phone';
+    if (suffix === '308') return 'email';
+    return 'text';
+  }
   if (labels.includes('email') || labels.includes('e-mail')) return 'email';
   if (labels.includes('phone') || labels.includes('telephone') || labels.includes('mobile') || labels.includes('fax')) {
     return 'phone';

@@ -12,24 +12,24 @@
     "optionalFieldCount": 1693,
     "primitiveCounts": {
       "checkbox": 755,
-      "text": 879,
-      "email": 47,
-      "phone": 4,
+      "text": 919,
+      "phone": 6,
+      "email": 5,
       "datePart": 8
     },
     "valueTypeCounts": {
       "boolean": 755,
-      "string": 879,
-      "email": 47,
-      "phone": 4,
+      "string": 919,
+      "phone": 6,
+      "email": 5,
       "datePart": 8
     },
     "validationRuleCounts": {
       "optional": 1693,
       "boolean": 755,
-      "string": 879,
-      "email": 47,
-      "phone": 4,
+      "string": 919,
+      "phone": 6,
+      "email": 5,
       "datePart.day": 2,
       "datePart.month": 2,
       "datePart.year": 4

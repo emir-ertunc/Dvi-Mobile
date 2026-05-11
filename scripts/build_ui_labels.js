@@ -1,18 +1,21 @@
-const { mkdirSync, readFileSync, writeFileSync } = require('node:fs');
+const { existsSync, mkdirSync, readFileSync, writeFileSync } = require('node:fs');
 const { dirname, join } = require('node:path');
 
-const PHASE = 'Phase 5A-Fix4';
-const VERSION = '0.5.4';
-const BUILD_ID = 'phase-5a-fix4-v0.5.4-20260512';
+const PHASE = 'Phase 5A-Fix6';
+const VERSION = '0.5.6';
+const BUILD_ID = 'phase-5a-fix6-v0.5.6-20260512';
 const ROOT = process.cwd();
 const OUTPUT = join(ROOT, 'data', 'ui-labels', 'field-ui-labels.json');
 const AUDIT_OUTPUT = join(ROOT, 'data', 'ui-labels', 'field-ui-labels-audit.json');
-const REPORT = join(ROOT, 'docs', 'app', 'phase-5a-fix4-label-coverage.md');
+const REPORT = join(ROOT, 'docs', 'app', 'phase-5a-fix6-label-coverage.md');
+const PDF_PROMPTS_PATH = join(ROOT, 'data', 'pdf-field-prompts', 'pdf-field-prompts.json');
 
 const SCHEMAS = [
   { formType: 'AM', path: join(ROOT, 'data', 'schema', 'am-schema.json'), expectedFields: 1687 },
   { formType: 'PM', path: join(ROOT, 'data', 'schema', 'pm-schema.json'), expectedFields: 1693 },
 ];
+
+const PDF_PROMPTS = existsSync(PDF_PROMPTS_PATH) ? readJson(PDF_PROMPTS_PATH).fields || {} : {};
 
 const SECTION_LABELS = {
   'am.header': 'AM üst bilgi',
@@ -320,6 +323,12 @@ function fieldNameLastPart(pdfFieldName) {
   return parts[parts.length - 1] || '';
 }
 
+function promptForField(field) {
+  const prompt = PDF_PROMPTS[`${field.formType}:${field.pdfFieldName}`];
+  const value = String(prompt?.promptTr || '').trim();
+  return value || null;
+}
+
 function semanticTopic(field) {
   const series = seriesFromPdfName(field.pdfFieldName);
   return SERIES_DESCRIPTIONS[field.formType]?.[series] || null;
@@ -382,22 +391,24 @@ function checkboxActionObject(text) {
 
 function specificFieldLabel(field, visible) {
   const lastPart = fieldNameLastPart(field.pdfFieldName);
+  const prompted = promptForField(field);
 
   if (field.controlType === 'email') {
-    if (lastPart === '306' || lastPart === '308' || /additional/i.test(field.visibleLabel || '')) return 'Ek e-posta adresi';
     return 'E-posta adresi';
   }
 
   if (field.controlType === 'phone') return 'Telefon numarası';
 
-  if (lastPart === '301') return 'Açık adres satırı 1';
-  if (lastPart === '302') return 'Açık adres satırı 2';
-  if (lastPart === '303') return 'İl veya ilçe';
-  if (lastPart === '304') return 'Posta kodu, ülke veya yer ayrıntısı';
-  if (lastPart === '305') return 'Ek iletişim veya adres bilgisi';
-  if (lastPart === '306') return 'Ek iletişim bilgisi';
-  if (lastPart === '307') return 'Ülke veya e-posta bilgisi';
-  if (lastPart === '308') return 'Ek ülke veya e-posta bilgisi';
+  if (prompted) return prompted;
+
+  if (lastPart === '301') return 'Cadde, sokak ve kapı numarası';
+  if (lastPart === '302') return 'Cadde, sokak ve kapı numarası devamı';
+  if (lastPart === '303') return 'Posta kodu, il veya ilçe';
+  if (lastPart === '304') return 'Posta kodu, il veya ilçe devamı';
+  if (lastPart === '305') return 'Eyalet, bölge veya ülke';
+  if (lastPart === '306') return 'Eyalet, bölge veya ülke devamı';
+  if (lastPart === '307') return 'Telefon numarası';
+  if (lastPart === '308') return 'E-posta adresi';
 
   return visible;
 }
@@ -579,9 +590,9 @@ function build({ write }) {
     )
     .join('\n');
 
-  const report = `# Phase 5A-Fix4 Label Coverage
+  const report = `# Phase 5A-Fix6 Label Coverage
 
-Bu rapor, kullanıcıya görünen alan etiketlerinin teknik PDF field id, satır/parça ifadesi, sıra numarası, belirsiz resmi blok numarası ve input tipiyle çelişen adres/e-posta başlıklarından ayrıldığını denetler.
+Bu rapor, kullanıcıya görünen alan etiketlerinin fillable PDF widget konumu ve görünür PDF promptlarıyla hizalandığını; teknik PDF field id, satır/parça ifadesi, sıra numarası, belirsiz resmi blok numarası ve input tipiyle çelişen adres/e-posta başlıklarından ayrıldığını denetler.
 
 ## Sonuç
 

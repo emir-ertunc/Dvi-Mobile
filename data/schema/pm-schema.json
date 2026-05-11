@@ -12,16 +12,16 @@
     "optionalFieldCount": 1693,
     "primitiveCounts": {
       "checkbox": 755,
-      "text": 879,
-      "email": 47,
-      "phone": 4,
+      "text": 919,
+      "phone": 6,
+      "email": 5,
       "datePart": 8
     },
     "valueTypeCounts": {
       "boolean": 755,
-      "string": 879,
-      "email": 47,
-      "phone": 4,
+      "string": 919,
+      "phone": 6,
+      "email": 5,
       "datePart": 8
     }
   },
@@ -2627,13 +2627,13 @@
       },
       "visibleLabel": "Town",
       "uiLabelTr": "PM alanı 170.4.305",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -2677,13 +2677,13 @@
       },
       "visibleLabel": "Town",
       "uiLabelTr": "PM alanı 170.4.306",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -2727,13 +2727,13 @@
       },
       "visibleLabel": "Email",
       "uiLabelTr": "PM alanı 170.4.307",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "phone",
+      "primitiveKind": "phone",
+      "valueType": "phone",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "phone"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -3395,13 +3395,13 @@
       },
       "visibleLabel": "Town",
       "uiLabelTr": "PM alanı 175.2.305",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -3445,13 +3445,13 @@
       },
       "visibleLabel": "Town",
       "uiLabelTr": "PM alanı 175.2.306",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -3495,13 +3495,13 @@
       },
       "visibleLabel": "Country",
       "uiLabelTr": "PM alanı 175.2.307",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "phone",
+      "primitiveKind": "phone",
+      "valueType": "phone",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "phone"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -12750,13 +12750,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 300.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -12800,13 +12800,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 300.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -12850,13 +12850,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 300.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -17252,13 +17252,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 310.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -17302,13 +17302,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 310.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -17352,13 +17352,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 310.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -29864,13 +29864,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 340.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -29914,13 +29914,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 340.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -29964,13 +29964,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 340.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -39842,13 +39842,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 402.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -39892,13 +39892,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 402.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -39942,13 +39942,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 402.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -48162,13 +48162,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 424.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -48212,13 +48212,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 424.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -48262,13 +48262,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 424.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -55455,13 +55455,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 484.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -55505,13 +55505,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 484.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -55555,13 +55555,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 484.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -64772,13 +64772,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 510.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -64822,13 +64822,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 510.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -64872,13 +64872,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 510.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -66712,13 +66712,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 520.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -66762,13 +66762,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 520.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -66812,13 +66812,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 520.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -74311,13 +74311,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 610.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -74361,13 +74361,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 610.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -74411,13 +74411,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 610.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -78613,13 +78613,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 630.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -78663,13 +78663,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 630.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -78713,13 +78713,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 630.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -81642,13 +81642,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 805.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -81692,13 +81692,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 805.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -81742,13 +81742,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 805.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -88513,13 +88513,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 852.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -88563,13 +88563,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 852.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -88613,13 +88613,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "PM alanı 852.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,

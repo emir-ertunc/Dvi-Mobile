@@ -11,30 +11,30 @@
     "requiredFieldCount": 0,
     "optionalFieldCount": 1687,
     "primitiveCounts": {
-      "text": 984,
-      "email": 62,
+      "text": 1029,
+      "phone": 12,
+      "email": 11,
       "checkbox": 610,
       "datePart": 24,
-      "phone": 6,
       "number": 1
     },
     "valueTypeCounts": {
-      "string": 984,
-      "email": 62,
+      "string": 1029,
+      "phone": 12,
+      "email": 11,
       "boolean": 610,
       "datePart": 24,
-      "phone": 6,
       "number": 1
     },
     "validationRuleCounts": {
       "optional": 1687,
-      "string": 984,
-      "email": 62,
+      "string": 1029,
+      "phone": 12,
+      "email": 11,
       "boolean": 610,
       "datePart.day": 6,
       "datePart.month": 6,
       "datePart.year": 12,
-      "phone": 6,
       "number": 1
     },
     "defaultValueValidatedCount": 1687

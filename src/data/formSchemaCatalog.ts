@@ -54,7 +54,19 @@ export function getInitialSectionId(formType: FormType): string {
 }
 
 export function getSectionFields(formType: FormType, sectionId: string): readonly CanonicalSchemaField[] {
-  return getFormSchema(formType).fields.filter((field) => field.officialSection.id === sectionId);
+  return getFormSchema(formType)
+    .fields.filter((field) => field.officialSection.id === sectionId)
+    .sort((left, right) => {
+      const leftWidget = left.widgetInstances[0];
+      const rightWidget = right.widgetInstances[0];
+      if (!leftWidget || !rightWidget) return left.schemaFieldId.localeCompare(right.schemaFieldId);
+      return (
+        leftWidget.pageNumber - rightWidget.pageNumber ||
+        leftWidget.rect[1] - rightWidget.rect[1] ||
+        leftWidget.rect[0] - rightWidget.rect[0] ||
+        left.schemaFieldId.localeCompare(right.schemaFieldId)
+      );
+    });
 }
 
 export function fieldPageSummary(field: CanonicalSchemaField): string {

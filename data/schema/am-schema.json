@@ -11,19 +11,19 @@
     "requiredFieldCount": 0,
     "optionalFieldCount": 1687,
     "primitiveCounts": {
-      "text": 984,
-      "email": 62,
+      "text": 1029,
+      "phone": 12,
+      "email": 11,
       "checkbox": 610,
       "datePart": 24,
-      "phone": 6,
       "number": 1
     },
     "valueTypeCounts": {
-      "string": 984,
-      "email": 62,
+      "string": 1029,
+      "phone": 12,
+      "email": 11,
       "boolean": 610,
       "datePart": 24,
-      "phone": 6,
       "number": 1
     }
   },
@@ -292,13 +292,13 @@
       },
       "visibleLabel": "Town",
       "uiLabelTr": "AM alanı 100.1.305",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -342,13 +342,13 @@
       },
       "visibleLabel": "Town",
       "uiLabelTr": "AM alanı 100.1.306",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -392,13 +392,13 @@
       },
       "visibleLabel": "Country",
       "uiLabelTr": "AM alanı 100.1.307",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "phone",
+      "primitiveKind": "phone",
+      "valueType": "phone",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "phone"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -760,13 +760,13 @@
       },
       "visibleLabel": "Email",
       "uiLabelTr": "AM alanı 105.1.2",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -1060,13 +1060,13 @@
       },
       "visibleLabel": "Town",
       "uiLabelTr": "AM alanı 105.1.305",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -1160,13 +1160,13 @@
       },
       "visibleLabel": "Country",
       "uiLabelTr": "AM alanı 105.1.307",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "phone",
+      "primitiveKind": "phone",
+      "valueType": "phone",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "phone"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -1437,13 +1437,13 @@
       },
       "visibleLabel": "Email",
       "uiLabelTr": "AM alanı 110.1.2",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -1737,13 +1737,13 @@
       },
       "visibleLabel": "Town",
       "uiLabelTr": "AM alanı 110.1.305",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -1837,13 +1837,13 @@
       },
       "visibleLabel": "Country",
       "uiLabelTr": "AM alanı 110.1.307",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "phone",
+      "primitiveKind": "phone",
+      "valueType": "phone",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "phone"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -3400,13 +3400,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 200.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -3450,13 +3450,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 200.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -3500,13 +3500,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 200.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -16230,13 +16230,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 300.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -16280,13 +16280,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 300.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -16330,13 +16330,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 300.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -20732,13 +20732,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 310.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -20782,13 +20782,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 310.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -20832,13 +20832,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 310.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -33344,13 +33344,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 340.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -33394,13 +33394,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 340.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -33444,13 +33444,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 340.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -47494,13 +47494,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 404.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -47544,13 +47544,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 404.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -47594,13 +47594,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 404.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -51374,13 +51374,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 424.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -51424,13 +51424,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 424.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -51474,13 +51474,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 424.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -59439,13 +59439,13 @@
       },
       "visibleLabel": "Town",
       "uiLabelTr": "AM alanı 500.1.305",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -59539,13 +59539,13 @@
       },
       "visibleLabel": "Country",
       "uiLabelTr": "AM alanı 500.1.307",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "phone",
+      "primitiveKind": "phone",
+      "valueType": "phone",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "phone"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -59739,13 +59739,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 500.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -59789,13 +59789,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 500.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -59839,13 +59839,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 500.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -67170,13 +67170,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 555.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -67220,13 +67220,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 555.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -67270,13 +67270,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 555.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -72645,13 +72645,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 560.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -72695,13 +72695,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 560.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -72745,13 +72745,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 560.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -73304,13 +73304,13 @@
       },
       "visibleLabel": "Town",
       "uiLabelTr": "AM alanı 600.1.305",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -73404,13 +73404,13 @@
       },
       "visibleLabel": "Country",
       "uiLabelTr": "AM alanı 600.1.307",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "phone",
+      "primitiveKind": "phone",
+      "valueType": "phone",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "phone"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -73890,13 +73890,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 600.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -73940,13 +73940,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 600.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -73990,13 +73990,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 600.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -74726,13 +74726,13 @@
       },
       "visibleLabel": "Town",
       "uiLabelTr": "AM alanı 605.1.305",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -74826,13 +74826,13 @@
       },
       "visibleLabel": "Country",
       "uiLabelTr": "AM alanı 605.1.307",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "phone",
+      "primitiveKind": "phone",
+      "valueType": "phone",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "phone"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -79391,13 +79391,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 630.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -79441,13 +79441,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 630.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -79491,13 +79491,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 630.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -82244,13 +82244,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 805.1001.3",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -82294,13 +82294,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 805.1001.4",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,
@@ -82344,13 +82344,13 @@
       },
       "visibleLabel": ":",
       "uiLabelTr": "AM alanı 805.1001.5",
-      "controlType": "email",
-      "primitiveKind": "email",
-      "valueType": "email",
+      "controlType": "text",
+      "primitiveKind": "text",
+      "valueType": "string",
       "defaultValue": "",
       "validationRules": [
         "optional",
-        "email"
+        "string"
       ],
       "readinessRule": "readiness.optional",
       "repeatGroup": null,

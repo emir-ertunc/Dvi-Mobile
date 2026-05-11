@@ -1,7 +1,7 @@
 {
-  "phase": "Phase 5A-Fix5",
-  "version": "0.5.5",
-  "buildId": "phase-5a-fix5-v0.5.5-20260512",
+  "phase": "Phase 5A-Fix6",
+  "version": "0.5.6",
+  "buildId": "phase-5a-fix6-v0.5.6-20260512",
   "passed": true,
   "failures": [],
   "totals": {
@@ -32,8 +32,9 @@
             1
           ],
           "controlCounts": {
-            "text": 31,
-            "email": 12,
+            "text": 37,
+            "phone": 3,
+            "email": 3,
             "checkbox": 16
           },
           "editable": true
@@ -47,11 +48,11 @@
             2
           ],
           "controlCounts": {
-            "text": 38,
-            "email": 5,
+            "text": 41,
             "checkbox": 32,
             "date-part": 8,
-            "phone": 2
+            "phone": 2,
+            "email": 2
           },
           "editable": true
         },
@@ -66,9 +67,8 @@
             5
           ],
           "controlCounts": {
-            "text": 468,
+            "text": 477,
             "checkbox": 189,
-            "email": 9,
             "phone": 4
           },
           "editable": true
@@ -83,9 +83,8 @@
             7
           ],
           "controlCounts": {
-            "text": 89,
-            "checkbox": 181,
-            "email": 6
+            "text": 95,
+            "checkbox": 181
           },
           "editable": true
         },
@@ -100,8 +99,9 @@
             10
           ],
           "controlCounts": {
-            "text": 154,
-            "email": 12,
+            "text": 164,
+            "phone": 1,
+            "email": 1,
             "checkbox": 90
           },
           "editable": true
@@ -117,8 +117,9 @@
           ],
           "controlCounts": {
             "checkbox": 73,
-            "text": 77,
-            "email": 12
+            "text": 85,
+            "phone": 2,
+            "email": 2
           },
           "editable": true
         },
@@ -148,8 +149,8 @@
             17
           ],
           "controlCounts": {
-            "text": 109,
-            "email": 6,
+            "text": 112,
+            "email": 3,
             "checkbox": 15
           },
           "editable": true
@@ -238,8 +239,9 @@
           ],
           "controlCounts": {
             "checkbox": 32,
-            "text": 30,
-            "email": 8
+            "text": 34,
+            "phone": 2,
+            "email": 2
           },
           "editable": true
         },
@@ -254,9 +256,8 @@
             4
           ],
           "controlCounts": {
-            "text": 468,
+            "text": 477,
             "checkbox": 189,
-            "email": 9,
             "phone": 4
           },
           "editable": true
@@ -273,8 +274,7 @@
           ],
           "controlCounts": {
             "checkbox": 245,
-            "text": 92,
-            "email": 9
+            "text": 101
           },
           "editable": true
         },
@@ -289,8 +289,7 @@
           ],
           "controlCounts": {
             "checkbox": 139,
-            "text": 85,
-            "email": 6
+            "text": 91
           },
           "editable": true
         },
@@ -305,8 +304,7 @@
           ],
           "controlCounts": {
             "checkbox": 79,
-            "text": 72,
-            "email": 6
+            "text": 78
           },
           "editable": true
         },
@@ -337,8 +335,8 @@
             19
           ],
           "controlCounts": {
-            "text": 117,
-            "email": 9,
+            "text": 123,
+            "email": 3,
             "checkbox": 59
           },
           "editable": true
