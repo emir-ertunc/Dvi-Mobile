@@ -578,6 +578,33 @@ Implementation dosya grupları:
 - `DviMobile-phase-5a-fix1-v0.5.1-20260512.apk` üretilmeli.
 - Commit ve push tamamlanmalı.
 
+### Phase 5A-Fix2 - Checkbox Label Sadeleştirme
+
+Phase 5A-Fix1 seçenek görünürlüğünü düzeltti; ancak bazı alanlarda label üretimi hâlâ `1. satır`, `bilgi parçası` veya `115 numaralı resmi form bloğu` gibi kullanıcıya ne dolduracağını söylemeyen teknik kalıplar üretebiliyordu. Bu ara fix, checkbox ve genel field label üretimini daha açık Türkçe görev metnine çevirir.
+
+Hedef:
+
+- Checkbox içinde satır/parça gibi teknik ayrıntılar gösterilmez.
+- `numaralı resmi form bloğu` fallback'i kullanıcı-facing label ve yardım metinlerinden kaldırılır.
+- `115` serisi gibi eksik konu başlıkları açık metne çevrilir: `eş veya partner bilgisi`.
+- Checkbox içindeki seçenek metninden kontrol tipi artıkları kaldırılır; örneğin `eş veya partner bilgisi seçim` yerine `Eş veya partner bilgisi` görünür.
+- Yardım metinleri `bilgisini bilgiyi yazın` gibi bozuk tekrarlar üretmez.
+- Label doğrulaması teknik satır/parça ve belirsiz blok numarası kalıplarını hata sayar.
+
+Kapsam dışı:
+
+- PDF export başlatılmaz.
+- Choice group/radio davranışı ve export state regression başlatılmaz.
+- Elle tüm 3380 alanın adli terminoloji redaksiyonu yapılmaz; bu faz otomatik label üretimini güvenli hale getirir.
+
+Çıkış kriterleri:
+
+- `npm run ui:labels:verify` teknik satır/parça ve belirsiz blok numarası kalıbı olmadan geçmeli.
+- AM 115 serisi checkbox/metin alanları `eş veya partner bilgisi` bağlamıyla görünmeli.
+- UI coverage 3380 field / 4032 widget kapsamını korumalı.
+- `DviMobile-phase-5a-fix2-v0.5.2-20260512.apk` üretilmeli.
+- Commit ve push tamamlanmalı.
+
 ### Phase 5B - Binding Manifest
 
 Canonical field id ile PDF field name/button state eşleşmeleri manifest içinde tutulur.

@@ -67,7 +67,7 @@ assertContains(join('App.tsx'), "animationType=\"fade\"");
 assertContains(join('App.tsx'), "accessibilityRole=\"alert\"");
 assertContains(join('App.tsx'), "updateDraftFieldValue");
 assertContains(join('src', 'storage', 'draftStore.ts'), "updateDraftFieldValue");
-assertContains(join('src', 'config', 'buildInfo.ts'), "phase-5a-fix1-v0.5.1-20260512");
+assertContains(join('src', 'config', 'buildInfo.ts'), "phase-5a-fix2-v0.5.2-20260512");
 assertContains(join('src', 'config', 'pdfTemplates.ts'), "PDF_TEMPLATE_MANIFEST");
 assertContains(join('src', 'config', 'diagnostics.ts'), "PDF şablonları");
 assertContains(join('src', 'navigation', 'appRoutes.ts'), "'saved' | 'forms' | 'form' | 'status' | 'system'");
@@ -99,6 +99,10 @@ assertContains(join('src', 'components', 'FormFieldControl.tsx'), "checkboxOptio
 assertContains(join('src', 'components', 'FormFieldControl.tsx'), "Seçenek: {checkboxLabel}");
 assertContains(join('src', 'components', 'FormFieldControl.tsx'), "Seçili değil");
 assertContains(join('src', 'components', 'FormFieldControl.tsx'), "Kaldır");
+assertContains(join('src', 'components', 'FormFieldControl.tsx'), "replace(/\\s+seçim$/i");
+assertContains(join('scripts', 'build_ui_labels.js'), "numaralı resmi form bloğu");
+assertContains(join('scripts', 'build_ui_labels.js'), "bilgi parçası");
+assertContains(join('scripts', 'build_ui_labels.js'), "eş veya partner bilgisi");
 assertContains(join('scripts', 'build_ui_labels.js'), "İşlemi yapan görevli veya memur");
 assertContains(join('scripts', 'build_ui_labels.js'), "SERIES_DESCRIPTIONS");
 

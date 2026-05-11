@@ -1,13 +1,13 @@
 const { mkdirSync, readFileSync, writeFileSync } = require('node:fs');
 const { dirname, join } = require('node:path');
 
-const PHASE = 'Phase 5A-Fix1';
-const VERSION = '0.5.1';
-const BUILD_ID = 'phase-5a-fix1-v0.5.1-20260512';
+const PHASE = 'Phase 5A-Fix2';
+const VERSION = '0.5.2';
+const BUILD_ID = 'phase-5a-fix2-v0.5.2-20260512';
 const ROOT = process.cwd();
 const OUTPUT = join(ROOT, 'data', 'ui-labels', 'field-ui-labels.json');
 const AUDIT_OUTPUT = join(ROOT, 'data', 'ui-labels', 'field-ui-labels-audit.json');
-const REPORT = join(ROOT, 'docs', 'app', 'phase-5a-fix1-label-coverage.md');
+const REPORT = join(ROOT, 'docs', 'app', 'phase-5a-fix2-label-coverage.md');
 
 const SCHEMAS = [
   { formType: 'AM', path: join(ROOT, 'data', 'schema', 'am-schema.json'), expectedFields: 1687 },
@@ -63,6 +63,12 @@ const VISIBLE_LABEL_TRANSLATIONS = new Map(
     'email:': 'E-posta adresi',
     by: 'İşlemi yapan görevli veya memur',
     'by:': 'İşlemi yapan görevli veya memur',
+    partner: 'Eş veya partner',
+    'partner:': 'Eş veya partner',
+    fingerprinted: 'Parmak izi alındı seçeneği',
+    fingerprints: 'Parmak izi kaydı seçeneği',
+    'not,': 'Bilgi yok seçeneği',
+    not: 'Bilgi yok seçeneği',
     relationship: 'Bilgiyi veren kişiyle yakınlık ilişkisi',
     name: 'Ad soyad',
     'name:': 'Ad soyad',
@@ -164,6 +170,81 @@ const SERIES_DESCRIPTIONS = {
   },
 };
 
+const COMMON_SERIES_DESCRIPTIONS = {
+  305: 'takı ve değerli eşya bilgisi',
+  310: 'saat, gözlük ve aksesuar bilgisi',
+  315: 'cüzdan, çanta ve belge bilgisi',
+  320: 'anahtar ve küçük kişisel eşya bilgisi',
+  325: 'elektronik veya teknik cihaz bilgisi',
+  330: 'para, kart veya ödeme aracı bilgisi',
+  335: 'giysi ve üzerindeki eşya bilgisi',
+  404: 'cinsiyet, yaş ve temel fiziksel görünüm bilgisi',
+  416: 'saç, sakal veya vücut kılı bilgisi',
+  420: 'göz, yüz ve baş bölgesi özellikleri',
+  424: 'kulak, burun ve ağız bölgesi özellikleri',
+  428: 'kol, el ve parmak özellikleri',
+  432: 'gövde ve sırt bölgesi özellikleri',
+  436: 'bacak, ayak ve yürüyüş özellikleri',
+  444: 'ameliyat izi veya yara izi bilgisi',
+  448: 'dövme veya kalıcı işaret bilgisi',
+  452: 'doğum lekesi veya cilt izi bilgisi',
+  456: 'piercing, takı izi veya vücut modifikasyonu bilgisi',
+  460: 'protez, implant veya destek cihazı bilgisi',
+  464: 'kırık, deformite veya hareket kısıtlılığı bilgisi',
+  468: 'alışkanlık, duruş veya yürüyüş özelliği bilgisi',
+  472: 'ek ayırt edici fiziksel özellik bilgisi',
+  476: 'fotoğraf, görüntü veya fiziksel belge bilgisi',
+  480: 'fiziksel tanım ek açıklaması',
+  505: 'tıbbi kurum, doktor veya sağlık kaydı bilgisi',
+  515: 'ilaç, hastalık veya tedavi geçmişi bilgisi',
+  525: 'ameliyat veya tedavi geçmişi bilgisi',
+  530: 'implant, protez veya tıbbi cihaz bilgisi',
+  555: 'aşı, laboratuvar veya destekleyici sağlık bilgisi',
+  560: 'tıbbi belge ve ek sağlık açıklaması',
+  605: 'diş hekimi ve dental kayıt bilgisi',
+  615: 'diş tedavisi, protez veya dental özellik bilgisi',
+  620: 'diş röntgeni veya dental belge bilgisi',
+  625: 'diş röntgeni veya dental belge bilgisi',
+  635: 'odontoloji ek inceleme bilgisi',
+  640: 'odontoloji karşılaştırma ve sonuç bilgisi',
+  645: 'odontoloji uzman iletişim bilgisi',
+  705: 'destekleyici kimliklendirme notu',
+  805: 'ek belge ve fotoğraf bilgisi',
+  815: 'formu tamamlayan kişi veya birim bilgisi',
+  820: 'imza ve onay bilgisi',
+  825: 'ek belge listesi ve açıklama bilgisi',
+  830: 'son kontrol ve tamamlanma bilgisi',
+};
+
+Object.assign(SERIES_DESCRIPTIONS.AM, COMMON_SERIES_DESCRIPTIONS, {
+  115: 'eş veya partner bilgisi',
+  215: 'kayıp kişinin cinsiyet ve medeni durum bilgisi',
+  225: 'kaybolma olayına ilişkin ek açıklama',
+  240: 'kayıp kişinin adres ve iletişim ayrıntısı',
+  245: 'kayıp kişiye ait ek kimlik bilgisi',
+});
+
+Object.assign(SERIES_DESCRIPTIONS.PM, COMMON_SERIES_DESCRIPTIONS, {
+  488: 'post mortem ek fiziksel bulgu bilgisi',
+  492: 'kalıntıya ait özel işaret ve bulgu bilgisi',
+  496: 'kimliklendirmeye yardımcı ayrıntılı fiziksel bulgu',
+  535: 'otopsi veya dış muayene bulgusu',
+  540: 'implant, protez veya tıbbi cihaz bulgusu',
+  545: 'patolojik bulgu ve değerlendirme bilgisi',
+  550: 'tıbbi inceleme sonucu ve ek not',
+  647: 'odontoloji ek onay ve değerlendirme bilgisi',
+  852: 'DNA örneği ve laboratuvar bilgisi',
+  854: 'DNA örnek alma koşulu bilgisi',
+  856: 'DNA gönderim ve teslim bilgisi',
+  858: 'DNA analiz sonucu bilgisi',
+  860: 'DNA uzman iletişim bilgisi',
+  862: 'DNA karşılaştırma notu',
+  864: 'DNA ek belge bilgisi',
+  866: 'DNA onay ve imza bilgisi',
+  868: 'DNA kalite kontrol bilgisi',
+  872: 'nihai ek açıklama ve belge bilgisi',
+});
+
 function readJson(path) {
   return JSON.parse(readFileSync(path, 'utf8'));
 }
@@ -210,40 +291,23 @@ function seriesFromPdfName(pdfFieldName) {
   return match ? match[1] : null;
 }
 
-function rowHint(pdfFieldName) {
-  const parts = String(pdfFieldName).split('.');
-  if (parts.length >= 2 && /^\d+$/.test(parts[1])) return `${parts[1]}. satır`;
-  return null;
-}
-
-function subFieldHint(pdfFieldName) {
-  const parts = String(pdfFieldName).split('.');
-  const last = parts[parts.length - 1];
-  const hints = {
-    1: 'birinci bilgi parçası',
-    2: 'ikinci bilgi parçası',
-    3: 'üçüncü bilgi parçası',
-    4: 'dördüncü bilgi parçası',
-    5: 'beşinci bilgi parçası',
-    6: 'altıncı bilgi parçası',
-    7: 'yedinci bilgi parçası',
-    8: 'sekizinci bilgi parçası',
-    300: 'ad, kurum veya ana satır bilgisi',
-    301: 'adres veya yer satırı',
-    302: 'adres devam satırı',
-    303: 'il veya ilçe',
-    304: 'posta kodu veya yer ayrıntısı',
-    305: 'telefon veya iletişim satırı',
-    306: 'ek iletişim satırı',
-    307: 'e-posta veya ülke bilgisi',
-    308: 'ek e-posta veya ülke bilgisi',
-  };
-  return hints[last] || null;
-}
-
 function semanticTopic(field) {
   const series = seriesFromPdfName(field.pdfFieldName);
   return SERIES_DESCRIPTIONS[field.formType]?.[series] || null;
+}
+
+function fallbackTopic(field) {
+  if (field.officialSection.id.endsWith('.checklist')) return 'form kontrol listesi';
+  if (field.officialSection.id.endsWith('.header')) return 'form üst bilgisi';
+  if (field.officialSection.id.includes('kayit')) return 'kayıt ve sorumlu görevli bilgisi';
+  if (field.officialSection.id.includes('kisi')) return 'kişi kimlik ve olay bilgisi';
+  if (field.officialSection.id.includes('esyalar')) return 'eşya ve bulgu bilgisi';
+  if (field.officialSection.id.includes('fiziksel')) return 'fiziksel tanım ve ayırt edici özellik';
+  if (field.officialSection.id.includes('tibbi')) return 'tıbbi inceleme ve sağlık bilgisi';
+  if (field.officialSection.id.includes('odontoloji')) return 'diş ve odontoloji bilgisi';
+  if (field.officialSection.id.includes('destek')) return 'destekleyici kimliklendirme bilgisi';
+  if (field.officialSection.id.includes('ekler')) return 'ek belge, iletişim ve imza bilgisi';
+  return 'resmi form alanı';
 }
 
 function controlHelp(field) {
@@ -255,48 +319,39 @@ function controlHelp(field) {
   return 'Bu alanı resmi formdaki karşılığına göre doldurun.';
 }
 
-function actionVerb(field) {
+function actionInstruction(field) {
   if (field.controlType === 'checkbox') return 'uygunsa işaretleyin';
-  if (field.controlType === 'email') return 'e-posta adresini yazın';
-  if (field.controlType === 'phone') return 'telefon numarasını yazın';
-  if (field.controlType === 'number') return 'sayısal değeri yazın';
-  if (field.controlType === 'date-part') return 'tarihin ilgili parçasını yazın';
-  return 'bilgiyi açık ve okunur şekilde yazın';
+  if (field.controlType === 'email') return 'geçerli e-posta adresi olarak yazın';
+  if (field.controlType === 'phone') return 'telefon numarası olarak yazın';
+  if (field.controlType === 'number') return 'sayısal değer olarak yazın';
+  if (field.controlType === 'date-part') return 'tarihin gün, ay veya yıl parçası olarak yazın';
+  return 'açık ve okunur şekilde yazın';
 }
 
 function buildLabel(field, sectionIndex) {
   const sectionLabel = SECTION_LABELS[field.officialSection.id] || field.officialSection.title || `${field.formType} bölümü`;
   const visible = translatedVisibleLabel(field.visibleLabel);
   const series = seriesFromPdfName(field.pdfFieldName);
-  const row = rowHint(field.pdfFieldName);
   const control = CONTROL_LABELS[field.controlType] || 'alan';
+  const topic = semanticTopic(field) || fallbackTopic(field);
 
   if (visible) {
     const sequence = `${sectionIndex + 1}. alan`;
-    const topic = semanticTopic(field);
-    const row = rowHint(field.pdfFieldName);
-    const subField = subFieldHint(field.pdfFieldName);
-    const contextParts = [topic, row, subField].filter(Boolean).join(', ');
-    const helpContext = contextParts ? `${contextParts} için ` : '';
     return {
       labelTr: `${sectionLabel} - ${visible}`,
       shortLabelTr: `${visible} (${sequence})`,
-      helpTextTr: `${sectionLabel} bölümünde ${helpContext}${visible.toLocaleLowerCase('tr-TR')} bilgisini ${actionVerb(field)}.`,
+      helpTextTr: `${sectionLabel} bölümünde ${topic} için ${visible.toLocaleLowerCase('tr-TR')} bilgisini ${actionInstruction(field)}.`,
       reviewStatus: 'human_readable_contextual',
     };
   }
 
-  const topic = semanticTopic(field);
-  const seriesPart = topic || (series ? `${series} numaralı resmi form bloğu` : `${sectionIndex + 1}. alan`);
-  const rowPart = row ? `, ${row}` : '';
-  const subField = subFieldHint(field.pdfFieldName);
-  const subFieldPart = subField ? `, ${subField}` : '';
-  const shortLabelTr = `${seriesPart} ${control}`;
+  const fieldTopic = topic || (series ? `${sectionLabel.toLocaleLowerCase('tr-TR')} ek bilgisi` : `${sectionIndex + 1}. alan`);
+  const shortLabelTr = `${fieldTopic} ${control}`;
 
   return {
-    labelTr: `${sectionLabel} - ${seriesPart}${rowPart}${subFieldPart}`,
+    labelTr: `${sectionLabel} - ${fieldTopic}`,
     shortLabelTr,
-    helpTextTr: `${sectionLabel} bölümünde ${seriesPart.toLocaleLowerCase('tr-TR')}${rowPart}${subFieldPart} alanına istenen ${control} bilgisini ${actionVerb(field)}.`,
+    helpTextTr: `${sectionLabel} bölümünde ${fieldTopic.toLocaleLowerCase('tr-TR')} için gerekli ${control} bilgisini ${actionInstruction(field)}.`,
     reviewStatus: topic ? 'contextual_generated' : 'needs_human_review',
   };
 }
@@ -304,6 +359,9 @@ function buildLabel(field, sectionIndex) {
 function hasTechnicalRuntimeLabel(text, formType) {
   if (new RegExp(`^${formType} alanı\\b`, 'i').test(text)) return true;
   if (/\b\d{3}\.\d/.test(text)) return true;
+  if (/\b\d+\.\s*satır\b/i.test(text)) return true;
+  if (/\bbilgi parçası\b/i.test(text)) return true;
+  if (/\bnumaralı resmi form bloğu\b/i.test(text)) return true;
   return false;
 }
 
@@ -416,9 +474,9 @@ function build({ write }) {
     )
     .join('\n');
 
-  const report = `# Phase 5A-Fix1 Label Coverage
+  const report = `# Phase 5A-Fix2 Label Coverage
 
-Bu rapor, kullanıcıya görünen alan etiketlerinin teknik PDF field id değerlerinden ayrıldığını ve görevli-dostu Türkçe doldurma rehberine bağlandığını denetler.
+Bu rapor, kullanıcıya görünen alan etiketlerinin teknik PDF field id, satır/parça ifadesi ve belirsiz resmi blok numarası değerlerinden ayrıldığını denetler.
 
 ## Sonuç
 

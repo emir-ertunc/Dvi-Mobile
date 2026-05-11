@@ -57,9 +57,17 @@ function normalizeInputValue(field: CanonicalSchemaField, nextValue: string): Dr
 }
 
 function checkboxOptionLabel(label: string): string {
-  const withoutSequence = label.replace(/\s*\(\d+\.\s*alan\)$/i, '').trim();
-  if (!withoutSequence) return 'Bu seçenek';
-  return withoutSequence.charAt(0).toLocaleUpperCase('tr-TR') + withoutSequence.slice(1);
+  const readableLabel = label
+    .replace(/\s*\(\d+\.\s*alan\)$/i, '')
+    .replace(/\s+seçim$/i, '')
+    .replace(/\s+metin$/i, '')
+    .replace(/\s+tarih parçası$/i, '')
+    .replace(/\s+e-posta$/i, '')
+    .replace(/\s+telefon$/i, '')
+    .replace(/\s+sayı$/i, '')
+    .trim();
+  if (!readableLabel) return 'Bu seçenek';
+  return readableLabel.charAt(0).toLocaleUpperCase('tr-TR') + readableLabel.slice(1);
 }
 
 export function FormFieldControl({ editable, field, index, onValueChange, value }: FormFieldControlProps) {
