@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import type { CanonicalSchemaField } from '../domain/schemaTypes';
 import { validateSchemaValue } from '../domain/validation';
 import { fieldPageSummary } from '../data/formSchemaCatalog';
+import { getFieldUiText } from '../data/fieldUiLabels';
 import type { DraftFieldValue } from '../storage/draftStore';
 
 interface FormFieldControlProps {
@@ -57,6 +58,7 @@ function normalizeInputValue(field: CanonicalSchemaField, nextValue: string): Dr
 
 export function FormFieldControl({ editable, field, index, onValueChange, value }: FormFieldControlProps) {
   const controlLabel = controlTypeLabels[field.controlType] ?? 'Alan';
+  const uiText = getFieldUiText(field, index);
   const checked = value === true;
   const textValue = typeof value === 'string' || typeof value === 'number' ? String(value) : '';
   const validation = validateSchemaValue(value ?? null, {
@@ -71,10 +73,9 @@ export function FormFieldControl({ editable, field, index, onValueChange, value 
         <View style={styles.fieldTitleGroup}>
           <Text style={styles.fieldIndex}>{index + 1}</Text>
           <View style={styles.fieldLabelGroup}>
-            <Text style={styles.fieldLabel}>{field.uiLabelTr}</Text>
-            <Text style={styles.fieldMeta}>
-              {field.schemaFieldId} · Sayfa {fieldPageSummary(field)}
-            </Text>
+            <Text style={styles.fieldLabel}>{uiText.labelTr}</Text>
+            <Text style={styles.fieldHelp}>{uiText.helpTextTr}</Text>
+            <Text style={styles.fieldMeta}>Sayfa {fieldPageSummary(field)} · {controlLabel}</Text>
           </View>
         </View>
         <View style={styles.typeBadge}>
@@ -84,7 +85,7 @@ export function FormFieldControl({ editable, field, index, onValueChange, value 
 
       {field.controlType === 'checkbox' ? (
         <Pressable
-          accessibilityLabel={field.uiLabelTr}
+          accessibilityLabel={uiText.labelTr}
           accessibilityRole="checkbox"
           accessibilityState={{ checked, disabled: !editable }}
           disabled={!editable}
@@ -98,7 +99,7 @@ export function FormFieldControl({ editable, field, index, onValueChange, value 
         </Pressable>
       ) : (
         <TextInput
-          accessibilityLabel={field.uiLabelTr}
+          accessibilityLabel={uiText.labelTr}
           editable={editable}
           keyboardType={keyboardTypeForField(field)}
           maxLength={maxLengthForField(field)}
@@ -118,7 +119,7 @@ export function FormFieldControl({ editable, field, index, onValueChange, value 
         ))}
       {!editable && <Text style={styles.lockedText}>Bu bölüm sonraki alt fazda düzenlemeye açılacak.</Text>}
       <Text style={styles.bindingText}>
-        PDF bağlantısı: {field.exportBinding.widgetInstanceCount} bileşen · {field.pdfFieldName}
+        Teknik bağlantı: {field.exportBinding.widgetInstanceCount} PDF bileşeni
       </Text>
     </View>
   );
@@ -175,6 +176,11 @@ const styles = StyleSheet.create({
     color: '#475569',
     fontSize: 12,
     lineHeight: 17,
+  },
+  fieldHelp: {
+    color: '#334155',
+    fontSize: 13,
+    lineHeight: 18,
   },
   typeBadge: {
     backgroundColor: '#f8fafc',

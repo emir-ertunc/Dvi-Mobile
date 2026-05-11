@@ -129,7 +129,12 @@ export const WORKFLOW_STEPS: readonly WorkflowStep[] = [
   },
   {
     title: 'Kullanılabilirlik düzeltmeleri',
-    status: 'sürüyor',
+    status: 'tamamlandı',
     detail: 'Uzun form akışlarında kritik aksiyonlar ve alan anlaşılırlığı kademeli olarak iyileştirilir.',
+  },
+  {
+    title: 'Türkçe alan etiketleri',
+    status: 'sürüyor',
+    detail: 'Teknik PDF alan adları kullanıcı ekranından ayrılır ve Türkçe label/help katmanı kullanılır.',
   },
 ] as const;

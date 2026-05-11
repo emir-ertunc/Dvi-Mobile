@@ -56,7 +56,7 @@ function OverviewScreen({ draftState }: { readonly draftState: LocalDraftState }
     <View style={styles.screen}>
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Operasyon Özeti</Text>
-        <Text style={styles.sectionDetail}>Taslak silme onayı modal akışa alındı ve UI iyileştirme planı netleştirildi.</Text>
+        <Text style={styles.sectionDetail}>Teknik alan adları kullanıcı ekranından ayrıldı ve Türkçe label katmanı eklendi.</Text>
       </View>
 
       <View style={styles.metricGrid}>
@@ -73,8 +73,8 @@ function OverviewScreen({ draftState }: { readonly draftState: LocalDraftState }
       <View style={styles.panel}>
         <Text style={styles.panelTitle}>Hızlı Durum</Text>
         <Text style={styles.bodyText}>
-          Bu faz, uzun form ekranlarında kaybolan kritik aksiyonları düzeltmeye başlar. Silme onayı artık sayfa
-          sonunda değil, mevcut ekranın üzerinde görünür.
+          Bu faz, resmi PDF alan bağlantılarını korurken kullanıcıya görünen alan adlarını ayrı Türkçe label ve
+          yardım metni katmanından gösterir.
         </Text>
         {activeDraft && <Text style={styles.mutedText}>Aktif taslak: {activeDraft.title}</Text>}
       </View>

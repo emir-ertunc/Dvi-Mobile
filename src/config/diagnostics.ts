@@ -25,5 +25,6 @@ export const DIAGNOSTICS_INFO = {
     'Şema kapsamı',
     'Taslak saklama',
     'UI kapsamı',
+    'Türkçe alan etiketi',
   ],
 } as const;

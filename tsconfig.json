@@ -11,6 +11,7 @@
     "index.js",
     "src/**/*.ts",
     "src/**/*.tsx",
-    "data/schema/*.json"
+    "data/schema/*.json",
+    "data/ui-labels/*.json"
   ]
 }

@@ -1,12 +1,12 @@
 const { mkdirSync, readFileSync, writeFileSync } = require('node:fs');
 const { dirname, join } = require('node:path');
 
-const PHASE = 'Phase 4G-A';
-const VERSION = '0.4.6';
-const BUILD_ID = 'phase-4g-a-v0.4.6-20260511';
+const PHASE = 'Phase 4G-B';
+const VERSION = '0.4.7';
+const BUILD_ID = 'phase-4g-b-v0.4.7-20260511';
 const ROOT = process.cwd();
 const OUTPUT_AUDIT = join(ROOT, 'data', 'ui-coverage', 'ui-coverage-audit.json');
-const OUTPUT_MATRIX = join(ROOT, 'docs', 'app', 'phase-4g-a-ui-coverage-matrix.md');
+const OUTPUT_MATRIX = join(ROOT, 'docs', 'app', 'phase-4g-b-ui-coverage-matrix.md');
 
 const FORM_CONFIGS = [
   {
@@ -158,7 +158,7 @@ function matrixMarkdown(audit) {
     )
     .join('\n');
 
-  return `# Phase 4F UI Coverage Matrisi
+  return `# ${PHASE} UI Coverage Matrisi
 
 Bu matris, AM ve PM canonical schema bölümlerinin uygulamadaki form gezgini ve alan kontrol katmanı üzerinden erişilebilir olduğunu denetler.
 
@@ -195,7 +195,8 @@ function run({ write }) {
   requireToken(workspaceSource, 'activeFields.map', failures, 'FormWorkspace.tsx');
   requireToken(workspaceSource, 'FormFieldControl', failures, 'FormWorkspace.tsx');
   requireToken(workspaceSource, 'editable={editableSection}', failures, 'FormWorkspace.tsx');
-  requireToken(fieldControlSource, 'accessibilityLabel={field.uiLabelTr}', failures, 'FormFieldControl.tsx');
+  requireToken(fieldControlSource, 'accessibilityLabel={uiText.labelTr}', failures, 'FormFieldControl.tsx');
+  requireToken(fieldControlSource, 'getFieldUiText(field, index)', failures, 'FormFieldControl.tsx');
   requireToken(fieldControlSource, 'accessibilityRole="checkbox"', failures, 'FormFieldControl.tsx');
   requireToken(fieldControlSource, 'accessibilityState={{ checked, disabled: !editable }}', failures, 'FormFieldControl.tsx');
   requireToken(fieldControlSource, 'keyboardType={keyboardTypeForField(field)}', failures, 'FormFieldControl.tsx');
