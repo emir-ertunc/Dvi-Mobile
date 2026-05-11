@@ -5,6 +5,7 @@ const root = process.cwd();
 const store = readFileSync(join(root, 'src', 'storage', 'draftStore.ts'), 'utf8');
 const hook = readFileSync(join(root, 'src', 'hooks', 'useLocalDrafts.ts'), 'utf8');
 const app = readFileSync(join(root, 'App.tsx'), 'utf8');
+const fieldControl = readFileSync(join(root, 'src', 'components', 'FormFieldControl.tsx'), 'utf8');
 const diagnostics = readFileSync(join(root, 'src', 'config', 'diagnostics.ts'), 'utf8');
 
 const requiredStoreTokens = [
@@ -93,6 +94,10 @@ for (const token of requiredDiagnosticsTokens) {
 
 for (const token of requiredAppTokens) {
   if (!app.includes(token)) failures.push(`App.tsx içinde eksik taslak arayüz parçası: ${token}`);
+}
+
+if (!fieldControl.includes('Ne doldurulacak?')) {
+  failures.push('FormFieldControl.tsx içinde eksik doldurma rehberi başlığı: Ne doldurulacak?');
 }
 
 if (failures.length > 0) {

@@ -28,7 +28,7 @@ function placeholderForField(field: CanonicalSchemaField): string {
   if (field.controlType === 'phone') return '+90 5xx xxx xx xx';
   if (field.controlType === 'number') return 'Sayısal değer';
   if (field.controlType === 'date-part') return 'GG / AA / YYYY';
-  return 'Değer girin';
+  return 'İstenen bilgiyi yazın';
 }
 
 function keyboardTypeForField(field: CanonicalSchemaField) {
@@ -74,6 +74,7 @@ export function FormFieldControl({ editable, field, index, onValueChange, value 
           <Text style={styles.fieldIndex}>{index + 1}</Text>
           <View style={styles.fieldLabelGroup}>
             <Text style={styles.fieldLabel}>{uiText.labelTr}</Text>
+            <Text style={styles.instructionTitle}>Ne doldurulacak?</Text>
             <Text style={styles.fieldHelp}>{uiText.helpTextTr}</Text>
             <Text style={styles.fieldMeta}>Sayfa {fieldPageSummary(field)} · {controlLabel}</Text>
           </View>
@@ -118,9 +119,7 @@ export function FormFieldControl({ editable, field, index, onValueChange, value 
           </Text>
         ))}
       {!editable && <Text style={styles.lockedText}>Bu bölüm sonraki alt fazda düzenlemeye açılacak.</Text>}
-      <Text style={styles.bindingText}>
-        Teknik bağlantı: {field.exportBinding.widgetInstanceCount} PDF bileşeni
-      </Text>
+      <Text style={styles.bindingText}>Resmi form eşleşmesi: {field.exportBinding.widgetInstanceCount} bileşen</Text>
     </View>
   );
 }
@@ -181,6 +180,13 @@ const styles = StyleSheet.create({
     color: '#334155',
     fontSize: 13,
     lineHeight: 18,
+  },
+  instructionTitle: {
+    color: '#0f766e',
+    fontSize: 12,
+    fontWeight: '900',
+    lineHeight: 16,
+    marginTop: 2,
   },
   typeBadge: {
     backgroundColor: '#f8fafc',

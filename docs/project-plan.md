@@ -461,6 +461,34 @@ Hedef:
 - Uzun formdaki temel aksiyonlar için sayfanın en altına inme zorunluluğu azaltılır.
 - Typecheck, UI coverage, Türkçe metin kontrolü, APK build, commit ve push tamamlanır.
 
+### Phase 4I - Doldurma Rehberi ve Alan Anlaşılırlığı
+
+Phase 4H uygulama akışını sadeleştirmiştir; Phase 4I, alan düzeyindeki kullanıcı metinlerini belgeyi hiç bilmeyen saha görevlisi için daha açık hale getirir. Amaç, her alanın yalnızca resmi PDF karşılığına bağlı kalması değil, kullanıcıya hangi kişi, kurum, tarih, adres, bulgu veya görevli bilgisinin istendiğini açıkça anlatmasıdır.
+
+#### Phase 4I-A - Görevli-Dostu Alan Etiketi ve Yardım Metni
+
+Hedef:
+
+- `by`, `agency`, `name`, `date`, `address`, `phone`, `signature` gibi kısa PDF label kaynaklarını açık Türkçe görevli metinlerine çevirmek.
+- Teknik veya yetersiz label bulunan alanlarda resmi bölüm ve alan serisi bağlamından anlamlı Türkçe açıklama üretmek.
+- Alan kartlarında `Ne doldurulacak?` başlığıyla yardım metnini daha görünür hale getirmek.
+- Placeholder metnini genel `Değer girin` yerine daha açıklayıcı `İstenen bilgiyi yazın` diline çekmek.
+- Teknik export/debug hissi veren alan alt metinlerini kullanıcı-dostu resmi form eşleşmesi diline çevirmek.
+
+Kapsam dışı:
+
+- Tüm 3380 alanın adli terminolojiyle elle tek tek redaksiyonu.
+- PDF export motoruna başlamak.
+- Canonical schema veya envanter alan sayısını değiştirmek.
+
+Çıkış kriterleri:
+
+- UI label üretimi görevli-dostu bağlamlı açıklama üretmeli.
+- `İşlemi yapan görevli veya memur` gibi rol açıklamaları runtime label map içinde görünmeli.
+- UI coverage 3380 field / 4032 widget kapsamını korumalı.
+- Typecheck, Türkçe metin kontrolü, form renderer doğrulaması ve label doğrulaması geçmeli.
+- Versioned APK üretilmeli, commit ve push tamamlanmalı.
+
 ## 11. Phase 5 - PDF Export Engine
 
 ### Phase 5A - Template Pipeline
