@@ -544,6 +544,40 @@ Doğrulama komutları:
 - Uygulamada `Faz 5A / 0.5.0 / phase-5a-v0.5.0-20260511` görünür olmalı.
 - Versioned APK üretilmeli, commit ve push tamamlanmalı.
 
+### Phase 5A-Fix1 - Checkbox Seçenek Görünürlüğü
+
+Phase 5B export binding'e geçmeden önce checkbox kullanıcı deneyimindeki belirsizlik giderilir. Mevcut renderer checkbox satırında yalnızca `İşaretli değil` durumunu gösterdiği için kullanıcı hangi seçeneği işaretlediğini bazı alanlarda anlayamaz. Bu ara fix, checkbox satırını seçenek adı ve durum bilgisiyle okunur hale getirir.
+
+Hedef:
+
+- Checkbox satırında ana metin olarak seçilecek seçenek gösterilir.
+- `İşaretli değil` tek başına görünen ana metin olmaktan çıkarılır.
+- Durum bilgisi ikincil metin olarak `Seçili` / `Seçili değil` şeklinde gösterilir.
+- Düzenlenebilir checkbox satırında açık aksiyon etiketi bulunur: `Seç` veya `Kaldır`.
+- Mevcut 3380 field / 4032 widget UI coverage korunur.
+
+Kapsam dışı:
+
+- PDF export başlatılmaz.
+- Checkbox button state regression başlatılmaz.
+- Canonical schema field sayısı veya inventory kapsamı değiştirilmez.
+- Choice group/radio davranışı tam olarak bu fazda modellenmez; bu konu Phase 5E ve gerekirse ayrı UI grouping fazında sertleştirilecektir.
+
+Implementation dosya grupları:
+
+- `src/components/FormFieldControl.tsx`: Checkbox satırının seçenek metni ve durum düzeni.
+- `scripts/verify_form_renderer.js`: Checkbox seçenek görünürlüğünü build kapısı yapan doğrulama.
+- `src/config/buildInfo.ts`, `app.json`, Android config ve workflow: `0.5.1` ara fix sürümlemesi.
+- `docs/app/phase-5a-fix1-summary.md`: Ara fix raporu.
+
+Çıkış kriterleri:
+
+- Checkbox satırları sadece durum metniyle görünmemeli.
+- Kullanıcı satırda hangi seçeneği işaretlediğini görebilmeli.
+- TypeScript, Türkçe metin, renderer, UI coverage ve PDF template doğrulamaları geçmeli.
+- `DviMobile-phase-5a-fix1-v0.5.1-20260512.apk` üretilmeli.
+- Commit ve push tamamlanmalı.
+
 ### Phase 5B - Binding Manifest
 
 Canonical field id ile PDF field name/button state eşleşmeleri manifest içinde tutulur.

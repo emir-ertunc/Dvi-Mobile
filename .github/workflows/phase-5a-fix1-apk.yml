@@ -1,4 +1,4 @@
-name: Phase 5A APK
+name: Phase 5A-Fix1 APK
 
 on:
   push:
@@ -83,10 +83,10 @@ jobs:
       - name: APK dosyasini adlandir
         run: |
           mkdir -p artifacts
-          cp android/app/build/outputs/apk/release/app-release.apk artifacts/DviMobile-phase-5a-v0.5.0-20260511.apk
+          cp android/app/build/outputs/apk/release/app-release.apk artifacts/DviMobile-phase-5a-fix1-v0.5.1-20260512.apk
 
       - name: APK artifact yukle
         uses: actions/upload-artifact@v4
         with:
-          name: DviMobile-phase-5a-v0.5.0-20260511.apk
-          path: artifacts/DviMobile-phase-5a-v0.5.0-20260511.apk
+          name: DviMobile-phase-5a-fix1-v0.5.1-20260512.apk
+          path: artifacts/DviMobile-phase-5a-fix1-v0.5.1-20260512.apk

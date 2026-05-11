@@ -56,10 +56,17 @@ function normalizeInputValue(field: CanonicalSchemaField, nextValue: string): Dr
   return nextValue;
 }
 
+function checkboxOptionLabel(label: string): string {
+  const withoutSequence = label.replace(/\s*\(\d+\.\s*alan\)$/i, '').trim();
+  if (!withoutSequence) return 'Bu seçenek';
+  return withoutSequence.charAt(0).toLocaleUpperCase('tr-TR') + withoutSequence.slice(1);
+}
+
 export function FormFieldControl({ editable, field, index, onValueChange, value }: FormFieldControlProps) {
   const controlLabel = controlTypeLabels[field.controlType] ?? 'Alan';
   const uiText = getFieldUiText(field, index);
   const checked = value === true;
+  const checkboxLabel = checkboxOptionLabel(uiText.shortLabelTr || uiText.labelTr);
   const textValue = typeof value === 'string' || typeof value === 'number' ? String(value) : '';
   const validation = validateSchemaValue(value ?? null, {
     readinessRule: field.readinessRule,
@@ -96,7 +103,17 @@ export function FormFieldControl({ editable, field, index, onValueChange, value 
           <View style={[styles.checkboxBox, checked && styles.checkedBox]}>
             {checked && <Text style={styles.checkmark}>✓</Text>}
           </View>
-          <Text style={styles.checkboxText}>{checked ? 'İşaretli' : 'İşaretli değil'}</Text>
+          <View style={styles.checkboxTextGroup}>
+            <Text style={styles.checkboxOptionText}>Seçenek: {checkboxLabel}</Text>
+            <Text style={[styles.checkboxStateText, checked && styles.checkedStateText]}>
+              {checked ? 'Seçili' : 'Seçili değil'}
+            </Text>
+          </View>
+          {editable && (
+            <View style={styles.checkboxActionBadge}>
+              <Text style={styles.checkboxActionText}>{checked ? 'Kaldır' : 'Seç'}</Text>
+            </View>
+          )}
         </Pressable>
       ) : (
         <TextInput
@@ -226,8 +243,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     flexDirection: 'row',
     gap: 9,
+    justifyContent: 'space-between',
     minHeight: 44,
     paddingHorizontal: 11,
+    paddingVertical: 9,
   },
   checkboxBox: {
     alignItems: 'center',
@@ -250,10 +269,37 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     lineHeight: 16,
   },
-  checkboxText: {
+  checkboxTextGroup: {
+    flex: 1,
+    gap: 3,
+  },
+  checkboxOptionText: {
     color: '#334155',
     fontSize: 14,
-    fontWeight: '700',
+    fontWeight: '800',
+    lineHeight: 18,
+  },
+  checkboxStateText: {
+    color: '#64748b',
+    fontSize: 12,
+    fontWeight: '800',
+    lineHeight: 16,
+  },
+  checkedStateText: {
+    color: '#0f766e',
+  },
+  checkboxActionBadge: {
+    backgroundColor: '#eef6f5',
+    borderColor: '#b8d8d4',
+    borderRadius: 6,
+    borderWidth: 1,
+    paddingHorizontal: 8,
+    paddingVertical: 5,
+  },
+  checkboxActionText: {
+    color: '#134e4a',
+    fontSize: 12,
+    fontWeight: '900',
   },
   bindingText: {
     color: '#64748b',

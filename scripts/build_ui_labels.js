@@ -1,13 +1,13 @@
 const { mkdirSync, readFileSync, writeFileSync } = require('node:fs');
 const { dirname, join } = require('node:path');
 
-const PHASE = 'Phase 5A';
-const VERSION = '0.5.0';
-const BUILD_ID = 'phase-5a-v0.5.0-20260511';
+const PHASE = 'Phase 5A-Fix1';
+const VERSION = '0.5.1';
+const BUILD_ID = 'phase-5a-fix1-v0.5.1-20260512';
 const ROOT = process.cwd();
 const OUTPUT = join(ROOT, 'data', 'ui-labels', 'field-ui-labels.json');
 const AUDIT_OUTPUT = join(ROOT, 'data', 'ui-labels', 'field-ui-labels-audit.json');
-const REPORT = join(ROOT, 'docs', 'app', 'phase-5a-label-coverage.md');
+const REPORT = join(ROOT, 'docs', 'app', 'phase-5a-fix1-label-coverage.md');
 
 const SCHEMAS = [
   { formType: 'AM', path: join(ROOT, 'data', 'schema', 'am-schema.json'), expectedFields: 1687 },
@@ -416,7 +416,7 @@ function build({ write }) {
     )
     .join('\n');
 
-  const report = `# Phase 5A Label Coverage
+  const report = `# Phase 5A-Fix1 Label Coverage
 
 Bu rapor, kullanıcıya görünen alan etiketlerinin teknik PDF field id değerlerinden ayrıldığını ve görevli-dostu Türkçe doldurma rehberine bağlandığını denetler.
 
