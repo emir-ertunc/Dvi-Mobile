@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { BUILD_INFO } from './src/config/buildInfo';
+import { DIAGNOSTICS_INFO } from './src/config/diagnostics';
 import { MetricTile } from './src/components/MetricTile';
 import { RouteTabs } from './src/components/RouteTabs';
 import { StatusPanel } from './src/components/StatusPanel';
@@ -330,6 +331,8 @@ function WorkflowScreen() {
 }
 
 function SystemScreen({ draftState }: { readonly draftState: LocalDraftState }) {
+  const migrationReport = draftState.migrationReport;
+
   return (
     <View style={styles.screen}>
       <StatusPanel
@@ -351,13 +354,35 @@ function SystemScreen({ draftState }: { readonly draftState: LocalDraftState }) 
       </View>
 
       <View style={styles.panel}>
-        <Text style={styles.panelTitle}>Yerel Saklama</Text>
+        <Text style={styles.panelTitle}>Tanılama</Text>
+        <View style={styles.statsRow}>
+          <Text style={styles.statText}>Saklama sürümü: {DIAGNOSTICS_INFO.draftStorageVersion}</Text>
+          <Text style={styles.statText}>Alan kapsamı: {DIAGNOSTICS_INFO.schemaCoverage.totalFieldCount}</Text>
+          <Text style={styles.statText}>Bileşen: {DIAGNOSTICS_INFO.schemaCoverage.totalWidgetBindingCount}</Text>
+        </View>
         <Text style={styles.bodyText}>
           AM taslak: {draftState.amDraftCount} · PM taslak: {draftState.pmDraftCount}
         </Text>
-        <Text style={styles.mutedText}>
-          Taslak üst veri kayıtları cihaz depolamasında tutulur ve uygulama yeniden açıldığında okunur.
-        </Text>
+        {migrationReport && (
+          <Text style={styles.mutedText}>
+            Veri geçişi: {migrationReport.migrated ? 'Uygulandı' : 'Gerekmiyor'} · Geçersiz kayıt:{' '}
+            {migrationReport.invalidRecordCount}
+          </Text>
+        )}
+        {migrationReport?.messages.map((message) => (
+          <Text key={message} style={styles.mutedText}>
+            {message}
+          </Text>
+        ))}
+      </View>
+
+      <View style={styles.panel}>
+        <Text style={styles.panelTitle}>Kalite Kapıları</Text>
+        {DIAGNOSTICS_INFO.qualityGates.map((gate) => (
+          <Text key={gate} style={styles.mutedText}>
+            {gate}
+          </Text>
+        ))}
       </View>
     </View>
   );

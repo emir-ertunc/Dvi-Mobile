@@ -5,8 +5,10 @@ import {
   deleteDraft as persistDeletedDraft,
   duplicateDraft as persistDuplicatedDraft,
   type DraftFormType,
+  type DraftMigrationReport,
   type LocalDraft,
   loadDrafts,
+  loadDraftState,
   resumeDraft as persistResumedDraft,
   updateDraftTitle as persistUpdatedDraftTitle,
 } from '../storage/draftStore';
@@ -15,6 +17,7 @@ export interface LocalDraftState {
   readonly drafts: readonly LocalDraft[];
   readonly loading: boolean;
   readonly errorMessage: string | null;
+  readonly migrationReport: DraftMigrationReport | null;
   readonly draftCount: number;
   readonly amDraftCount: number;
   readonly pmDraftCount: number;
@@ -33,14 +36,16 @@ export function useLocalDrafts(): LocalDraftState {
   const [activeDraftId, setActiveDraftId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [migrationReport, setMigrationReport] = useState<DraftMigrationReport | null>(null);
 
   const reload = useCallback(async () => {
     setLoading(true);
     setErrorMessage(null);
     try {
-      const storedDrafts = await loadDrafts();
-      setDrafts(storedDrafts);
-      setActiveDraftId((current) => (current && storedDrafts.some((draft) => draft.id === current) ? current : null));
+      const result = await loadDraftState();
+      setDrafts(result.drafts);
+      setMigrationReport(result.migrationReport);
+      setActiveDraftId((current) => (current && result.drafts.some((draft) => draft.id === current) ? current : null));
     } catch {
       setErrorMessage('Yerel taslaklar okunamadı.');
     } finally {
@@ -121,6 +126,7 @@ export function useLocalDrafts(): LocalDraftState {
       drafts,
       loading,
       errorMessage,
+      migrationReport,
       draftCount: drafts.length,
       amDraftCount: drafts.filter((draft) => draft.formType === 'AM').length,
       pmDraftCount: drafts.filter((draft) => draft.formType === 'PM').length,
@@ -133,6 +139,18 @@ export function useLocalDrafts(): LocalDraftState {
       deleteDraft,
       selectDraft: setActiveDraftId,
     }),
-    [activeDraftId, createDraft, deleteDraft, drafts, duplicateDraft, errorMessage, loading, reload, resumeDraft, updateDraftTitle],
+    [
+      activeDraftId,
+      createDraft,
+      deleteDraft,
+      drafts,
+      duplicateDraft,
+      errorMessage,
+      loading,
+      migrationReport,
+      reload,
+      resumeDraft,
+      updateDraftTitle,
+    ],
   );
 }

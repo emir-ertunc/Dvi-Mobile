@@ -89,7 +89,12 @@ export const WORKFLOW_STEPS: readonly WorkflowStep[] = [
   },
   {
     title: 'Taslak yaşam döngüsü',
+    status: 'tamamlandı',
+    detail: 'Devam etme, başlık düzenleme, kopyalama ve onaylı silme tamamlandı.',
+  },
+  {
+    title: 'Tanılama ve veri geçişi',
     status: 'sürüyor',
-    detail: 'Devam etme, başlık düzenleme, kopyalama ve onaylı silme bu fazda tamamlanır.',
+    detail: 'Build bilgisi, saklama sürümü ve kalite kapıları bu fazda görünür hale getirilir.',
   },
 ] as const;

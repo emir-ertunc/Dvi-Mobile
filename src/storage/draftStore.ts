@@ -17,6 +17,26 @@ export interface LocalDraft {
 }
 
 export const DRAFT_STORAGE_KEY = '@dvi-mobile/local-drafts/v1';
+export const DRAFT_STORAGE_VERSION = 2;
+
+export interface DraftMigrationReport {
+  readonly storageVersion: number;
+  readonly migrated: boolean;
+  readonly draftCount: number;
+  readonly invalidRecordCount: number;
+  readonly messages: readonly string[];
+}
+
+export interface DraftLoadResult {
+  readonly drafts: readonly LocalDraft[];
+  readonly migrationReport: DraftMigrationReport;
+}
+
+interface DraftStorageEnvelope {
+  readonly storageVersion: number;
+  readonly savedAt: string;
+  readonly drafts: readonly LocalDraft[];
+}
 
 const FORM_TOTALS: Record<DraftFormType, { readonly schemaFieldCount: number; readonly widgetBindingCount: number }> = {
   AM: {
@@ -46,16 +66,17 @@ function createId(formType: DraftFormType, createdAt: string): string {
   return `${formType.toLowerCase()}-${Date.parse(createdAt)}-${randomPart}`;
 }
 
-function normalizeDrafts(value: unknown): LocalDraft[] {
+function normalizeDrafts(value: unknown): { readonly drafts: LocalDraft[]; readonly invalidRecordCount: number } {
   if (!Array.isArray(value)) {
-    return [];
+    return { drafts: [], invalidRecordCount: 0 };
   }
 
-  return value
+  let invalidRecordCount = 0;
+  const drafts = value
     .filter((item): item is LocalDraft => {
       if (!item || typeof item !== 'object') return false;
       const draft = item as Partial<LocalDraft>;
-      return (
+      const valid =
         typeof draft.id === 'string' &&
         (draft.formType === 'AM' || draft.formType === 'PM') &&
         typeof draft.title === 'string' &&
@@ -64,8 +85,11 @@ function normalizeDrafts(value: unknown): LocalDraft[] {
         typeof draft.schemaFieldCount === 'number' &&
         typeof draft.widgetBindingCount === 'number' &&
         typeof draft.savedFieldCount === 'number' &&
-        typeof draft.completionPercent === 'number'
-      );
+        typeof draft.completionPercent === 'number';
+      if (!valid) {
+        invalidRecordCount += 1;
+      }
+      return valid;
     })
     .map((draft) => ({
       ...draft,
@@ -73,23 +97,94 @@ function normalizeDrafts(value: unknown): LocalDraft[] {
       revision: typeof draft.revision === 'number' ? draft.revision : 1,
     }))
     .sort((left, right) => Date.parse(right.updatedAt) - Date.parse(left.updatedAt));
+
+  return { drafts, invalidRecordCount };
+}
+
+function readEnvelope(value: unknown): DraftLoadResult {
+  if (Array.isArray(value)) {
+    const normalized = normalizeDrafts(value);
+    return {
+      drafts: normalized.drafts,
+      migrationReport: {
+        storageVersion: DRAFT_STORAGE_VERSION,
+        migrated: true,
+        draftCount: normalized.drafts.length,
+        invalidRecordCount: normalized.invalidRecordCount,
+        messages: ['Eski taslak liste formatı sürümlü saklama zarfına yükseltildi.'],
+      },
+    };
+  }
+
+  if (value && typeof value === 'object' && Array.isArray((value as Partial<DraftStorageEnvelope>).drafts)) {
+    const envelope = value as Partial<DraftStorageEnvelope>;
+    const normalized = normalizeDrafts(envelope.drafts);
+    const version = typeof envelope.storageVersion === 'number' ? envelope.storageVersion : 1;
+    return {
+      drafts: normalized.drafts,
+      migrationReport: {
+        storageVersion: DRAFT_STORAGE_VERSION,
+        migrated: version !== DRAFT_STORAGE_VERSION || normalized.invalidRecordCount > 0,
+        draftCount: normalized.drafts.length,
+        invalidRecordCount: normalized.invalidRecordCount,
+        messages:
+          version === DRAFT_STORAGE_VERSION
+            ? ['Taslak saklama zarfı güncel.']
+            : [`Taslak saklama zarfı ${version} sürümünden ${DRAFT_STORAGE_VERSION} sürümüne yükseltildi.`],
+      },
+    };
+  }
+
+  return {
+    drafts: [],
+    migrationReport: {
+      storageVersion: DRAFT_STORAGE_VERSION,
+      migrated: false,
+      draftCount: 0,
+      invalidRecordCount: 0,
+      messages: ['Yerel taslak kaydı bulunmadı.'],
+    },
+  };
 }
 
 export async function loadDrafts(): Promise<LocalDraft[]> {
+  const result = await loadDraftState();
+  return [...result.drafts];
+}
+
+export async function loadDraftState(): Promise<DraftLoadResult> {
   const raw = await AsyncStorage.getItem(DRAFT_STORAGE_KEY);
   if (!raw) {
-    return [];
+    return readEnvelope(null);
   }
 
   try {
-    return normalizeDrafts(JSON.parse(raw));
+    const result = readEnvelope(JSON.parse(raw));
+    if (result.migrationReport.migrated) {
+      await saveDrafts(result.drafts);
+    }
+    return result;
   } catch {
-    return [];
+    return {
+      drafts: [],
+      migrationReport: {
+        storageVersion: DRAFT_STORAGE_VERSION,
+        migrated: false,
+        draftCount: 0,
+        invalidRecordCount: 1,
+        messages: ['Yerel taslak kaydı okunamadı; geçersiz veri yok sayıldı.'],
+      },
+    };
   }
 }
 
 export async function saveDrafts(drafts: readonly LocalDraft[]): Promise<void> {
-  await AsyncStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(drafts));
+  const envelope: DraftStorageEnvelope = {
+    storageVersion: DRAFT_STORAGE_VERSION,
+    savedAt: new Date().toISOString(),
+    drafts,
+  };
+  await AsyncStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(envelope));
 }
 
 export async function createDraft(formType: DraftFormType, existingDrafts: readonly LocalDraft[]): Promise<LocalDraft[]> {
@@ -108,7 +203,7 @@ export async function createDraft(formType: DraftFormType, existingDrafts: reado
     completionPercent: 0,
     revision: 1,
   };
-  const nextDrafts = normalizeDrafts([draft, ...existingDrafts]);
+  const nextDrafts = normalizeDrafts([draft, ...existingDrafts]).drafts;
   await saveDrafts(nextDrafts);
   return nextDrafts;
 }
@@ -126,7 +221,7 @@ export async function resumeDraft(draftId: string, existingDrafts: readonly Loca
           }
         : draft,
     ),
-  );
+  ).drafts;
   await saveDrafts(nextDrafts);
   return nextDrafts;
 }
@@ -149,7 +244,7 @@ export async function updateDraftTitle(
           }
         : draft,
     ),
-  );
+  ).drafts;
   await saveDrafts(nextDrafts);
   return nextDrafts;
 }
@@ -157,7 +252,7 @@ export async function updateDraftTitle(
 export async function duplicateDraft(draftId: string, existingDrafts: readonly LocalDraft[]): Promise<LocalDraft[]> {
   const source = existingDrafts.find((draft) => draft.id === draftId);
   if (!source) {
-    return normalizeDrafts(existingDrafts);
+    return normalizeDrafts(existingDrafts).drafts;
   }
 
   const createdAt = new Date().toISOString();
@@ -170,7 +265,7 @@ export async function duplicateDraft(draftId: string, existingDrafts: readonly L
     lastOpenedAt: null,
     revision: 1,
   };
-  const nextDrafts = normalizeDrafts([duplicate, ...existingDrafts]);
+  const nextDrafts = normalizeDrafts([duplicate, ...existingDrafts]).drafts;
   await saveDrafts(nextDrafts);
   return nextDrafts;
 }
