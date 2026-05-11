@@ -1,7 +1,7 @@
 {
-  "phase": "Phase 4H-C",
-  "version": "0.4.11",
-  "buildId": "phase-4h-c-v0.4.11-20260511",
+  "phase": "Phase 4H-D",
+  "version": "0.4.12",
+  "buildId": "phase-4h-d-v0.4.12-20260511",
   "passed": true,
   "totals": {
     "fieldCount": 3380,

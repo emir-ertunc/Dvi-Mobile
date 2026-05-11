@@ -345,16 +345,45 @@ function DraftDetailPanel({
   readonly onTitleChange: (title: string) => void;
 }) {
   const [title, setTitle] = useState(draft.title);
+  const [activeSectionTitle, setActiveSectionTitle] = useState('İlk bölüm hazırlanıyor');
 
   return (
     <View style={styles.panel}>
-      <View style={styles.detailHeader}>
-        <View>
-          <Text style={styles.panelTitle}>Taslak Detayı</Text>
-          <Text style={styles.mutedText}>{draft.formType} kayıt yaşam döngüsü</Text>
+      <View style={styles.activeFormHeader}>
+        <View style={styles.formBadge}>
+          <Text style={styles.formBadgeText}>{draft.formType}</Text>
+        </View>
+        <View style={styles.activeFormTitleGroup}>
+          <Text style={styles.panelTitle}>{draft.title}</Text>
+          <Text style={styles.mutedText}>
+            Son kayıt: {formatDraftDate(draft.updatedAt)} · Tamamlanma: %{draft.completionPercent}
+          </Text>
         </View>
         <Pressable accessibilityRole="button" onPress={onClose} style={styles.closeButton}>
           <Text style={styles.closeButtonText}>Kapat</Text>
+        </Pressable>
+      </View>
+
+      <View style={styles.activeContextGrid}>
+        <View style={styles.contextTile}>
+          <Text style={styles.contextLabel}>Kayıt türü</Text>
+          <Text style={styles.contextValue}>{draft.formType === 'AM' ? 'Ölüm öncesi' : 'Ölüm sonrası'}</Text>
+        </View>
+        <View style={styles.contextTile}>
+          <Text style={styles.contextLabel}>Aktif bölüm</Text>
+          <Text style={styles.contextValue}>{activeSectionTitle}</Text>
+        </View>
+        <View style={styles.contextTile}>
+          <Text style={styles.contextLabel}>Kaydedilen alan</Text>
+          <Text style={styles.contextValue}>
+            {draft.savedFieldCount} / {draft.schemaFieldCount}
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.quickActionBar}>
+        <Pressable accessibilityRole="button" onPress={onClose} style={styles.secondaryAction}>
+          <Text style={styles.secondaryActionText}>Formu kapat</Text>
         </Pressable>
       </View>
 
@@ -371,11 +400,7 @@ function DraftDetailPanel({
         <Text style={styles.statText}>Oluşturma: {formatDraftDate(draft.createdAt)}</Text>
         <Text style={styles.statText}>Güncelleme: {formatDraftDate(draft.updatedAt)}</Text>
       </View>
-      <Text style={styles.bodyText}>
-        Bu panel, taslağın seçilmesini, üst veri düzenlemesini ve bu fazda açılan AM/PM alan değerlerinin
-        saklanmasını doğrular.
-      </Text>
-      <FormWorkspace draft={draft} onFieldValueChange={onFieldValueChange} />
+      <FormWorkspace draft={draft} onActiveSectionChange={setActiveSectionTitle} onFieldValueChange={onFieldValueChange} />
     </View>
   );
 }
@@ -776,11 +801,48 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '900',
   },
-  detailHeader: {
+  activeFormHeader: {
     alignItems: 'center',
+    borderBottomColor: '#e2e8f0',
+    borderBottomWidth: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     gap: 12,
+    paddingBottom: 12,
+  },
+  activeFormTitleGroup: {
+    flex: 1,
+    gap: 3,
+  },
+  activeContextGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  contextTile: {
+    backgroundColor: '#f8fafc',
+    borderColor: '#d8dee8',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexGrow: 1,
+    gap: 4,
+    minWidth: 138,
+    padding: 11,
+  },
+  contextLabel: {
+    color: '#64748b',
+    fontSize: 12,
+    fontWeight: '800',
+  },
+  contextValue: {
+    color: '#111827',
+    fontSize: 14,
+    fontWeight: '900',
+    lineHeight: 19,
+  },
+  quickActionBar: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
   },
   closeButton: {
     borderColor: '#64748b',

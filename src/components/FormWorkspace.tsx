@@ -19,6 +19,7 @@ import { FormSectionNavigator } from './FormSectionNavigator';
 
 interface FormWorkspaceProps {
   readonly draft: LocalDraft;
+  readonly onActiveSectionChange?: (sectionTitle: string) => void;
   readonly onFieldValueChange: (draftId: string, fieldId: string, value: DraftFieldValue | null) => void;
 }
 
@@ -95,7 +96,7 @@ function fieldHasIssue(field: CanonicalSchemaField, value: DraftFieldValue | und
   return !validation.valid;
 }
 
-export function FormWorkspace({ draft, onFieldValueChange }: FormWorkspaceProps) {
+export function FormWorkspace({ draft, onActiveSectionChange, onFieldValueChange }: FormWorkspaceProps) {
   const formType = draft.formType as FormType;
   const sections = useMemo(() => getFormSections(formType), [formType]);
   const [activeSectionId, setActiveSectionId] = useState(getInitialSectionId(formType));
@@ -138,6 +139,10 @@ export function FormWorkspace({ draft, onFieldValueChange }: FormWorkspaceProps)
     if (fieldFilter === 'issues') return issue;
     return true;
   });
+
+  useEffect(() => {
+    if (activeSection) onActiveSectionChange?.(activeSection.title);
+  }, [activeSection, onActiveSectionChange]);
 
   return (
     <View style={styles.workspace}>
