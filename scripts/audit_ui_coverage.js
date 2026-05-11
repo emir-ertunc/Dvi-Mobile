@@ -1,12 +1,12 @@
 const { mkdirSync, readFileSync, writeFileSync } = require('node:fs');
 const { dirname, join } = require('node:path');
 
-const PHASE = 'Phase 4H-A';
-const VERSION = '0.4.9';
-const BUILD_ID = 'phase-4h-a-v0.4.9-20260511';
+const PHASE = 'Phase 4H-B';
+const VERSION = '0.4.10';
+const BUILD_ID = 'phase-4h-b-v0.4.10-20260511';
 const ROOT = process.cwd();
 const OUTPUT_AUDIT = join(ROOT, 'data', 'ui-coverage', 'ui-coverage-audit.json');
-const OUTPUT_MATRIX = join(ROOT, 'docs', 'app', 'phase-4h-a-ui-coverage-matrix.md');
+const OUTPUT_MATRIX = join(ROOT, 'docs', 'app', 'phase-4h-b-ui-coverage-matrix.md');
 
 const FORM_CONFIGS = [
   {

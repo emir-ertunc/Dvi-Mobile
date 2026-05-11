@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
@@ -14,11 +14,19 @@ import { useLocalDrafts, type LocalDraftState } from './src/hooks/useLocalDrafts
 import { APP_ROUTES, type AppRouteId } from './src/navigation/appRoutes';
 import { formatDraftDate, type LocalDraft } from './src/storage/draftStore';
 
+type DraftListFilter = 'all' | 'AM' | 'PM';
+
 const statusColor: Record<string, string> = {
   tamamlandı: '#0f766e',
   sürüyor: '#1d4ed8',
   bekliyor: '#64748b',
 };
+
+const DRAFT_LIST_FILTERS: readonly { id: DraftListFilter; label: string }[] = [
+  { id: 'all', label: 'Tümü' },
+  { id: 'AM', label: 'AM' },
+  { id: 'PM', label: 'PM' },
+];
 
 export default function App() {
   const [activeRoute, setActiveRoute] = useState<AppRouteId>('saved');
@@ -57,13 +65,29 @@ function SavedScreen({
   readonly draftState: LocalDraftState;
   readonly onNavigate: (route: AppRouteId) => void;
 }) {
-  const recentDrafts = draftState.drafts.slice(0, 3);
+  const [draftFilter, setDraftFilter] = useState<DraftListFilter>('all');
+  const [draftSearch, setDraftSearch] = useState('');
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
+  const normalizedSearch = draftSearch.trim().toLocaleLowerCase('tr-TR');
+  const filteredDrafts = draftState.drafts.filter((draft) => {
+    const matchesType = draftFilter === 'all' || draft.formType === draftFilter;
+    const searchableText = [
+      draft.title,
+      draft.formType,
+      formatDraftDate(draft.updatedAt),
+      draft.lastOpenedAt ? formatDraftDate(draft.lastOpenedAt) : '',
+    ]
+      .join(' ')
+      .toLocaleLowerCase('tr-TR');
+    const matchesSearch = normalizedSearch.length === 0 || searchableText.includes(normalizedSearch);
+    return matchesType && matchesSearch;
+  });
 
   return (
     <View style={styles.screen}>
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Kayıtlı Taslaklar</Text>
-        <Text style={styles.sectionDetail}>Cihazda saklanan AM ve PM taslaklarının hızlı durumu.</Text>
+        <Text style={styles.sectionDetail}>Cihazda saklanan AM ve PM taslaklarını bulun, açın, kopyalayın veya silin.</Text>
       </View>
 
       <View style={styles.metricGrid}>
@@ -77,36 +101,82 @@ function SavedScreen({
       </View>
 
       <View style={styles.panel}>
-        <Text style={styles.panelTitle}>Son Kayıtlar</Text>
+        <Text style={styles.panelTitle}>Taslak Listesi</Text>
+        <TextInput
+          accessibilityLabel="Taslak arama"
+          onChangeText={setDraftSearch}
+          placeholder="Başlık, tür veya tarih ara"
+          placeholderTextColor="#64748b"
+          style={styles.searchInput}
+          value={draftSearch}
+        />
+        <View style={styles.filterRow}>
+          {DRAFT_LIST_FILTERS.map((filter) => {
+            const active = filter.id === draftFilter;
+            return (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityState={{ selected: active }}
+                key={filter.id}
+                onPress={() => setDraftFilter(filter.id)}
+                style={[styles.filterButton, active && styles.activeFilterButton]}
+              >
+                <Text style={[styles.filterButtonText, active && styles.activeFilterButtonText]}>{filter.label}</Text>
+              </Pressable>
+            );
+          })}
+        </View>
+        <Text style={styles.filterResultText}>
+          {filteredDrafts.length} taslak gösteriliyor. AM: {draftState.amDraftCount}, PM: {draftState.pmDraftCount}.
+        </Text>
         {draftState.loading && <Text style={styles.mutedText}>Taslaklar yükleniyor.</Text>}
         {draftState.errorMessage && <Text style={styles.errorText}>{draftState.errorMessage}</Text>}
-        {!draftState.loading && recentDrafts.length === 0 && (
-          <Text style={styles.mutedText}>Cihazda kayıtlı taslak bulunmuyor.</Text>
-        )}
-        {recentDrafts.map((draft) => (
-          <View key={draft.id} style={[styles.savedSummaryRow, draft.id === draftState.activeDraftId && styles.activeDraftRow]}>
-            <View style={styles.draftMain}>
-              <Text style={styles.draftTitle}>{draft.title}</Text>
-              <Text style={styles.mutedText}>{draft.formType} · Son kayıt: {formatDraftDate(draft.updatedAt)}</Text>
-            </View>
-            <Pressable
-              accessibilityRole="button"
-              onPress={() => {
-                void draftState.resumeDraft(draft.id);
-                onNavigate('form');
-              }}
-              style={styles.smallButton}
-            >
-              <Text style={styles.smallButtonText}>Devam</Text>
+        {!draftState.loading && draftState.drafts.length === 0 && (
+          <View style={styles.emptyStatePanel}>
+            <Text style={styles.emptyStateTitle}>Kayıtlı taslak yok</Text>
+            <Text style={styles.mutedText}>Yeni AM veya PM kaydı başlatarak ilk yerel taslağı oluşturun.</Text>
+            <Pressable accessibilityRole="button" onPress={() => onNavigate('forms')} style={styles.primaryAction}>
+              <Text style={styles.primaryActionText}>Yeni kayıt başlat</Text>
             </Pressable>
           </View>
+        )}
+        {!draftState.loading && draftState.drafts.length > 0 && filteredDrafts.length === 0 && (
+          <View style={styles.emptyStatePanel}>
+            <Text style={styles.emptyStateTitle}>Eşleşen taslak yok</Text>
+            <Text style={styles.mutedText}>Arama metnini veya AM/PM filtresini değiştirin.</Text>
+          </View>
+        )}
+        {filteredDrafts.map((draft) => (
+          <DraftRow
+            active={draft.id === draftState.activeDraftId}
+            draft={draft}
+            key={draft.id}
+            onDeleteRequest={() => setPendingDeleteId(draft.id)}
+            onDuplicate={() => void draftState.duplicateDraft(draft.id)}
+            onResume={() => {
+              void draftState.resumeDraft(draft.id);
+              onNavigate('form');
+            }}
+          />
         ))}
-        <View style={styles.actionRow}>
-          <Pressable accessibilityRole="button" onPress={() => onNavigate('forms')} style={styles.primaryAction}>
-            <Text style={styles.primaryActionText}>Yeni kayıt başlat</Text>
-          </Pressable>
-        </View>
+        {draftState.drafts.length > 0 && (
+          <View style={styles.actionRow}>
+            <Pressable accessibilityRole="button" onPress={() => onNavigate('forms')} style={styles.secondaryAction}>
+              <Text style={styles.secondaryActionText}>Yeni kayıt başlat</Text>
+            </Pressable>
+          </View>
+        )}
       </View>
+
+      {pendingDeleteId && (
+        <DeleteConfirmation
+          onCancel={() => setPendingDeleteId(null)}
+          onConfirm={() => {
+            void draftState.deleteDraft(pendingDeleteId);
+            setPendingDeleteId(null);
+          }}
+        />
+      )}
     </View>
   );
 }
@@ -163,13 +233,7 @@ function ActiveFormScreen({
 
 function FormsScreen({ draftState }: { readonly draftState: LocalDraftState }) {
   const [selectedForm, setSelectedForm] = useState<'AM' | 'PM'>('AM');
-  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
   const selected = FORM_READINESS.find((form) => form.code === selectedForm) ?? FORM_READINESS[0];
-  const selectedDrafts = draftState.drafts.filter((draft) => draft.formType === selectedForm);
-  const activeDraft = useMemo(
-    () => draftState.drafts.find((draft) => draft.id === draftState.activeDraftId) ?? null,
-    [draftState.activeDraftId, draftState.drafts],
-  );
 
   return (
     <View style={styles.screen}>
@@ -229,44 +293,12 @@ function FormsScreen({ draftState }: { readonly draftState: LocalDraftState }) {
       </View>
 
       <View style={styles.panel}>
-        <Text style={styles.panelTitle}>Kalıcı taslak listesi</Text>
-        {draftState.loading && <Text style={styles.mutedText}>Taslaklar yükleniyor.</Text>}
-        {draftState.errorMessage && <Text style={styles.errorText}>{draftState.errorMessage}</Text>}
-        {!draftState.loading && selectedDrafts.length === 0 && (
-          <Text style={styles.mutedText}>Bu form türü için yerel taslak bulunmuyor.</Text>
-        )}
-        {selectedDrafts.map((draft) => (
-          <DraftRow
-            active={draft.id === draftState.activeDraftId}
-            draft={draft}
-            key={draft.id}
-            onDeleteRequest={() => setPendingDeleteId(draft.id)}
-            onDuplicate={() => void draftState.duplicateDraft(draft.id)}
-            onResume={() => void draftState.resumeDraft(draft.id)}
-            onSelect={() => draftState.selectDraft(draft.id)}
-          />
-        ))}
+        <Text style={styles.panelTitle}>Kayıtlı taslaklar ayrı ekranda</Text>
+        <Text style={styles.bodyText}>
+          Önceden oluşturulan AM/PM taslaklarına Kayıtlı sekmesinden devam edilir. Bu ekran yalnızca yeni kayıt
+          başlatma kararını gösterir.
+        </Text>
       </View>
-
-      {activeDraft && (
-        <DraftDetailPanel
-          draft={activeDraft}
-          key={activeDraft.id}
-          onClose={() => draftState.selectDraft(null)}
-          onFieldValueChange={(fieldId, value) => void draftState.updateDraftFieldValue(activeDraft.id, fieldId, value)}
-          onTitleChange={(title) => void draftState.updateDraftTitle(activeDraft.id, title)}
-        />
-      )}
-
-      {pendingDeleteId && (
-        <DeleteConfirmation
-          onCancel={() => setPendingDeleteId(null)}
-          onConfirm={() => {
-            void draftState.deleteDraft(pendingDeleteId);
-            setPendingDeleteId(null);
-          }}
-        />
-      )}
     </View>
   );
 }
@@ -277,14 +309,12 @@ function DraftRow({
   onDeleteRequest,
   onDuplicate,
   onResume,
-  onSelect,
 }: {
   readonly active: boolean;
   readonly draft: LocalDraft;
   readonly onDeleteRequest: () => void;
   readonly onDuplicate: () => void;
   readonly onResume: () => void;
-  readonly onSelect: () => void;
 }) {
   return (
     <View style={[styles.draftRow, active && styles.activeDraftRow]}>
@@ -300,9 +330,6 @@ function DraftRow({
       </View>
       <View style={styles.draftActions}>
         <Text style={styles.progressText}>%{draft.completionPercent}</Text>
-        <Pressable accessibilityRole="button" onPress={onSelect} style={styles.smallButton}>
-          <Text style={styles.smallButtonText}>Seç</Text>
-        </Pressable>
         <Pressable accessibilityRole="button" onPress={onResume} style={styles.smallButton}>
           <Text style={styles.smallButtonText}>Devam</Text>
         </Pressable>
@@ -651,6 +678,46 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: 10,
   },
+  searchInput: {
+    backgroundColor: '#f8fafc',
+    borderColor: '#cbd5e1',
+    borderRadius: 8,
+    borderWidth: 1,
+    color: '#111827',
+    fontSize: 14,
+    minHeight: 44,
+    paddingHorizontal: 11,
+  },
+  filterRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  filterButton: {
+    borderColor: '#cbd5e1',
+    borderRadius: 7,
+    borderWidth: 1,
+    minHeight: 38,
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+  },
+  activeFilterButton: {
+    backgroundColor: '#0f766e',
+    borderColor: '#0f766e',
+  },
+  filterButtonText: {
+    color: '#334155',
+    fontSize: 13,
+    fontWeight: '900',
+  },
+  activeFilterButtonText: {
+    color: '#ffffff',
+  },
+  filterResultText: {
+    color: '#475569',
+    fontSize: 12,
+    lineHeight: 17,
+  },
   primaryAction: {
     alignItems: 'center',
     backgroundColor: '#134e4a',
@@ -684,6 +751,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 12,
     padding: 12,
+  },
+  emptyStatePanel: {
+    backgroundColor: '#f8fafc',
+    borderColor: '#d8dee8',
+    borderRadius: 8,
+    borderWidth: 1,
+    gap: 10,
+    padding: 14,
+  },
+  emptyStateTitle: {
+    color: '#111827',
+    fontSize: 15,
+    fontWeight: '900',
   },
   activeDraftRow: {
     backgroundColor: '#eef6f5',
