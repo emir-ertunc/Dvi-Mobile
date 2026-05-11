@@ -36,7 +36,7 @@ Her faz veya subfaz sonunda şu kapılar tamamlanmadan sonraki faza geçilmeyece
 - Kod ve dokümantasyon tamamlanmış olacak.
 - Doğrulama komutları çalışacak.
 - Versioned APK üretilecek.
-- Uygulama içinde faz, sürüm ve build kimliği görünecek.
+- Uygulama içinde faz, sürüm ve derleme kimliği görünecek.
 - Commit alınacak.
 - Branch push edilecek.
 - Faz raporu verilecek.
@@ -107,7 +107,7 @@ Yeni PDF inspection scripti yazılacaktır. Script şu bilgileri üretir:
 - widget type distribution
 - checkbox/button states
 - page-level widget counts
-- per-widget metadata
+- alan bileşeni üst verisi
 
 ### Beklenen Teknik Gerçekler
 
@@ -128,7 +128,7 @@ Yeni PDF inspection scripti yazılacaktır. Script şu bilgileri üretir:
 - PDF dosyaları bulunamazsa script fail eder.
 - Beklenen page/widget/field count saparsa script fail eder.
 - Text layer boşsa script fail eder.
-- Widget metadata eksikse script fail eder.
+- Alan bileşeni üst verisi eksikse script hata verir.
 
 ## 5. Phase 1B - AM Tam Alan Envanteri
 
@@ -279,9 +279,9 @@ Ana ekran, AM/PM ayrımı, vaka listesi ve build info paneli oluşturulur.
 
 ### Phase 3B - Local Persistence
 
-Draft kayıtları cihaz üzerinde saklanır. Veri modeli versioned migration destekler.
+Taslak kayıtları cihaz üzerinde saklanır. Veri modeli sürümlemeli veri geçişini destekler.
 
-### Phase 3C - Draft Lifecycle
+### Phase 3C - Taslak Yaşam Döngüsü
 
 Create, edit, resume, duplicate ve delete akışları kurulur. Silme işlemi explicit confirmation gerektirir.
 
@@ -327,11 +327,11 @@ Canonical field id ile PDF field name/button state eşleşmeleri manifest içind
 
 ### Phase 5C - AM Export
 
-AM draft verisi resmi fillable AM PDF’ye aktarılır.
+AM taslak verisi resmi fillable AM PDF’ye aktarılır.
 
 ### Phase 5D - PM Export
 
-PM draft verisi resmi fillable PM PDF’ye aktarılır.
+PM taslak verisi resmi fillable PM PDF’ye aktarılır.
 
 ### Phase 5E - Checkbox Regression
 
@@ -375,7 +375,7 @@ Türkçe karakterler, uygulama metinleri ve PDF export metinleri denetlenir.
 
 ### Phase 7C - Export Regression
 
-AM/PM sample draft setleriyle export tekrar testleri çalışır.
+AM/PM örnek taslak setleriyle export tekrar testleri çalışır.
 
 ### Phase 7D - Offline Edge Cases
 

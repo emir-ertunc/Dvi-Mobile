@@ -228,7 +228,7 @@ function SystemScreen({ draftState }: { readonly draftState: LocalDraftState }) 
           AM taslak: {draftState.amDraftCount} · PM taslak: {draftState.pmDraftCount}
         </Text>
         <Text style={styles.mutedText}>
-          Taslak metadata kayıtları cihaz depolamasında tutulur ve uygulama yeniden açıldığında okunur.
+          Taslak üst veri kayıtları cihaz depolamasında tutulur ve uygulama yeniden açıldığında okunur.
         </Text>
       </View>
     </View>

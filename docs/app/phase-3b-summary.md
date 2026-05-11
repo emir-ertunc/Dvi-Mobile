@@ -1,4 +1,4 @@
-# Phase 3B Özeti: Yerel Draft Persistence
+# Phase 3B Özeti: Yerel Taslak Saklama
 
 Phase 3B, uygulama kabuğuna cihazda kalıcı AM/PM taslak saklama temelini ekler.
 
@@ -14,7 +14,7 @@ Phase 3B, uygulama kabuğuna cihazda kalıcı AM/PM taslak saklama temelini ekle
 ## Uygulama Kapsamı
 
 - AM ve PM için ayrı yeni taslak oluşturma aksiyonları eklendi.
-- Taslak metadata kayıtları cihaz depolamasında kalıcı tutulur.
+- Taslak üst veri kayıtları cihaz depolamasında kalıcı tutulur.
 - Uygulama açıldığında yerel taslak listesi yeniden okunur.
 - Taslaklar form türüne göre listelenir.
 - Taslak silme aksiyonu eklendi.

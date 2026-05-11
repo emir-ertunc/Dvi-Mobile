@@ -5,7 +5,7 @@ DVI Mobil, Türkçe kullanıcı arayüzüne sahip çevrimdışı öncelikli bir 
 ## Faz 3B
 
 - Uygulama sürümü: `0.3.1`
-- Uygulama içinde görünür build kimliği: `phase-3b-v0.3.1-20260511`
+- Uygulama içinde görünür derleme kimliği: `phase-3b-v0.3.1-20260511`
 - Resmi form kaynağı artık fillable INTERPOL AM/PM PDF dosyalarıdır.
 - AM fillable PDF: 18 sayfa, 2006 widget, 1687 unique field name.
 - PM fillable PDF: 19 sayfa, 2026 widget, 1693 unique field name.

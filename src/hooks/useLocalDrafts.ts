@@ -45,24 +45,26 @@ export function useLocalDrafts(): LocalDraftState {
     async (formType: DraftFormType) => {
       setErrorMessage(null);
       try {
-        setDrafts(await persistCreatedDraft(formType, drafts));
+        const currentDrafts = await loadDrafts();
+        setDrafts(await persistCreatedDraft(formType, currentDrafts));
       } catch {
         setErrorMessage('Taslak oluşturulamadı.');
       }
     },
-    [drafts],
+    [],
   );
 
   const deleteDraft = useCallback(
     async (draftId: string) => {
       setErrorMessage(null);
       try {
-        setDrafts(await persistDeletedDraft(draftId, drafts));
+        const currentDrafts = await loadDrafts();
+        setDrafts(await persistDeletedDraft(draftId, currentDrafts));
       } catch {
         setErrorMessage('Taslak silinemedi.');
       }
     },
-    [drafts],
+    [],
   );
 
   return useMemo(

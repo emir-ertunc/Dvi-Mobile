@@ -18,6 +18,7 @@ const requiredStoreTokens = [
 
 const requiredHookTokens = [
   'loadDrafts',
+  'const currentDrafts = await loadDrafts();',
   'persistCreatedDraft',
   'persistDeletedDraft',
   'Yerel taslaklar okunamadı.',

@@ -75,7 +75,7 @@ export const WORKFLOW_STEPS: readonly WorkflowStep[] = [
   {
     title: 'Şema doğrulaması',
     status: 'tamamlandı',
-    detail: 'AM/PM şema kapsamı build kapısı haline getirildi.',
+    detail: 'AM/PM şema kapsamı derleme kapısı haline getirildi.',
   },
   {
     title: 'Uygulama kabuğu',
