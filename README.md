@@ -2,10 +2,10 @@
 
 DVI Mobil, Türkçe kullanıcı arayüzüne sahip çevrimdışı öncelikli bir mobil uygulama olarak geliştirilecektir. Resmi PDF aktarımı için kaynak şablonlar 2018 INTERPOL fillable AM ve PM formlarıdır.
 
-## Faz 3B
+## Faz 3C
 
-- Uygulama sürümü: `0.3.1`
-- Uygulama içinde görünür derleme kimliği: `phase-3b-v0.3.1-20260511`
+- Uygulama sürümü: `0.3.2`
+- Uygulama içinde görünür derleme kimliği: `phase-3c-v0.3.2-20260511`
 - Resmi form kaynağı artık fillable INTERPOL AM/PM PDF dosyalarıdır.
 - AM fillable PDF: 18 sayfa, 2006 widget, 1687 unique field name.
 - PM fillable PDF: 19 sayfa, 2026 widget, 1693 unique field name.
@@ -18,6 +18,7 @@ DVI Mobil, Türkçe kullanıcı arayüzüne sahip çevrimdışı öncelikli bir 
 - AM/PM schema coverage denetimi `data/schema/schema-coverage-audit.json` içindedir.
 - Uygulama kabuğu, navigasyon ve dashboard temeli `App.tsx`, `src/navigation` ve `src/data` altında kuruludur.
 - Yerel taslak saklama katmanı `src/storage/draftStore.ts` ve `src/hooks/useLocalDrafts.ts` içindedir.
+- AM/PM taslak yaşam döngüsü devam etme, başlık düzenleme, kopyalama ve onaylı silme akışlarını içerir.
 - Widget manifestleri `data/acroform-forensics/generated` altında tutulur.
 - Ana proje planı `docs/project-plan.md` içindedir.
 
@@ -47,10 +48,10 @@ npm run schema:coverage:verify
 npm run drafts:storage:verify
 ```
 
-Android APK GitHub Actions üzerinde `Phase 3B APK` workflow'u ile üretilir. Beklenen artifact adı:
+Android APK GitHub Actions üzerinde `Phase 3C APK` workflow'u ile üretilir. Beklenen artifact adı:
 
 ```text
-DviMobile-phase-3b-v0.3.1-20260511.apk
+DviMobile-phase-3c-v0.3.2-20260511.apk
 ```
 
 ## Kaynak Sınırı

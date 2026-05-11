@@ -8,10 +8,12 @@ export interface LocalDraft {
   readonly title: string;
   readonly createdAt: string;
   readonly updatedAt: string;
+  readonly lastOpenedAt: string | null;
   readonly schemaFieldCount: number;
   readonly widgetBindingCount: number;
   readonly savedFieldCount: number;
   readonly completionPercent: number;
+  readonly revision: number;
 }
 
 export const DRAFT_STORAGE_KEY = '@dvi-mobile/local-drafts/v1';
@@ -65,6 +67,11 @@ function normalizeDrafts(value: unknown): LocalDraft[] {
         typeof draft.completionPercent === 'number'
       );
     })
+    .map((draft) => ({
+      ...draft,
+      lastOpenedAt: typeof draft.lastOpenedAt === 'string' ? draft.lastOpenedAt : null,
+      revision: typeof draft.revision === 'number' ? draft.revision : 1,
+    }))
     .sort((left, right) => Date.parse(right.updatedAt) - Date.parse(left.updatedAt));
 }
 
@@ -94,12 +101,76 @@ export async function createDraft(formType: DraftFormType, existingDrafts: reado
     title: draftTitle(formType, createdAt),
     createdAt,
     updatedAt: createdAt,
+    lastOpenedAt: null,
     schemaFieldCount: totals.schemaFieldCount,
     widgetBindingCount: totals.widgetBindingCount,
     savedFieldCount: 0,
     completionPercent: 0,
+    revision: 1,
   };
   const nextDrafts = normalizeDrafts([draft, ...existingDrafts]);
+  await saveDrafts(nextDrafts);
+  return nextDrafts;
+}
+
+export async function resumeDraft(draftId: string, existingDrafts: readonly LocalDraft[]): Promise<LocalDraft[]> {
+  const openedAt = new Date().toISOString();
+  const nextDrafts = normalizeDrafts(
+    existingDrafts.map((draft) =>
+      draft.id === draftId
+        ? {
+            ...draft,
+            updatedAt: openedAt,
+            lastOpenedAt: openedAt,
+            revision: draft.revision + 1,
+          }
+        : draft,
+    ),
+  );
+  await saveDrafts(nextDrafts);
+  return nextDrafts;
+}
+
+export async function updateDraftTitle(
+  draftId: string,
+  title: string,
+  existingDrafts: readonly LocalDraft[],
+): Promise<LocalDraft[]> {
+  const updatedAt = new Date().toISOString();
+  const cleanTitle = title.trim();
+  const nextDrafts = normalizeDrafts(
+    existingDrafts.map((draft) =>
+      draft.id === draftId
+        ? {
+            ...draft,
+            title: cleanTitle.length > 0 ? cleanTitle : draft.title,
+            updatedAt,
+            revision: draft.revision + 1,
+          }
+        : draft,
+    ),
+  );
+  await saveDrafts(nextDrafts);
+  return nextDrafts;
+}
+
+export async function duplicateDraft(draftId: string, existingDrafts: readonly LocalDraft[]): Promise<LocalDraft[]> {
+  const source = existingDrafts.find((draft) => draft.id === draftId);
+  if (!source) {
+    return normalizeDrafts(existingDrafts);
+  }
+
+  const createdAt = new Date().toISOString();
+  const duplicate: LocalDraft = {
+    ...source,
+    id: createId(source.formType, createdAt),
+    title: `${source.title} - Kopya`,
+    createdAt,
+    updatedAt: createdAt,
+    lastOpenedAt: null,
+    revision: 1,
+  };
+  const nextDrafts = normalizeDrafts([duplicate, ...existingDrafts]);
   await saveDrafts(nextDrafts);
   return nextDrafts;
 }

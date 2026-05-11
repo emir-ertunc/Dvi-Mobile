@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { BUILD_INFO } from './src/config/buildInfo';
 import { MetricTile } from './src/components/MetricTile';
@@ -48,6 +48,8 @@ export default function App() {
 }
 
 function OverviewScreen({ draftState }: { readonly draftState: LocalDraftState }) {
+  const activeDraft = draftState.drafts.find((draft) => draft.id === draftState.activeDraftId);
+
   return (
     <View style={styles.screen}>
       <View style={styles.sectionHeader}>
@@ -69,9 +71,10 @@ function OverviewScreen({ draftState }: { readonly draftState: LocalDraftState }
       <View style={styles.panel}>
         <Text style={styles.panelTitle}>Hızlı Durum</Text>
         <Text style={styles.bodyText}>
-          Bu faz, AM/PM taslaklarının cihazda kalıcı tutulmasını ekler. Tam veri giriş ekranı ve
-          ayrıntılı düzenleme sonraki fazlarda bağlanacaktır.
+          Bu faz, taslak oluşturma, devam etme, başlık düzenleme, kopyalama ve onaylı silme akışını
+          cihaz üzerinde çalışır hale getirir.
         </Text>
+        {activeDraft && <Text style={styles.mutedText}>Aktif taslak: {activeDraft.title}</Text>}
       </View>
     </View>
   );
@@ -79,8 +82,13 @@ function OverviewScreen({ draftState }: { readonly draftState: LocalDraftState }
 
 function FormsScreen({ draftState }: { readonly draftState: LocalDraftState }) {
   const [selectedForm, setSelectedForm] = useState<'AM' | 'PM'>('AM');
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
   const selected = FORM_READINESS.find((form) => form.code === selectedForm) ?? FORM_READINESS[0];
   const selectedDrafts = draftState.drafts.filter((draft) => draft.formType === selectedForm);
+  const activeDraft = useMemo(
+    () => draftState.drafts.find((draft) => draft.id === draftState.activeDraftId) ?? null,
+    [draftState.activeDraftId, draftState.drafts],
+  );
 
   return (
     <View style={styles.screen}>
@@ -147,27 +155,147 @@ function FormsScreen({ draftState }: { readonly draftState: LocalDraftState }) {
           <Text style={styles.mutedText}>Bu form türü için yerel taslak bulunmuyor.</Text>
         )}
         {selectedDrafts.map((draft) => (
-          <DraftRow key={draft.id} draft={draft} onDelete={() => void draftState.deleteDraft(draft.id)} />
+          <DraftRow
+            active={draft.id === draftState.activeDraftId}
+            draft={draft}
+            key={draft.id}
+            onDeleteRequest={() => setPendingDeleteId(draft.id)}
+            onDuplicate={() => void draftState.duplicateDraft(draft.id)}
+            onResume={() => void draftState.resumeDraft(draft.id)}
+            onSelect={() => draftState.selectDraft(draft.id)}
+          />
         ))}
+      </View>
+
+      {activeDraft && (
+        <DraftDetailPanel
+          draft={activeDraft}
+          key={activeDraft.id}
+          onClose={() => draftState.selectDraft(null)}
+          onTitleChange={(title) => void draftState.updateDraftTitle(activeDraft.id, title)}
+        />
+      )}
+
+      {pendingDeleteId && (
+        <DeleteConfirmation
+          onCancel={() => setPendingDeleteId(null)}
+          onConfirm={() => {
+            void draftState.deleteDraft(pendingDeleteId);
+            setPendingDeleteId(null);
+          }}
+        />
+      )}
+    </View>
+  );
+}
+
+function DraftRow({
+  active,
+  draft,
+  onDeleteRequest,
+  onDuplicate,
+  onResume,
+  onSelect,
+}: {
+  readonly active: boolean;
+  readonly draft: LocalDraft;
+  readonly onDeleteRequest: () => void;
+  readonly onDuplicate: () => void;
+  readonly onResume: () => void;
+  readonly onSelect: () => void;
+}) {
+  return (
+    <View style={[styles.draftRow, active && styles.activeDraftRow]}>
+      <View style={styles.draftMain}>
+        <Text style={styles.draftTitle}>{draft.title}</Text>
+        <Text style={styles.mutedText}>Son kayıt: {formatDraftDate(draft.updatedAt)}</Text>
+        <Text style={styles.mutedText}>
+          Son açılış: {draft.lastOpenedAt ? formatDraftDate(draft.lastOpenedAt) : 'Henüz açılmadı'}
+        </Text>
+        <Text style={styles.mutedText}>
+          {draft.savedFieldCount} / {draft.schemaFieldCount} alan kaydedildi · Sürüm {draft.revision}
+        </Text>
+      </View>
+      <View style={styles.draftActions}>
+        <Text style={styles.progressText}>%{draft.completionPercent}</Text>
+        <Pressable accessibilityRole="button" onPress={onSelect} style={styles.smallButton}>
+          <Text style={styles.smallButtonText}>Seç</Text>
+        </Pressable>
+        <Pressable accessibilityRole="button" onPress={onResume} style={styles.smallButton}>
+          <Text style={styles.smallButtonText}>Devam</Text>
+        </Pressable>
+        <Pressable accessibilityRole="button" onPress={onDuplicate} style={styles.smallButton}>
+          <Text style={styles.smallButtonText}>Kopyala</Text>
+        </Pressable>
+        <Pressable accessibilityRole="button" onPress={onDeleteRequest} style={styles.deleteButton}>
+          <Text style={styles.deleteButtonText}>Sil</Text>
+        </Pressable>
       </View>
     </View>
   );
 }
 
-function DraftRow({ draft, onDelete }: { readonly draft: LocalDraft; readonly onDelete: () => void }) {
+function DraftDetailPanel({
+  draft,
+  onClose,
+  onTitleChange,
+}: {
+  readonly draft: LocalDraft;
+  readonly onClose: () => void;
+  readonly onTitleChange: (title: string) => void;
+}) {
+  const [title, setTitle] = useState(draft.title);
+
   return (
-    <View style={styles.draftRow}>
-      <View style={styles.draftMain}>
-        <Text style={styles.draftTitle}>{draft.title}</Text>
-        <Text style={styles.mutedText}>Son kayıt: {formatDraftDate(draft.updatedAt)}</Text>
-        <Text style={styles.mutedText}>
-          {draft.savedFieldCount} / {draft.schemaFieldCount} alan kaydedildi
-        </Text>
+    <View style={styles.panel}>
+      <View style={styles.detailHeader}>
+        <View>
+          <Text style={styles.panelTitle}>Taslak Detayı</Text>
+          <Text style={styles.mutedText}>{draft.formType} kayıt yaşam döngüsü</Text>
+        </View>
+        <Pressable accessibilityRole="button" onPress={onClose} style={styles.closeButton}>
+          <Text style={styles.closeButtonText}>Kapat</Text>
+        </Pressable>
       </View>
-      <View style={styles.draftActions}>
-        <Text style={styles.progressText}>%{draft.completionPercent}</Text>
-        <Pressable accessibilityRole="button" onPress={onDelete} style={styles.deleteButton}>
-          <Text style={styles.deleteButtonText}>Sil</Text>
+
+      <TextInput
+        accessibilityLabel="Taslak başlığı"
+        onChangeText={setTitle}
+        onEndEditing={() => onTitleChange(title)}
+        onSubmitEditing={() => onTitleChange(title)}
+        style={styles.titleInput}
+        value={title}
+      />
+
+      <View style={styles.statsRow}>
+        <Text style={styles.statText}>Oluşturma: {formatDraftDate(draft.createdAt)}</Text>
+        <Text style={styles.statText}>Güncelleme: {formatDraftDate(draft.updatedAt)}</Text>
+      </View>
+      <Text style={styles.bodyText}>
+        Bu panel, tam alan editörü bağlanmadan önce taslağın seçilmesini, geri dönülmesini ve üst veri
+        düzenlemesini doğrular.
+      </Text>
+    </View>
+  );
+}
+
+function DeleteConfirmation({
+  onCancel,
+  onConfirm,
+}: {
+  readonly onCancel: () => void;
+  readonly onConfirm: () => void;
+}) {
+  return (
+    <View style={styles.warningPanel}>
+      <Text style={styles.warningTitle}>Silme onayı</Text>
+      <Text style={styles.bodyText}>Bu taslak cihazdan kaldırılacak. İşlem geri alınamaz.</Text>
+      <View style={styles.actionRow}>
+        <Pressable accessibilityRole="button" onPress={onCancel} style={styles.secondaryAction}>
+          <Text style={styles.secondaryActionText}>Vazgeç</Text>
+        </Pressable>
+        <Pressable accessibilityRole="button" onPress={onConfirm} style={styles.dangerAction}>
+          <Text style={styles.primaryActionText}>Kalıcı Sil</Text>
         </Pressable>
       </View>
     </View>
@@ -413,6 +541,10 @@ const styles = StyleSheet.create({
     gap: 12,
     padding: 12,
   },
+  activeDraftRow: {
+    backgroundColor: '#eef6f5',
+    borderColor: '#0f766e',
+  },
   draftMain: {
     flex: 1,
     gap: 3,
@@ -443,6 +575,84 @@ const styles = StyleSheet.create({
     color: '#b91c1c',
     fontSize: 13,
     fontWeight: '900',
+  },
+  smallButton: {
+    borderColor: '#0f766e',
+    borderRadius: 6,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+  },
+  smallButtonText: {
+    color: '#0f766e',
+    fontSize: 13,
+    fontWeight: '900',
+  },
+  detailHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  closeButton: {
+    borderColor: '#64748b',
+    borderRadius: 6,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+  },
+  closeButtonText: {
+    color: '#334155',
+    fontSize: 13,
+    fontWeight: '900',
+  },
+  titleInput: {
+    backgroundColor: '#ffffff',
+    borderColor: '#cbd5e1',
+    borderRadius: 8,
+    borderWidth: 1,
+    color: '#111827',
+    fontSize: 16,
+    fontWeight: '800',
+    minHeight: 48,
+    paddingHorizontal: 12,
+  },
+  warningPanel: {
+    backgroundColor: '#fff7ed',
+    borderColor: '#fdba74',
+    borderRadius: 8,
+    borderWidth: 1,
+    gap: 10,
+    padding: 16,
+  },
+  warningTitle: {
+    color: '#9a3412',
+    fontSize: 18,
+    fontWeight: '900',
+  },
+  secondaryAction: {
+    alignItems: 'center',
+    borderColor: '#64748b',
+    borderRadius: 7,
+    borderWidth: 1,
+    flexGrow: 1,
+    minHeight: 46,
+    justifyContent: 'center',
+    paddingHorizontal: 14,
+  },
+  secondaryActionText: {
+    color: '#334155',
+    fontSize: 14,
+    fontWeight: '900',
+  },
+  dangerAction: {
+    alignItems: 'center',
+    backgroundColor: '#b91c1c',
+    borderRadius: 7,
+    flexGrow: 1,
+    minHeight: 46,
+    justifyContent: 'center',
+    paddingHorizontal: 14,
   },
   errorText: {
     color: '#b91c1c',

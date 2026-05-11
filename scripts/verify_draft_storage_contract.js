@@ -11,7 +11,12 @@ const requiredStoreTokens = [
   'AsyncStorage.getItem',
   'AsyncStorage.setItem',
   'createDraft',
+  'resumeDraft',
+  'updateDraftTitle',
+  'duplicateDraft',
   'deleteDraft',
+  'lastOpenedAt',
+  'revision',
   'schemaFieldCount: 1687',
   'schemaFieldCount: 1693',
 ];
@@ -20,13 +25,27 @@ const requiredHookTokens = [
   'loadDrafts',
   'const currentDrafts = await loadDrafts();',
   'persistCreatedDraft',
+  'persistResumedDraft',
+  'persistUpdatedDraftTitle',
+  'persistDuplicatedDraft',
   'persistDeletedDraft',
   'Yerel taslaklar okunamadı.',
   'Taslak oluşturulamadı.',
+  'Taslağa devam edilemedi.',
+  'Taslak başlığı güncellenemedi.',
+  'Taslak kopyalanamadı.',
   'Taslak silinemedi.',
 ];
 
-const requiredAppTokens = ['useLocalDrafts', 'Yeni AM taslağı', 'Yeni PM taslağı', 'Kalıcı taslak listesi'];
+const requiredAppTokens = [
+  'useLocalDrafts',
+  'Yeni AM taslağı',
+  'Yeni PM taslağı',
+  'Kalıcı taslak listesi',
+  'Taslak Detayı',
+  'Silme onayı',
+  'Kalıcı Sil',
+];
 const failures = [];
 
 for (const token of requiredStoreTokens) {

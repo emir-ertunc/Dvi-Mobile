@@ -84,7 +84,12 @@ export const WORKFLOW_STEPS: readonly WorkflowStep[] = [
   },
   {
     title: 'Yerel taslaklar',
+    status: 'tamamlandı',
+    detail: 'Cihazda kalıcı AM/PM taslak saklama kuruldu.',
+  },
+  {
+    title: 'Taslak yaşam döngüsü',
     status: 'sürüyor',
-    detail: 'Cihazda kalıcı AM/PM taslak saklama bu fazda kuruluyor.',
+    detail: 'Devam etme, başlık düzenleme, kopyalama ve onaylı silme bu fazda tamamlanır.',
   },
 ] as const;
