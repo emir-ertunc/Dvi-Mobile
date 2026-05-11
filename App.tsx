@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { BUILD_INFO } from './src/config/buildInfo';
 import { DIAGNOSTICS_INFO } from './src/config/diagnostics';
@@ -56,7 +56,7 @@ function OverviewScreen({ draftState }: { readonly draftState: LocalDraftState }
     <View style={styles.screen}>
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Operasyon Özeti</Text>
-        <Text style={styles.sectionDetail}>AM/PM kullanıcı arayüzü kapsamı ve erişilebilirlik sözleşmesi denetlendi.</Text>
+        <Text style={styles.sectionDetail}>Taslak silme onayı modal akışa alındı ve UI iyileştirme planı netleştirildi.</Text>
       </View>
 
       <View style={styles.metricGrid}>
@@ -73,8 +73,8 @@ function OverviewScreen({ draftState }: { readonly draftState: LocalDraftState }
       <View style={styles.panel}>
         <Text style={styles.panelTitle}>Hızlı Durum</Text>
         <Text style={styles.bodyText}>
-          Bu faz, AM ve PM bölümlerinin form gezgini üzerinden erişilebilir olduğunu ve temel alan kontrollerinin
-          doğru erişilebilirlik sözleşmesini taşıdığını doğrular.
+          Bu faz, uzun form ekranlarında kaybolan kritik aksiyonları düzeltmeye başlar. Silme onayı artık sayfa
+          sonunda değil, mevcut ekranın üzerinde görünür.
         </Text>
         {activeDraft && <Text style={styles.mutedText}>Aktif taslak: {activeDraft.title}</Text>}
       </View>
@@ -293,18 +293,22 @@ function DeleteConfirmation({
   readonly onConfirm: () => void;
 }) {
   return (
-    <View style={styles.warningPanel}>
-      <Text style={styles.warningTitle}>Silme onayı</Text>
-      <Text style={styles.bodyText}>Bu taslak cihazdan kaldırılacak. İşlem geri alınamaz.</Text>
-      <View style={styles.actionRow}>
-        <Pressable accessibilityRole="button" onPress={onCancel} style={styles.secondaryAction}>
-          <Text style={styles.secondaryActionText}>Vazgeç</Text>
-        </Pressable>
-        <Pressable accessibilityRole="button" onPress={onConfirm} style={styles.dangerAction}>
-          <Text style={styles.primaryActionText}>Kalıcı Sil</Text>
-        </Pressable>
+    <Modal animationType="fade" onRequestClose={onCancel} transparent visible>
+      <View style={styles.modalBackdrop}>
+        <View accessibilityRole="alert" style={styles.modalPanel}>
+          <Text style={styles.warningTitle}>Silme onayı</Text>
+          <Text style={styles.bodyText}>Bu taslak cihazdan kaldırılacak. İşlem geri alınamaz.</Text>
+          <View style={styles.actionRow}>
+            <Pressable accessibilityRole="button" onPress={onCancel} style={styles.secondaryAction}>
+              <Text style={styles.secondaryActionText}>Vazgeç</Text>
+            </Pressable>
+            <Pressable accessibilityRole="button" onPress={onConfirm} style={styles.dangerAction}>
+              <Text style={styles.primaryActionText}>Kalıcı Sil</Text>
+            </Pressable>
+          </View>
+        </View>
       </View>
-    </View>
+    </Modal>
   );
 }
 
@@ -647,13 +651,22 @@ const styles = StyleSheet.create({
     minHeight: 48,
     paddingHorizontal: 12,
   },
-  warningPanel: {
+  modalBackdrop: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(15, 23, 42, 0.46)',
+    flex: 1,
+    justifyContent: 'center',
+    padding: 18,
+  },
+  modalPanel: {
     backgroundColor: '#fff7ed',
     borderColor: '#fdba74',
     borderRadius: 8,
     borderWidth: 1,
     gap: 10,
+    maxWidth: 520,
     padding: 16,
+    width: '100%',
   },
   warningTitle: {
     color: '#9a3412',

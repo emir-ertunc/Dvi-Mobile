@@ -315,6 +315,76 @@ Pathology, odontology, attachments, signature ve footer blokları uygulanır.
 
 Her inventory alanının ekranda bir control karşılığı olduğu doğrulanır.
 
+### Phase 4G - Kullanılabilirlik ve Türkçe Alan Anlaşılırlığı
+
+Phase 4A-4F kapsamı, resmi alanların eksiksiz ekrana bağlanmasını hedeflemiştir. Bu yaklaşım export ve coverage doğruluğu için gerekliydi; ancak saha kullanıcısı için tek başına yeterli değildir. Phase 4G, tam veri kapsamını bozmadan uzun AM/PM formlarının kullanılabilirliğini iyileştirir.
+
+#### Phase 4G-A - Kritik Aksiyon Kullanılabilirliği ve Plan Güncellemesi
+
+Hedef:
+
+- Silme gibi yıkıcı aksiyonların uzun form akışı içinde kaybolmasını engelle.
+- Silme onayını sayfa sonundaki inline panel yerine modal onaya taşı.
+- Proje planında UI kullanılabilirlik borcunu açık fazlara böl.
+- Build bilgisini `0.4.6 / Faz 4G-A` olarak güncelle.
+
+Kapsam dışı:
+
+- Tüm field label haritasını bu alt fazda tamamlamak.
+- PDF export motoruna başlamak.
+- Matching ekranı tasarlamak.
+
+Doğrulama:
+
+- Typecheck geçmeli.
+- Türkçe metin kontrolü geçmeli.
+- Form renderer doğrulaması modal silme sözleşmesini denetlemeli.
+- UI coverage doğrulaması önceki 21/21 section kapsamını korumalı.
+- Versioned APK üretilmeli, commit ve push tamamlanmalı.
+
+#### Phase 4G-B - İnsan-Okur Türkçe Label ve Yardım Metni Stratejisi
+
+Hedef:
+
+- Teknik `AM alanı 300.4.4` / `PM alanı 300.4.4` etiketlerini kullanıcıya anlamlı Türkçe label yapısına taşımak.
+- PDF field name değerlerini kullanıcı etiketi olarak göstermeyi bırakmak; bu bilgi yalnızca teknik binding/debug alanında kalmalı.
+- Section başlıkları, alt grup başlıkları ve alan yardım metinleri için ayrı bir Türkçe UI label map dosyası oluşturmak.
+- Label coverage audit scripti eklemek.
+
+Kapsam:
+
+- İlk geçişte otomatik label üretimi yerine resmi PDF label/text layer ve mevcut section bağlamından türeyen denetlenebilir map dosyası kullanılacak.
+- Eksik veya şüpheli label değerleri `needsReview` olarak işaretlenecek, kullanıcıya teknik field id gösterilmeyecek.
+- AM/PM için label coverage raporu üretilecek.
+
+Çıkış kriterleri:
+
+- Her editable field için insan-okur Türkçe label veya explicit review açıklaması bulunmalı.
+- Teknik field id yalnızca debug/binding satırında görünmeli.
+- UI label audit build kapısı olmalı.
+
+#### Phase 4G-C - Uzun Form Ergonomisi ve Mobil İş Akışı
+
+Hedef:
+
+- Binlerce alanı düz liste gibi göstermek yerine daha okunabilir bölüm içi grup düzeni oluşturmak.
+- Aktif bölüm, alan ilerlemesi, eksik alanlar ve hızlı gezinme deneyimini güçlendirmek.
+- Kritik aksiyonları sticky/bottom action alanına almak.
+- Bölüm içi arama, kontrol tipi filtresi ve hata filtresi eklemek.
+
+Kapsam:
+
+- Section navigator mobilde daha hızlı taranabilir hale getirilecek.
+- Form field card yoğunluğu azaltılacak; label, yardım, değer ve validasyon hiyerarşisi netleşecek.
+- Uzun form içinde silme/kapat/devam gibi aksiyonlar kaybolmayacak.
+
+Çıkış kriterleri:
+
+- AM ve PM taslakları telefon ekranında kaybolmadan düzenlenebilir olmalı.
+- Silme, kapatma ve devam etme aksiyonları görünür ve geri dönüşü anlaşılır olmalı.
+- UI coverage korunmalı.
+- Accessibility ve Türkçe metin kontrolleri geçmeli.
+
 ## 11. Phase 5 - PDF Export Engine
 
 ### Phase 5A - Template Pipeline

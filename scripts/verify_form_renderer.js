@@ -54,8 +54,11 @@ assertContains(join('src', 'components', 'FormFieldControl.tsx'), "keyboardType"
 assertContains(join('src', 'components', 'FormFieldControl.tsx'), "accessibilityRole=\"checkbox\"");
 assertContains(join('src', 'components', 'FormFieldControl.tsx'), "onValueChange");
 assertContains(join('src', 'components', 'FormFieldControl.tsx'), "validateSchemaValue");
+assertContains(join('App.tsx'), "Modal");
+assertContains(join('App.tsx'), "animationType=\"fade\"");
+assertContains(join('App.tsx'), "accessibilityRole=\"alert\"");
 assertContains(join('App.tsx'), "updateDraftFieldValue");
 assertContains(join('src', 'storage', 'draftStore.ts'), "updateDraftFieldValue");
-assertContains(join('src', 'config', 'buildInfo.ts'), "phase-4f-v0.4.5-20260511");
+assertContains(join('src', 'config', 'buildInfo.ts'), "phase-4g-a-v0.4.6-20260511");
 
 console.log('Ortak form renderer doğrulaması geçti.');

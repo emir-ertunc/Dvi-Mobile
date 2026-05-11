@@ -2,10 +2,10 @@
 
 DVI Mobil, Türkçe kullanıcı arayüzüne sahip çevrimdışı öncelikli bir mobil uygulama olarak geliştirilecektir. Resmi PDF aktarımı için kaynak şablonlar 2018 INTERPOL fillable AM ve PM formlarıdır.
 
-## Faz 4F
+## Faz 4G-A
 
-- Uygulama sürümü: `0.4.5`
-- Uygulama içinde görünür derleme kimliği: `phase-4f-v0.4.5-20260511`
+- Uygulama sürümü: `0.4.6`
+- Uygulama içinde görünür derleme kimliği: `phase-4g-a-v0.4.6-20260511`
 - Resmi form kaynağı fillable INTERPOL AM/PM PDF dosyalarıdır.
 - AM fillable PDF: 18 sayfa, 2006 widget, 1687 unique field name.
 - PM fillable PDF: 19 sayfa, 2026 widget, 1693 unique field name.
@@ -18,6 +18,8 @@ DVI Mobil, Türkçe kullanıcı arayüzüne sahip çevrimdışı öncelikli bir 
 - AM genel bilgi, klinik, destek, ek ve imza blokları yerel taslak değerlerine bağlıdır.
 - PM buluntu, kalıntı, eşya, fiziksel tanım, patoloji, odontoloji, destek, DNA, ek ve imza blokları yerel taslak değerlerine bağlıdır.
 - UI kapsam matrisi `data/ui-coverage/ui-coverage-audit.json` ve `docs/app/phase-4f-ui-coverage-matrix.md` içinde denetlenir.
+- Silme onayı uzun form akışında kaybolmaması için modal olarak gösterilir.
+- Kullanılabilirlik iyileştirme planı `docs/project-plan.md` içinde Phase 4G-A/B/C olarak bölünmüştür.
 - Tanılama ve veri geçişi bilgileri `src/config/diagnostics.ts` ve Sistem ekranı içinde görünürdür.
 - Ana proje planı `docs/project-plan.md` içindedir.
 
@@ -41,10 +43,10 @@ npm run forms:renderer:verify
 npm run ui:coverage:verify
 ```
 
-Android APK GitHub Actions üzerinde `Phase 4F APK` workflow'u ile üretilir. Beklenen artifact adı:
+Android APK GitHub Actions üzerinde `Phase 4G-A APK` workflow'u ile üretilir. Beklenen artifact adı:
 
 ```text
-DviMobile-phase-4f-v0.4.5-20260511.apk
+DviMobile-phase-4g-a-v0.4.6-20260511.apk
 ```
 
 ## Kaynak Sınırı

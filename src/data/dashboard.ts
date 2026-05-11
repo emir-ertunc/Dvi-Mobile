@@ -124,7 +124,12 @@ export const WORKFLOW_STEPS: readonly WorkflowStep[] = [
   },
   {
     title: 'UI kapsamı',
-    status: 'sürüyor',
+    status: 'tamamlandı',
     detail: 'AM/PM bölüm kapsamı, alan kontrol erişimi ve temel erişilebilirlik sözleşmesi denetlenir.',
+  },
+  {
+    title: 'Kullanılabilirlik düzeltmeleri',
+    status: 'sürüyor',
+    detail: 'Uzun form akışlarında kritik aksiyonlar ve alan anlaşılırlığı kademeli olarak iyileştirilir.',
   },
 ] as const;
