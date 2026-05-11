@@ -1,6 +1,6 @@
 {
   "name": "dvi-mobile",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "private": true,
   "main": "index.js",
   "scripts": {
@@ -25,6 +25,7 @@
     "schema:coverage:verify": "node scripts/audit_schema_coverage.js",
     "drafts:storage:verify": "node scripts/verify_draft_storage_contract.js",
     "forms:renderer:verify": "node scripts/verify_form_renderer.js",
+    "forms:input:verify": "node scripts/verify_form_input_contract.js",
     "ui:labels": "node scripts/build_ui_labels.js --write",
     "ui:labels:verify": "node scripts/build_ui_labels.js",
     "ui:coverage": "node scripts/audit_ui_coverage.js --write",

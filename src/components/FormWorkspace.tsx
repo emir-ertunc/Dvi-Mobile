@@ -20,7 +20,7 @@ import { FormSectionNavigator } from './FormSectionNavigator';
 interface FormWorkspaceProps {
   readonly draft: LocalDraft;
   readonly onActiveSectionChange?: (sectionTitle: string) => void;
-  readonly onFieldValueChange: (draftId: string, fieldId: string, value: DraftFieldValue | null) => void;
+  readonly onFieldValueChange: (fieldId: string, value: DraftFieldValue | null) => void;
 }
 
 const EDITABLE_AM_SECTION_IDS = new Set([
@@ -258,7 +258,7 @@ export function FormWorkspace({ draft, onActiveSectionChange, onFieldValueChange
             field={field}
             index={index}
             key={field.schemaFieldId}
-            onValueChange={(fieldId, value) => onFieldValueChange(draft.id, fieldId, value)}
+            onValueChange={(fieldId, value) => onFieldValueChange(fieldId, value)}
             value={draft.fieldValues[field.schemaFieldId]}
           />
         ))}

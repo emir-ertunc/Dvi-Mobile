@@ -1,4 +1,4 @@
-name: Phase 5A-Fix4 APK
+name: Phase 5A-Fix5 APK
 
 on:
   push:
@@ -62,6 +62,9 @@ jobs:
       - name: Ortak form renderer dogrulamasi
         run: npm run forms:renderer:verify
 
+      - name: Form veri giris dogrulamasi
+        run: npm run forms:input:verify
+
       - name: Turkce alan etiketi dogrulamasi
         run: npm run ui:labels:verify
 
@@ -86,10 +89,10 @@ jobs:
       - name: APK dosyasini adlandir
         run: |
           mkdir -p artifacts
-          cp android/app/build/outputs/apk/release/app-release.apk artifacts/DviMobile-phase-5a-fix4-v0.5.4-20260512.apk
+          cp android/app/build/outputs/apk/release/app-release.apk artifacts/DviMobile-phase-5a-fix5-v0.5.5-20260512.apk
 
       - name: APK artifact yukle
         uses: actions/upload-artifact@v4
         with:
-          name: DviMobile-phase-5a-fix4-v0.5.4-20260512.apk
-          path: artifacts/DviMobile-phase-5a-fix4-v0.5.4-20260512.apk
+          name: DviMobile-phase-5a-fix5-v0.5.5-20260512.apk
+          path: artifacts/DviMobile-phase-5a-fix5-v0.5.5-20260512.apk

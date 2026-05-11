@@ -676,6 +676,33 @@ Implementation dosya grupları:
 - `DviMobile-phase-5a-fix4-v0.5.4-20260512.apk` üretilmeli.
 - Commit ve push tamamlanmalı.
 
+### Phase 5A-Fix5 - Veri Giriş Kontrolleri Düzeltmesi
+
+Phase 5A-Fix4 alan sözleşmesini sertleştirdi; ancak form çalışma alanında callback imzası hatalı kaldığı için TextInput ve checkbox değerleri gerçek schema field id'sine yazılamıyordu. Kullanıcı bir metin girdiğinde veya checkbox seçtiğinde değer taslağa yanlış anahtarla kaydediliyor, sonraki render'da alan boş görünüyordu.
+
+Hedef:
+
+- TextInput değerleri doğrudan ilgili `schemaFieldId` altında taslağa yazılır.
+- Checkbox seçimleri aynı field id altında `true` veya boş değer olarak kalıcılaşır.
+- FormWorkspace, üst katmana yalnızca `fieldId` ve `value` gönderir; draft id eklemez.
+- Veri giriş callback sözleşmesi ayrı script ile build gate haline getirilir.
+- Uygulama içi build bilgisi `0.5.5` / `phase-5a-fix5-v0.5.5-20260512` olarak görünür.
+
+Kapsam dışı:
+
+- PDF export motoru başlatılmaz.
+- Alan envanteri, schema veya label kapsamı değiştirilmez.
+- Form tasarımı bu fazda yeniden düzenlenmez; yalnızca veri girişinin doğru çalışması hedeflenir.
+
+Çıkış kriterleri:
+
+- `npm run forms:input:verify` geçmeli.
+- TextInput `onChangeText` akışı field id ile taslağa yazmalı.
+- Checkbox `onPress` akışı field id ile taslağa yazmalı.
+- TypeScript, renderer, draft storage, UI coverage ve field contract doğrulamaları geçmeli.
+- `DviMobile-phase-5a-fix5-v0.5.5-20260512.apk` üretilmeli.
+- Commit ve push tamamlanmalı.
+
 ### Phase 5B - Binding Manifest
 
 Canonical field id ile PDF field name/button state eşleşmeleri manifest içinde tutulur.
