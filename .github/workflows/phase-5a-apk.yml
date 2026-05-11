@@ -1,4 +1,4 @@
-name: Phase 4I-A APK
+name: Phase 5A APK
 
 on:
   push:
@@ -8,82 +8,85 @@ on:
 
 jobs:
   android-apk:
-    name: Android APK üretimi
+    name: Android APK uretimi
     runs-on: ubuntu-latest
     steps:
       - name: Kaynak kodu al
         uses: actions/checkout@v4
 
-      - name: Node.js hazırla
+      - name: Node.js hazirla
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
 
-      - name: Bağımlılıkları kur
+      - name: Bagimliliklari kur
         run: npm ci
 
-      - name: TypeScript kontrolü
+      - name: TypeScript kontrolu
         run: npm run typecheck
 
-      - name: Türkçe metin kontrolü
+      - name: Turkce metin kontrolu
         run: npm run text:verify-tr
 
-      - name: Yeniden baz alma kontrolü
+      - name: Yeniden baz alma kontrolu
         run: npm run rebaseline:verify
 
-      - name: Fillable PDF forensics doğrulaması
+      - name: Fillable PDF forensics dogrulamasi
         run: npm run forensics:verify
 
-      - name: AM envanter doğrulaması
+      - name: AM envanter dogrulamasi
         run: npm run inventory:am:verify
 
-      - name: PM envanter doğrulaması
+      - name: PM envanter dogrulamasi
         run: npm run inventory:pm:verify
 
       - name: AM/PM ortak envanter denetimi
         run: npm run inventory:audit:verify
 
-      - name: Field primitive doğrulaması
+      - name: Field primitive dogrulamasi
         run: npm run schema:primitives:verify
 
-      - name: AM schema doğrulaması
+      - name: AM schema dogrulamasi
         run: npm run schema:am:verify
 
-      - name: PM schema doğrulaması
+      - name: PM schema dogrulamasi
         run: npm run schema:pm:verify
 
-      - name: Schema coverage doğrulaması
+      - name: Schema coverage dogrulamasi
         run: npm run schema:coverage:verify
 
-      - name: Yerel taslak saklama doğrulaması
+      - name: Yerel taslak saklama dogrulamasi
         run: npm run drafts:storage:verify
 
-      - name: Ortak form renderer doğrulaması
+      - name: Ortak form renderer dogrulamasi
         run: npm run forms:renderer:verify
 
-      - name: Türkçe alan etiketi doğrulaması
+      - name: Turkce alan etiketi dogrulamasi
         run: npm run ui:labels:verify
 
-      - name: UI kapsam doğrulaması
+      - name: UI kapsam dogrulamasi
         run: npm run ui:coverage:verify
 
-      - name: Android proje dosyalarını üret
+      - name: PDF sablon dogrulamasi
+        run: npm run pdf:templates:verify
+
+      - name: Android proje dosyalarini uret
         run: CI=1 npx expo prebuild --platform android --clean
 
-      - name: Release APK üret
+      - name: Release APK uret
         run: |
           cd android
           chmod +x ./gradlew
           ./gradlew assembleRelease
 
-      - name: APK dosyasını adlandır
+      - name: APK dosyasini adlandir
         run: |
           mkdir -p artifacts
-          cp android/app/build/outputs/apk/release/app-release.apk artifacts/DviMobile-phase-4i-a-v0.4.13-20260511.apk
+          cp android/app/build/outputs/apk/release/app-release.apk artifacts/DviMobile-phase-5a-v0.5.0-20260511.apk
 
-      - name: APK artifact yükle
+      - name: APK artifact yukle
         uses: actions/upload-artifact@v4
         with:
-          name: DviMobile-phase-4i-a-v0.4.13-20260511.apk
-          path: artifacts/DviMobile-phase-4i-a-v0.4.13-20260511.apk
+          name: DviMobile-phase-5a-v0.5.0-20260511.apk
+          path: artifacts/DviMobile-phase-5a-v0.5.0-20260511.apk

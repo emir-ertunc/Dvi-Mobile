@@ -1,0 +1,35 @@
+{
+  "phase": "Phase 5A",
+  "version": "0.5.0",
+  "buildId": "phase-5a-v0.5.0-20260511",
+  "strategy": "Committed AcroForm template assets with deterministic hash verification.",
+  "generatedAtPolicy": "Manifest content is deterministic; regeneration must not depend on wall-clock time.",
+  "templates": [
+    {
+      "formType": "AM",
+      "displayNameTr": "Ölüm Öncesi Formu",
+      "sourceFileName": "Ante Mortem (yellow) INTERPOL DVI form (2018, fillable) - Missing person.pdf",
+      "assetPath": "assets/pdf-templates/interpol-dvi-2018-am-fillable.pdf",
+      "sha256": "0a20690e3510ae844a34cee725a80f54817ead3ba385172d3c7b7c5e492fe171",
+      "byteLength": 2370170,
+      "pageCount": 18,
+      "widgetCount": 2006,
+      "uniqueFieldNameCount": 1687,
+      "hasTextLayer": true,
+      "hasWidgets": true
+    },
+    {
+      "formType": "PM",
+      "displayNameTr": "Ölüm Sonrası Formu",
+      "sourceFileName": "Post Mortem (pink) INTERPOL DVI form (2018, fillable) - Unidentified human remains.pdf",
+      "assetPath": "assets/pdf-templates/interpol-dvi-2018-pm-fillable.pdf",
+      "sha256": "203a9d52189f07219b4e64c7c767eaf252d40b2d0d6e8cd9e814b91face83a02",
+      "byteLength": 2728006,
+      "pageCount": 19,
+      "widgetCount": 2026,
+      "uniqueFieldNameCount": 1693,
+      "hasTextLayer": true,
+      "hasWidgets": true
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "name": "dvi-mobile",
-  "version": "0.4.13",
+  "version": "0.5.0",
   "private": true,
   "main": "index.js",
   "scripts": {
@@ -29,6 +29,8 @@
     "ui:labels:verify": "node scripts/build_ui_labels.js",
     "ui:coverage": "node scripts/audit_ui_coverage.js --write",
     "ui:coverage:verify": "node scripts/audit_ui_coverage.js",
+    "pdf:templates": "node scripts/build_pdf_template_manifest.js --write",
+    "pdf:templates:verify": "node scripts/build_pdf_template_manifest.js",
     "rebaseline:verify": "node scripts/verify_rebaseline.js",
     "text:verify-tr": "node scripts/verify_ui_text_tr.js",
     "ios": "expo run:ios"

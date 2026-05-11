@@ -493,7 +493,56 @@ Kapsam dışı:
 
 ### Phase 5A - Template Pipeline
 
-Fillable PDF şablonları build-time asset olarak hazırlanır. Hash kontrolüyle yanlış şablon kullanımı engellenir.
+Fillable PDF şablonları uygulama asset'i olarak sabitlenir ve hash kontrolüyle yanlış şablon kullanımı engellenir.
+
+Hedef:
+
+- AM ve PM INTERPOL DVI 2018 fillable PDF dosyalarını repo içinde tekil, adlandırılmış asset olarak tutmak.
+- Şablonların sayfa sayısı, widget sayısı, unique field sayısı, byte uzunluğu ve SHA-256 hash değerlerini manifestte kilitlemek.
+- CI ve yerel build sırasında yanlış PDF, eksik PDF veya değişmiş PDF kullanımını erken durdurmak.
+- PDF export motoruna başlamadan önce runtime'ın kullanacağı resmi template kaynağını deterministik hale getirmek.
+
+Kapsam dışı:
+
+- Canonical field id ile PDF field name eşlemesi üretmek.
+- AM/PM verisini PDF alanlarına yazmak.
+- Checkbox button state regression, appearance update veya flatten işlemi yapmak.
+- Koordinat tabanlı fallback export eklemek.
+
+Implementation dosya grupları:
+
+- `assets/pdf-templates/`: Hash ile kilitlenen AM/PM fillable PDF şablonları.
+- `data/pdf-templates/pdf-template-manifest.json`: Şablon metadata ve doğrulama manifesti.
+- `scripts/build_pdf_template_manifest.js`: Şablon asset kopyalama, manifest üretme ve drift doğrulama scripti.
+- `src/config/pdfTemplates.ts`: Uygulama tarafında manifest ve paketlenmiş PDF asset referansları.
+- `.github/workflows/phase-5a-apk.yml`: Build kapısına PDF şablon doğrulamasını ekleyen APK workflow'u.
+- `docs/pdf-export/phase-5a-template-pipeline.md`: Faz çıktısı ve denetim notları.
+
+Veri sözleşmesi:
+
+- AM asset yolu: `assets/pdf-templates/interpol-dvi-2018-am-fillable.pdf`
+- PM asset yolu: `assets/pdf-templates/interpol-dvi-2018-pm-fillable.pdf`
+- AM beklenen özet: 18 sayfa, 2006 widget, 1687 unique field, text layer var.
+- PM beklenen özet: 19 sayfa, 2026 widget, 1693 unique field, text layer var.
+- Manifest içerikleri wall-clock zamana bağlı olmayacak; tekrar üretim aynı çıktıyı vermeli.
+
+Doğrulama komutları:
+
+- `npm run pdf:templates`
+- `npm run pdf:templates:verify`
+- `npm run typecheck`
+- `npm run text:verify-tr`
+- `npm run forensics:verify`
+- `npm run forms:renderer:verify`
+- `npm run ui:coverage:verify`
+
+Çıkış kriterleri:
+
+- AM/PM PDF asset dosyaları repo içinde mevcut olmalı.
+- Manifest hash, byte uzunluğu ve forensics metadata ile tutarlı olmalı.
+- Metro `pdf` asset uzantısını paketleyebilmeli.
+- Uygulamada `Faz 5A / 0.5.0 / phase-5a-v0.5.0-20260511` görünür olmalı.
+- Versioned APK üretilmeli, commit ve push tamamlanmalı.
 
 ### Phase 5B - Binding Manifest
 

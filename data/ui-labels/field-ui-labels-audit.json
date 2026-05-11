@@ -1,7 +1,7 @@
 {
-  "phase": "Phase 4I-A",
-  "version": "0.4.13",
-  "buildId": "phase-4i-a-v0.4.13-20260511",
+  "phase": "Phase 5A",
+  "version": "0.5.0",
+  "buildId": "phase-5a-v0.5.0-20260511",
   "passed": true,
   "totals": {
     "fieldCount": 3380,

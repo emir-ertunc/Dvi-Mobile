@@ -12,6 +12,7 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "data/schema/*.json",
-    "data/ui-labels/*.json"
+    "data/ui-labels/*.json",
+    "data/pdf-templates/*.json"
   ]
 }

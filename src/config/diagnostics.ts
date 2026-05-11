@@ -1,4 +1,5 @@
 import { BUILD_INFO } from './buildInfo';
+import { PDF_TEMPLATE_MANIFEST } from './pdfTemplates';
 import { DRAFT_STORAGE_KEY, DRAFT_STORAGE_VERSION } from '../storage/draftStore';
 
 export const DIAGNOSTICS_INFO = {
@@ -15,6 +16,16 @@ export const DIAGNOSTICS_INFO = {
     amFieldCount: 1687,
     pmFieldCount: 1693,
   },
+  pdfTemplates: {
+    templateCount: PDF_TEMPLATE_MANIFEST.templates.length,
+    buildId: PDF_TEMPLATE_MANIFEST.buildId,
+    forms: PDF_TEMPLATE_MANIFEST.templates.map((template) => ({
+      formType: template.formType,
+      sha256: template.sha256,
+      pageCount: template.pageCount,
+      widgetCount: template.widgetCount,
+    })),
+  },
   qualityGates: [
     'TypeScript kontrolü',
     'Türkçe arayüz metni',
@@ -26,5 +37,6 @@ export const DIAGNOSTICS_INFO = {
     'Taslak saklama',
     'UI kapsamı',
     'Türkçe alan etiketi',
+    'PDF şablonları',
   ],
 } as const;
