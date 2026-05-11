@@ -134,7 +134,12 @@ export const WORKFLOW_STEPS: readonly WorkflowStep[] = [
   },
   {
     title: 'Türkçe alan etiketleri',
-    status: 'sürüyor',
+    status: 'tamamlandı',
     detail: 'Teknik PDF alan adları kullanıcı ekranından ayrılır ve Türkçe label/help katmanı kullanılır.',
+  },
+  {
+    title: 'Uzun form ergonomisi',
+    status: 'sürüyor',
+    detail: 'Bölüm ilerlemesi, alan arama ve boş/dolu/uyarı filtreleriyle mobil veri girişi hızlandırılır.',
   },
 ] as const;

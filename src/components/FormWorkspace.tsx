@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import {
   getFormSchema,
@@ -9,7 +9,10 @@ import {
   getSectionFields,
   type FormSectionSummary,
 } from '../data/formSchemaCatalog';
+import { getFieldUiText } from '../data/fieldUiLabels';
 import type { FormType } from '../domain/fieldPrimitives';
+import type { CanonicalSchemaField } from '../domain/schemaTypes';
+import { validateSchemaValue } from '../domain/validation';
 import type { DraftFieldValue, LocalDraft } from '../storage/draftStore';
 import { FormFieldControl } from './FormFieldControl';
 import { FormSectionNavigator } from './FormSectionNavigator';
@@ -46,6 +49,15 @@ const EDITABLE_PM_SECTION_IDS = new Set([
   'pm.other',
 ]);
 
+type FieldFilterId = 'all' | 'empty' | 'filled' | 'issues';
+
+const FIELD_FILTERS: readonly { id: FieldFilterId; label: string }[] = [
+  { id: 'all', label: 'Tümü' },
+  { id: 'empty', label: 'Boş' },
+  { id: 'filled', label: 'Dolu' },
+  { id: 'issues', label: 'Uyarı' },
+];
+
 function sectionStatusText(section: FormSectionSummary): string {
   return `${section.fieldCount} alan ve ${section.widgetCount} PDF bileşeni bu bölümde temsil edilir.`;
 }
@@ -67,15 +79,40 @@ function sectionStateText(formType: FormType, editable: boolean): string {
   return 'Bu bölüm sonraki alt fazlarda düzenlemeye açılacak.';
 }
 
+function hasDraftValue(value: DraftFieldValue | undefined): boolean {
+  if (value === undefined || value === null) return false;
+  if (typeof value === 'string') return value.trim().length > 0;
+  if (typeof value === 'boolean') return value;
+  return true;
+}
+
+function fieldHasIssue(field: CanonicalSchemaField, value: DraftFieldValue | undefined): boolean {
+  const validation = validateSchemaValue(value ?? null, {
+    readinessRule: field.readinessRule,
+    validationRules: field.validationRules,
+    valueType: field.valueType,
+  });
+  return !validation.valid;
+}
+
 export function FormWorkspace({ draft, onFieldValueChange }: FormWorkspaceProps) {
   const formType = draft.formType as FormType;
   const sections = useMemo(() => getFormSections(formType), [formType]);
   const [activeSectionId, setActiveSectionId] = useState(getInitialSectionId(formType));
+  const [fieldFilter, setFieldFilter] = useState<FieldFilterId>('all');
+  const [fieldSearch, setFieldSearch] = useState('');
   const schema = getFormSchema(formType);
 
   useEffect(() => {
     setActiveSectionId(getInitialSectionId(formType));
+    setFieldFilter('all');
+    setFieldSearch('');
   }, [formType, draft.id]);
+
+  useEffect(() => {
+    setFieldFilter('all');
+    setFieldSearch('');
+  }, [activeSectionId]);
 
   const activeSection = sections.find((section) => section.id === activeSectionId) ?? sections[0];
   const activeFields = activeSection ? getSectionFields(formType, activeSection.id) : [];
@@ -83,6 +120,24 @@ export function FormWorkspace({ draft, onFieldValueChange }: FormWorkspaceProps)
   const activeSectionIndex = sections.findIndex((section) => section.id === activeSection?.id);
   const previousSection = activeSectionIndex > 0 ? sections[activeSectionIndex - 1] : null;
   const nextSection = activeSectionIndex >= 0 && activeSectionIndex < sections.length - 1 ? sections[activeSectionIndex + 1] : null;
+  const activeFieldRows = activeFields.map((field, index) => ({ field, index, uiText: getFieldUiText(field, index) }));
+  const sectionFilledCount = activeFieldRows.filter(({ field }) => hasDraftValue(draft.fieldValues[field.schemaFieldId])).length;
+  const sectionIssueCount = activeFieldRows.filter(({ field }) =>
+    fieldHasIssue(field, draft.fieldValues[field.schemaFieldId]),
+  ).length;
+  const normalizedSearch = fieldSearch.trim().toLocaleLowerCase('tr-TR');
+  const filteredFieldRows = activeFieldRows.filter(({ field, uiText }) => {
+    const value = draft.fieldValues[field.schemaFieldId];
+    const filled = hasDraftValue(value);
+    const issue = fieldHasIssue(field, value);
+    const searchableText = `${uiText.labelTr} ${uiText.helpTextTr} ${field.controlType}`.toLocaleLowerCase('tr-TR');
+    const matchesSearch = normalizedSearch.length === 0 || searchableText.includes(normalizedSearch);
+    if (!matchesSearch) return false;
+    if (fieldFilter === 'empty') return !filled;
+    if (fieldFilter === 'filled') return filled;
+    if (fieldFilter === 'issues') return issue;
+    return true;
+  });
 
   return (
     <View style={styles.workspace}>
@@ -120,6 +175,25 @@ export function FormWorkspace({ draft, onFieldValueChange }: FormWorkspaceProps)
           <Text style={[styles.sectionStateText, editableSection ? styles.editableStateText : styles.lockedStateText]}>
             {sectionStateText(formType, editableSection)}
           </Text>
+          <View style={styles.progressPanel}>
+            <View style={styles.progressHeader}>
+              <Text style={styles.progressTitle}>Bölüm ilerlemesi</Text>
+              <Text style={styles.progressValue}>
+                {sectionFilledCount} / {activeFieldRows.length}
+              </Text>
+            </View>
+            <View style={styles.progressTrack}>
+              <View
+                style={[
+                  styles.progressFill,
+                  { width: `${activeFieldRows.length > 0 ? Math.round((sectionFilledCount / activeFieldRows.length) * 100) : 0}%` },
+                ]}
+              />
+            </View>
+            <Text style={styles.progressDetail}>
+              {sectionIssueCount > 0 ? `${sectionIssueCount} alan uyarı veriyor.` : 'Bu bölümde geçerli olmayan değer görünmüyor.'}
+            </Text>
+          </View>
           <View style={styles.sectionActions}>
             <Pressable
               accessibilityRole="button"
@@ -141,8 +215,39 @@ export function FormWorkspace({ draft, onFieldValueChange }: FormWorkspaceProps)
         </View>
       )}
 
+      <View style={styles.fieldToolsPanel}>
+        <Text style={styles.toolsTitle}>Alan bul ve filtrele</Text>
+        <TextInput
+          accessibilityLabel="Alan arama"
+          onChangeText={setFieldSearch}
+          placeholder="Alan adı veya yardım metni ara"
+          placeholderTextColor="#64748b"
+          style={styles.searchInput}
+          value={fieldSearch}
+        />
+        <View style={styles.filterRow}>
+          {FIELD_FILTERS.map((filter) => {
+            const active = filter.id === fieldFilter;
+            return (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityState={{ selected: active }}
+                key={filter.id}
+                onPress={() => setFieldFilter(filter.id)}
+                style={[styles.filterButton, active && styles.activeFilterButton]}
+              >
+                <Text style={[styles.filterButtonText, active && styles.activeFilterButtonText]}>{filter.label}</Text>
+              </Pressable>
+            );
+          })}
+        </View>
+        <Text style={styles.filterResultText}>
+          {filteredFieldRows.length} alan gösteriliyor. Boş: {activeFieldRows.length - sectionFilledCount}, dolu: {sectionFilledCount}.
+        </Text>
+      </View>
+
       <View style={styles.fieldList}>
-        {activeFields.map((field, index) => (
+        {filteredFieldRows.map(({ field, index }) => (
           <FormFieldControl
             editable={editableSection}
             field={field}
@@ -152,6 +257,12 @@ export function FormWorkspace({ draft, onFieldValueChange }: FormWorkspaceProps)
             value={draft.fieldValues[field.schemaFieldId]}
           />
         ))}
+        {filteredFieldRows.length === 0 && (
+          <View style={styles.emptyFilterPanel}>
+            <Text style={styles.emptyFilterTitle}>Eşleşen alan yok</Text>
+            <Text style={styles.emptyFilterText}>Arama metnini veya filtre seçimini değiştirin.</Text>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -260,6 +371,98 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: 10,
   },
+  progressPanel: {
+    backgroundColor: '#ffffff',
+    borderColor: '#d8dee8',
+    borderRadius: 8,
+    borderWidth: 1,
+    gap: 8,
+    padding: 11,
+  },
+  progressHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 10,
+  },
+  progressTitle: {
+    color: '#111827',
+    fontSize: 13,
+    fontWeight: '900',
+  },
+  progressValue: {
+    color: '#134e4a',
+    fontSize: 13,
+    fontWeight: '900',
+  },
+  progressTrack: {
+    backgroundColor: '#e2e8f0',
+    borderRadius: 999,
+    height: 8,
+    overflow: 'hidden',
+  },
+  progressFill: {
+    backgroundColor: '#0f766e',
+    height: 8,
+  },
+  progressDetail: {
+    color: '#475569',
+    fontSize: 12,
+    lineHeight: 17,
+  },
+  fieldToolsPanel: {
+    backgroundColor: '#ffffff',
+    borderColor: '#d8dee8',
+    borderRadius: 8,
+    borderWidth: 1,
+    gap: 10,
+    padding: 13,
+  },
+  toolsTitle: {
+    color: '#111827',
+    fontSize: 15,
+    fontWeight: '900',
+  },
+  searchInput: {
+    backgroundColor: '#f8fafc',
+    borderColor: '#cbd5e1',
+    borderRadius: 8,
+    borderWidth: 1,
+    color: '#111827',
+    fontSize: 14,
+    minHeight: 44,
+    paddingHorizontal: 11,
+  },
+  filterRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  filterButton: {
+    borderColor: '#cbd5e1',
+    borderRadius: 7,
+    borderWidth: 1,
+    minHeight: 38,
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+  },
+  activeFilterButton: {
+    backgroundColor: '#0f766e',
+    borderColor: '#0f766e',
+  },
+  filterButtonText: {
+    color: '#334155',
+    fontSize: 13,
+    fontWeight: '900',
+  },
+  activeFilterButtonText: {
+    color: '#ffffff',
+  },
+  filterResultText: {
+    color: '#475569',
+    fontSize: 12,
+    lineHeight: 17,
+  },
   secondaryButton: {
     alignItems: 'center',
     borderColor: '#0f766e',
@@ -283,5 +486,23 @@ const styles = StyleSheet.create({
   },
   fieldList: {
     gap: 10,
+  },
+  emptyFilterPanel: {
+    backgroundColor: '#f8fafc',
+    borderColor: '#d8dee8',
+    borderRadius: 8,
+    borderWidth: 1,
+    gap: 4,
+    padding: 14,
+  },
+  emptyFilterTitle: {
+    color: '#111827',
+    fontSize: 15,
+    fontWeight: '900',
+  },
+  emptyFilterText: {
+    color: '#475569',
+    fontSize: 13,
+    lineHeight: 18,
   },
 });

@@ -1,12 +1,12 @@
 const { mkdirSync, readFileSync, writeFileSync } = require('node:fs');
 const { dirname, join } = require('node:path');
 
-const PHASE = 'Phase 4G-B';
-const VERSION = '0.4.7';
-const BUILD_ID = 'phase-4g-b-v0.4.7-20260511';
+const PHASE = 'Phase 4G-C';
+const VERSION = '0.4.8';
+const BUILD_ID = 'phase-4g-c-v0.4.8-20260511';
 const ROOT = process.cwd();
 const OUTPUT_AUDIT = join(ROOT, 'data', 'ui-coverage', 'ui-coverage-audit.json');
-const OUTPUT_MATRIX = join(ROOT, 'docs', 'app', 'phase-4g-b-ui-coverage-matrix.md');
+const OUTPUT_MATRIX = join(ROOT, 'docs', 'app', 'phase-4g-c-ui-coverage-matrix.md');
 
 const FORM_CONFIGS = [
   {
@@ -195,6 +195,11 @@ function run({ write }) {
   requireToken(workspaceSource, 'activeFields.map', failures, 'FormWorkspace.tsx');
   requireToken(workspaceSource, 'FormFieldControl', failures, 'FormWorkspace.tsx');
   requireToken(workspaceSource, 'editable={editableSection}', failures, 'FormWorkspace.tsx');
+  requireToken(workspaceSource, 'FIELD_FILTERS', failures, 'FormWorkspace.tsx');
+  requireToken(workspaceSource, 'fieldSearch', failures, 'FormWorkspace.tsx');
+  requireToken(workspaceSource, 'filteredFieldRows', failures, 'FormWorkspace.tsx');
+  requireToken(workspaceSource, 'Bölüm ilerlemesi', failures, 'FormWorkspace.tsx');
+  requireToken(workspaceSource, 'Alan bul ve filtrele', failures, 'FormWorkspace.tsx');
   requireToken(fieldControlSource, 'accessibilityLabel={uiText.labelTr}', failures, 'FormFieldControl.tsx');
   requireToken(fieldControlSource, 'getFieldUiText(field, index)', failures, 'FormFieldControl.tsx');
   requireToken(fieldControlSource, 'accessibilityRole="checkbox"', failures, 'FormFieldControl.tsx');

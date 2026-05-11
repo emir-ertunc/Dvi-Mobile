@@ -1,13 +1,13 @@
 const { mkdirSync, readFileSync, writeFileSync } = require('node:fs');
 const { dirname, join } = require('node:path');
 
-const PHASE = 'Phase 4G-B';
-const VERSION = '0.4.7';
-const BUILD_ID = 'phase-4g-b-v0.4.7-20260511';
+const PHASE = 'Phase 4G-C';
+const VERSION = '0.4.8';
+const BUILD_ID = 'phase-4g-c-v0.4.8-20260511';
 const ROOT = process.cwd();
 const OUTPUT = join(ROOT, 'data', 'ui-labels', 'field-ui-labels.json');
 const AUDIT_OUTPUT = join(ROOT, 'data', 'ui-labels', 'field-ui-labels-audit.json');
-const REPORT = join(ROOT, 'docs', 'app', 'phase-4g-b-label-coverage.md');
+const REPORT = join(ROOT, 'docs', 'app', 'phase-4g-c-label-coverage.md');
 
 const SCHEMAS = [
   { formType: 'AM', path: join(ROOT, 'data', 'schema', 'am-schema.json'), expectedFields: 1687 },
