@@ -48,8 +48,8 @@ export const FORM_READINESS: readonly FormReadiness[] = [
     title: 'Ölüm Öncesi Kaydı',
     fieldCount: 1687,
     widgetCount: 2006,
-    status: 'AM genel bilgi alanları düzenlenebilir.',
-    nextAction: 'Kimlik, olay, kişi, iletişim ve genel bilgi alanları yerel taslağa kaydedilir.',
+    status: 'AM klinik ve destek blokları düzenlenebilir.',
+    nextAction: 'Eşya, fiziksel tanım, tıbbi, odontoloji, destek, ek ve imza alanları yerel taslağa kaydedilir.',
   },
   {
     code: 'PM',
@@ -104,7 +104,12 @@ export const WORKFLOW_STEPS: readonly WorkflowStep[] = [
   },
   {
     title: 'AM genel bilgi girişi',
+    status: 'tamamlandı',
+    detail: 'AM kimlik, olay, kişi, iletişim ve genel bilgi alanları yerel taslak değerlerine bağlandı.',
+  },
+  {
+    title: 'AM klinik ve destek blokları',
     status: 'sürüyor',
-    detail: 'AM kimlik, olay, kişi, iletişim ve genel bilgi alanları yerel taslak değerlerine bağlanır.',
+    detail: 'AM eşya, fiziksel tanım, tıbbi, odontoloji, destek, ek ve imza blokları düzenlenebilir hale getirilir.',
   },
 ] as const;

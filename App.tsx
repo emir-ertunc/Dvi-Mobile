@@ -56,7 +56,7 @@ function OverviewScreen({ draftState }: { readonly draftState: LocalDraftState }
     <View style={styles.screen}>
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Operasyon Özeti</Text>
-        <Text style={styles.sectionDetail}>AM genel bilgi girişi yerel taslaklara bağlandı.</Text>
+        <Text style={styles.sectionDetail}>AM klinik ve destek blokları yerel taslaklara bağlandı.</Text>
       </View>
 
       <View style={styles.metricGrid}>
@@ -73,8 +73,8 @@ function OverviewScreen({ draftState }: { readonly draftState: LocalDraftState }
       <View style={styles.panel}>
         <Text style={styles.panelTitle}>Hızlı Durum</Text>
         <Text style={styles.bodyText}>
-          Bu faz, seçili AM taslağında kimlik, olay, kişi, iletişim ve genel bilgi alanlarını çevrimdışı
-          kaydedilebilir hale getirir.
+          Bu faz, seçili AM taslağında eşya, fiziksel tanım, tıbbi, odontoloji, destek, ek ve imza alanlarını
+          çevrimdışı kaydedilebilir hale getirir.
         </Text>
         {activeDraft && <Text style={styles.mutedText}>Aktif taslak: {activeDraft.title}</Text>}
       </View>

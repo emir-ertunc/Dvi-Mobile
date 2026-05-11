@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import type { CanonicalSchemaField } from '../domain/schemaTypes';
+import { validateSchemaValue } from '../domain/validation';
 import { fieldPageSummary } from '../data/formSchemaCatalog';
 import type { DraftFieldValue } from '../storage/draftStore';
 
@@ -42,10 +43,27 @@ function maxLengthForField(field: CanonicalSchemaField): number | undefined {
   return undefined;
 }
 
+function normalizeInputValue(field: CanonicalSchemaField, nextValue: string): DraftFieldValue | null {
+  const trimmed = nextValue.trim();
+  if (trimmed.length === 0) return null;
+
+  if (field.controlType === 'number') {
+    const parsed = Number(trimmed.replace(',', '.'));
+    return Number.isFinite(parsed) ? parsed : trimmed;
+  }
+
+  return nextValue;
+}
+
 export function FormFieldControl({ editable, field, index, onValueChange, value }: FormFieldControlProps) {
   const controlLabel = controlTypeLabels[field.controlType] ?? 'Alan';
   const checked = value === true;
   const textValue = typeof value === 'string' || typeof value === 'number' ? String(value) : '';
+  const validation = validateSchemaValue(value ?? null, {
+    readinessRule: field.readinessRule,
+    validationRules: field.validationRules,
+    valueType: field.valueType,
+  });
 
   return (
     <View style={[styles.fieldCard, editable && styles.editableFieldCard]}>
@@ -83,15 +101,21 @@ export function FormFieldControl({ editable, field, index, onValueChange, value 
           editable={editable}
           keyboardType={keyboardTypeForField(field)}
           maxLength={maxLengthForField(field)}
-          onChangeText={(nextValue) => onValueChange(field.schemaFieldId, nextValue)}
+          onChangeText={(nextValue) => onValueChange(field.schemaFieldId, normalizeInputValue(field, nextValue))}
           placeholder={placeholderForField(field)}
           placeholderTextColor="#64748b"
-          style={[styles.inputPreview, editable && styles.editableInput]}
+          style={[styles.inputPreview, editable && styles.editableInput, editable && !validation.valid && styles.invalidInput]}
           value={textValue}
         />
       )}
 
-      {!editable && <Text style={styles.lockedText}>Bu bölüm sonraki AM alt fazında düzenlemeye açılacak.</Text>}
+      {editable &&
+        validation.issues.map((issue) => (
+          <Text key={issue.code} style={styles.validationText}>
+            {issue.messageTr}
+          </Text>
+        ))}
+      {!editable && <Text style={styles.lockedText}>Bu bölüm sonraki alt fazda düzenlemeye açılacak.</Text>}
       <Text style={styles.bindingText}>
         PDF bağlantısı: {field.exportBinding.widgetInstanceCount} bileşen · {field.pdfFieldName}
       </Text>
@@ -178,6 +202,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderColor: '#0f766e',
   },
+  invalidInput: {
+    borderColor: '#b91c1c',
+  },
   checkboxPreview: {
     alignItems: 'center',
     backgroundColor: '#f8fafc',
@@ -224,6 +251,12 @@ const styles = StyleSheet.create({
     color: '#64748b',
     fontSize: 12,
     fontWeight: '700',
+    lineHeight: 17,
+  },
+  validationText: {
+    color: '#b91c1c',
+    fontSize: 12,
+    fontWeight: '800',
     lineHeight: 17,
   },
 });
