@@ -385,6 +385,82 @@ Kapsam:
 - UI coverage korunmalı.
 - Accessibility ve Türkçe metin kontrolleri geçmeli.
 
+### Phase 4H - Mobil Navigasyon ve Çalışma Akışı Ayrıştırması
+
+Phase 4G, alan içi okunabilirliği iyileştirmiştir; ancak üst seviye uygulama akışı hâlâ geliştirme odaklı `Genel`, `Formlar`, `Akış`, `Sistem` yapısına dayanır. Phase 4H, Phase 5 PDF export öncesinde saha kullanıcısının doğal iş akışına uygun bir navigasyon düzeni kurar. Amaç, kayıtlı taslakları, yeni kayıt başlatmayı, aktif form düzenlemeyi ve sistem durumunu birbirinden ayırmaktır.
+
+#### Phase 4H-A - Navigasyon Yeniden Tasarımı ve Plan Güncellemesi
+
+Hedef:
+
+- Birincil navigasyonu `Kayıtlı`, `Formlar`, `Form`, `Durum`, `Sistem` başlıklarına taşımak.
+- `Genel` ve `Akış` sekmelerini birincil navigasyondan kaldırmak.
+- Eski genel özet ve faz ilerleme bilgisini sadeleştirilmiş `Durum` ekranında toplamak.
+- Üst sekmeleri yatay kaydırmalı hale getirerek beş başlığın mobilde okunur kalmasını sağlamak.
+- Build bilgisini `0.4.9 / Faz 4H-A` olarak güncellemek.
+
+Kapsam dışı:
+
+- Taslak listesini bu alt fazda tam arama/filtre/aksiyon ekranına dönüştürmek.
+- Formlar ekranından tekrar eden yeni taslak butonlarını kaldırmak.
+- Aktif form ekranında tüm sticky aksiyon cila işlerini tamamlamak.
+- PDF export veya matching motoruna başlamak.
+
+Çıkış kriterleri:
+
+- Yeni route sözleşmesi `Kayıtlı`, `Formlar`, `Form`, `Durum`, `Sistem` başlıklarını içerir.
+- `Genel` ve `Akış` artık üst sekme olarak görünmez.
+- Sekmeler daralıp okunmaz hale gelmez; yatay kaydırma desteklenir.
+- Typecheck, Türkçe metin kontrolü, form renderer doğrulaması ve UI coverage doğrulaması geçer.
+- Versioned APK üretilir, commit ve push tamamlanır.
+
+#### Phase 4H-B - Kayıtlı Taslaklar Ekranı
+
+Hedef:
+
+- Taslak listesini `Formlar` ekranından çıkarıp `Kayıtlı` ekranına taşımak.
+- AM/PM/Tümü filtresi, taslak arama, tamamlanma yüzdesi, son güncelleme bilgisi ve `Devam`, `Kopyala`, `Sil` aksiyonlarını bu ekranda toplamak.
+- `Devam` aksiyonunda aktif taslağı seçip kullanıcıyı `Form` ekranına almak.
+- Boş liste halinde kullanıcıyı yeni kayıt başlatmaya yönlendirmek.
+
+Çıkış kriterleri:
+
+- Taslak oluşturma, devam etme, kopyalama ve silme akışı çalışır.
+- Silme onayı modal kalır ve uzun formun en altına inme zorunluluğu oluşturmaz.
+- Typecheck, UI coverage, Türkçe metin kontrolü, APK build, commit ve push tamamlanır.
+
+#### Phase 4H-C - Formlar Ekranı: Doğrudan Yeni AM/PM Başlatma
+
+Hedef:
+
+- `Formlar` ekranını yalnızca yeni AM/PM kayıt başlatma yüzeyi haline getirmek.
+- `Ölüm Öncesi Kaydı Başlat` ve `Ölüm Sonrası Kaydı Başlat` aksiyonlarını doğrudan yeni taslak oluşturup `Form` ekranına yönlendirecek şekilde düzenlemek.
+- Gereksiz ikinci seviye `Yeni AM taslağı` ve `Yeni PM taslağı` butonlarını kaldırmak.
+
+Çıkış kriterleri:
+
+- AM seçimi doğrudan yeni AM formunu açar.
+- PM seçimi doğrudan yeni PM formunu açar.
+- Formlar ekranında taslak listesi veya tekrar eden yeni taslak aksiyonları kalmaz.
+- Typecheck, UI coverage, Türkçe metin kontrolü, APK build, commit ve push tamamlanır.
+
+#### Phase 4H-D - Aktif Form Çalışma Alanı ve Mobil Kullanım Cilası
+
+Hedef:
+
+- `Form` ekranını yalnızca aktif taslak düzenleme alanı haline getirmek.
+- Aktif taslak yoksa `Kayıtlı` ve `Formlar` ekranlarına net yönlendirme vermek.
+- Aktif form üstünde AM/PM türü, taslak başlığı, tamamlanma yüzdesi, aktif bölüm ve son kaydetme bağlamını göstermek.
+- Uzun formda kapat, taslak adı düzenle ve önceki/sonraki bölüm aksiyonlarının görünür kalmasını sağlamak.
+- Gereksiz açıklama metinlerini azaltarak kullanıcının hangi kaydı doldurduğunu daha net hissettirmek.
+
+Çıkış kriterleri:
+
+- Aktif taslak yokken boş ekran kalmaz.
+- Aktif taslakla form açıldığında kullanıcı hangi kayıt üzerinde çalıştığını anlar.
+- Uzun formdaki temel aksiyonlar için sayfanın en altına inme zorunluluğu azaltılır.
+- Typecheck, UI coverage, Türkçe metin kontrolü, APK build, commit ve push tamamlanır.
+
 ## 11. Phase 5 - PDF Export Engine
 
 ### Phase 5A - Template Pipeline

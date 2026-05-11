@@ -21,7 +21,7 @@ const statusColor: Record<string, string> = {
 };
 
 export default function App() {
-  const [activeRoute, setActiveRoute] = useState<AppRouteId>('overview');
+  const [activeRoute, setActiveRoute] = useState<AppRouteId>('saved');
   const draftState = useLocalDrafts();
 
   return (
@@ -39,9 +39,10 @@ export default function App() {
         <RouteTabs routes={APP_ROUTES} activeRoute={activeRoute} onChange={setActiveRoute} />
 
         <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-          {activeRoute === 'overview' && <OverviewScreen draftState={draftState} />}
+          {activeRoute === 'saved' && <SavedScreen draftState={draftState} onNavigate={setActiveRoute} />}
           {activeRoute === 'forms' && <FormsScreen draftState={draftState} />}
-          {activeRoute === 'workflow' && <WorkflowScreen />}
+          {activeRoute === 'form' && <ActiveFormScreen draftState={draftState} onNavigate={setActiveRoute} />}
+          {activeRoute === 'status' && <StatusScreen draftState={draftState} />}
           {activeRoute === 'system' && <SystemScreen draftState={draftState} />}
         </ScrollView>
       </View>
@@ -49,35 +50,113 @@ export default function App() {
   );
 }
 
-function OverviewScreen({ draftState }: { readonly draftState: LocalDraftState }) {
-  const activeDraft = draftState.drafts.find((draft) => draft.id === draftState.activeDraftId);
+function SavedScreen({
+  draftState,
+  onNavigate,
+}: {
+  readonly draftState: LocalDraftState;
+  readonly onNavigate: (route: AppRouteId) => void;
+}) {
+  const recentDrafts = draftState.drafts.slice(0, 3);
 
   return (
     <View style={styles.screen}>
       <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Operasyon Özeti</Text>
-        <Text style={styles.sectionDetail}>Uzun AM/PM formlarında arama, filtre ve bölüm ilerleme araçları eklendi.</Text>
+        <Text style={styles.sectionTitle}>Kayıtlı Taslaklar</Text>
+        <Text style={styles.sectionDetail}>Cihazda saklanan AM ve PM taslaklarının hızlı durumu.</Text>
       </View>
 
       <View style={styles.metricGrid}>
         <MetricTile
-          label="Yerel taslak"
+          label="Toplam taslak"
           value={String(draftState.draftCount)}
-          detail="Cihazda kalıcı olarak saklanan AM/PM taslakları."
+          detail="Cihazda kalıcı olarak saklanan kayıtlar."
         />
-        {DASHBOARD_METRICS.map((metric) => (
-          <MetricTile key={metric.label} label={metric.label} value={metric.value} detail={metric.detail} />
-        ))}
+        <MetricTile label="AM taslak" value={String(draftState.amDraftCount)} detail="Ölüm öncesi kayıtları." />
+        <MetricTile label="PM taslak" value={String(draftState.pmDraftCount)} detail="Ölüm sonrası kayıtları." />
       </View>
 
       <View style={styles.panel}>
-        <Text style={styles.panelTitle}>Hızlı Durum</Text>
-        <Text style={styles.bodyText}>
-          Bu faz, aktif bölümde alan aramayı, boş/dolu/uyarılı alan filtresini ve bölüm doluluk takibini görünür
-          hale getirir.
-        </Text>
-        {activeDraft && <Text style={styles.mutedText}>Aktif taslak: {activeDraft.title}</Text>}
+        <Text style={styles.panelTitle}>Son Kayıtlar</Text>
+        {draftState.loading && <Text style={styles.mutedText}>Taslaklar yükleniyor.</Text>}
+        {draftState.errorMessage && <Text style={styles.errorText}>{draftState.errorMessage}</Text>}
+        {!draftState.loading && recentDrafts.length === 0 && (
+          <Text style={styles.mutedText}>Cihazda kayıtlı taslak bulunmuyor.</Text>
+        )}
+        {recentDrafts.map((draft) => (
+          <View key={draft.id} style={[styles.savedSummaryRow, draft.id === draftState.activeDraftId && styles.activeDraftRow]}>
+            <View style={styles.draftMain}>
+              <Text style={styles.draftTitle}>{draft.title}</Text>
+              <Text style={styles.mutedText}>{draft.formType} · Son kayıt: {formatDraftDate(draft.updatedAt)}</Text>
+            </View>
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => {
+                void draftState.resumeDraft(draft.id);
+                onNavigate('form');
+              }}
+              style={styles.smallButton}
+            >
+              <Text style={styles.smallButtonText}>Devam</Text>
+            </Pressable>
+          </View>
+        ))}
+        <View style={styles.actionRow}>
+          <Pressable accessibilityRole="button" onPress={() => onNavigate('forms')} style={styles.primaryAction}>
+            <Text style={styles.primaryActionText}>Yeni kayıt başlat</Text>
+          </Pressable>
+        </View>
       </View>
+    </View>
+  );
+}
+
+function ActiveFormScreen({
+  draftState,
+  onNavigate,
+}: {
+  readonly draftState: LocalDraftState;
+  readonly onNavigate: (route: AppRouteId) => void;
+}) {
+  const activeDraft = draftState.drafts.find((draft) => draft.id === draftState.activeDraftId);
+
+  if (!activeDraft) {
+    return (
+      <View style={styles.screen}>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Aktif Form</Text>
+          <Text style={styles.sectionDetail}>Düzenlemek için bir taslak seçin veya yeni kayıt başlatın.</Text>
+        </View>
+        <View style={styles.panel}>
+          <Text style={styles.panelTitle}>Aktif taslak yok</Text>
+          <Text style={styles.bodyText}>Form çalışma alanı seçili AM veya PM taslağı üzerinden açılır.</Text>
+          <View style={styles.actionRow}>
+            <Pressable accessibilityRole="button" onPress={() => onNavigate('saved')} style={styles.secondaryAction}>
+              <Text style={styles.secondaryActionText}>Kayıtlı taslaklar</Text>
+            </Pressable>
+            <Pressable accessibilityRole="button" onPress={() => onNavigate('forms')} style={styles.primaryAction}>
+              <Text style={styles.primaryActionText}>Yeni kayıt</Text>
+            </Pressable>
+          </View>
+        </View>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.screen}>
+      <View style={styles.sectionHeader}>
+        <Text style={styles.sectionTitle}>Aktif Form</Text>
+        <Text style={styles.sectionDetail}>{activeDraft.title}</Text>
+      </View>
+
+      <DraftDetailPanel
+        draft={activeDraft}
+        key={activeDraft.id}
+        onClose={() => draftState.selectDraft(null)}
+        onFieldValueChange={(fieldId, value) => void draftState.updateDraftFieldValue(activeDraft.id, fieldId, value)}
+        onTitleChange={(title) => void draftState.updateDraftTitle(activeDraft.id, title)}
+      />
     </View>
   );
 }
@@ -312,12 +391,34 @@ function DeleteConfirmation({
   );
 }
 
-function WorkflowScreen() {
+function StatusScreen({ draftState }: { readonly draftState: LocalDraftState }) {
+  const activeDraft = draftState.drafts.find((draft) => draft.id === draftState.activeDraftId);
+
   return (
     <View style={styles.screen}>
       <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>İş Akışı</Text>
-        <Text style={styles.sectionDetail}>Faz kapıları sıralı ve denetlenebilir tutulur.</Text>
+        <Text style={styles.sectionTitle}>Durum</Text>
+        <Text style={styles.sectionDetail}>Uygulama kapsamı, yerel kayıt durumu ve faz ilerlemesi.</Text>
+      </View>
+
+      <View style={styles.metricGrid}>
+        <MetricTile
+          label="Yerel taslak"
+          value={String(draftState.draftCount)}
+          detail="Cihazda kalıcı olarak saklanan AM/PM taslakları."
+        />
+        {DASHBOARD_METRICS.map((metric) => (
+          <MetricTile key={metric.label} label={metric.label} value={metric.value} detail={metric.detail} />
+        ))}
+      </View>
+
+      <View style={styles.panel}>
+        <Text style={styles.panelTitle}>Hızlı Durum</Text>
+        <Text style={styles.bodyText}>
+          Üst navigasyon saha kullanımına göre yeniden düzenlendi. Kayıtlı taslaklar, yeni form başlatma,
+          aktif form ve sistem tanılaması ayrı başlıklara taşındı.
+        </Text>
+        {activeDraft && <Text style={styles.mutedText}>Aktif taslak: {activeDraft.title}</Text>}
       </View>
 
       <View style={styles.timeline}>
@@ -568,6 +669,15 @@ const styles = StyleSheet.create({
     fontWeight: '900',
   },
   draftRow: {
+    borderColor: '#e2e8f0',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 12,
+    padding: 12,
+  },
+  savedSummaryRow: {
+    alignItems: 'center',
     borderColor: '#e2e8f0',
     borderRadius: 8,
     borderWidth: 1,

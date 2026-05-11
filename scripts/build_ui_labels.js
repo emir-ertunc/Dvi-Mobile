@@ -1,13 +1,13 @@
 const { mkdirSync, readFileSync, writeFileSync } = require('node:fs');
 const { dirname, join } = require('node:path');
 
-const PHASE = 'Phase 4G-C';
-const VERSION = '0.4.8';
-const BUILD_ID = 'phase-4g-c-v0.4.8-20260511';
+const PHASE = 'Phase 4H-A';
+const VERSION = '0.4.9';
+const BUILD_ID = 'phase-4h-a-v0.4.9-20260511';
 const ROOT = process.cwd();
 const OUTPUT = join(ROOT, 'data', 'ui-labels', 'field-ui-labels.json');
 const AUDIT_OUTPUT = join(ROOT, 'data', 'ui-labels', 'field-ui-labels-audit.json');
-const REPORT = join(ROOT, 'docs', 'app', 'phase-4g-c-label-coverage.md');
+const REPORT = join(ROOT, 'docs', 'app', 'phase-4h-a-label-coverage.md');
 
 const SCHEMAS = [
   { formType: 'AM', path: join(ROOT, 'data', 'schema', 'am-schema.json'), expectedFields: 1687 },
@@ -295,7 +295,7 @@ ${reportRows}
 
 ## Faz Sınırı
 
-Bu faz teknik etiketlerin kullanıcı ekranından kaldırılması ve label/help map katmanının build kapısına bağlanması içindir. Bütün alanların nihai adli terminolojiyle elden düzeltilmesi Phase 4G-C ve sonraki UI metin iyileştirme çalışmalarında sürdürülecektir.
+Bu rapor teknik etiketlerin kullanıcı ekranından kaldırılması ve label/help map katmanının build kapısına bağlanması içindir. Nihai adli terminoloji ve üst seviye mobil akış iyileştirmeleri Phase 4H alt fazlarında sürdürülecektir.
 `;
 
   if (write) {

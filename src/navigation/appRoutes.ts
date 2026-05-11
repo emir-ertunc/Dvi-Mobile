@@ -1,4 +1,4 @@
-export type AppRouteId = 'overview' | 'forms' | 'workflow' | 'system';
+export type AppRouteId = 'saved' | 'forms' | 'form' | 'status' | 'system';
 
 export interface AppRoute {
   readonly id: AppRouteId;
@@ -8,9 +8,9 @@ export interface AppRoute {
 
 export const APP_ROUTES: readonly AppRoute[] = [
   {
-    id: 'overview',
-    label: 'Genel Bakış',
-    shortLabel: 'Genel',
+    id: 'saved',
+    label: 'Kayıtlı Taslaklar',
+    shortLabel: 'Kayıtlı',
   },
   {
     id: 'forms',
@@ -18,9 +18,14 @@ export const APP_ROUTES: readonly AppRoute[] = [
     shortLabel: 'Formlar',
   },
   {
-    id: 'workflow',
-    label: 'İş Akışı',
-    shortLabel: 'Akış',
+    id: 'form',
+    label: 'Aktif Form',
+    shortLabel: 'Form',
+  },
+  {
+    id: 'status',
+    label: 'Durum',
+    shortLabel: 'Durum',
   },
   {
     id: 'system',

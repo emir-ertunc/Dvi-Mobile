@@ -67,6 +67,13 @@ assertContains(join('App.tsx'), "animationType=\"fade\"");
 assertContains(join('App.tsx'), "accessibilityRole=\"alert\"");
 assertContains(join('App.tsx'), "updateDraftFieldValue");
 assertContains(join('src', 'storage', 'draftStore.ts'), "updateDraftFieldValue");
-assertContains(join('src', 'config', 'buildInfo.ts'), "phase-4g-c-v0.4.8-20260511");
+assertContains(join('src', 'config', 'buildInfo.ts'), "phase-4h-a-v0.4.9-20260511");
+assertContains(join('src', 'navigation', 'appRoutes.ts'), "'saved' | 'forms' | 'form' | 'status' | 'system'");
+assertContains(join('src', 'navigation', 'appRoutes.ts'), "Kayıtlı Taslaklar");
+assertContains(join('src', 'components', 'RouteTabs.tsx'), "ScrollView");
+assertContains(join('src', 'components', 'RouteTabs.tsx'), "horizontal");
+assertContains(join('App.tsx'), "SavedScreen");
+assertContains(join('App.tsx'), "ActiveFormScreen");
+assertContains(join('App.tsx'), "StatusScreen");
 
 console.log('Ortak form renderer doğrulaması geçti.');

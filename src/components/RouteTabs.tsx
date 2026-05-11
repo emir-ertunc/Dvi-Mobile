@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import type { AppRoute, AppRouteId } from '../navigation/appRoutes';
 
@@ -10,41 +10,57 @@ interface RouteTabsProps {
 
 export function RouteTabs({ routes, activeRoute, onChange }: RouteTabsProps) {
   return (
-    <View style={styles.container}>
-      {routes.map((route) => {
-        const active = route.id === activeRoute;
-        return (
-          <Pressable
-            accessibilityRole="tab"
-            accessibilityState={{ selected: active }}
-            key={route.id}
-            onPress={() => onChange(route.id)}
-            style={[styles.tab, active && styles.activeTab]}
-          >
-            <Text style={[styles.tabText, active && styles.activeTabText]}>{route.shortLabel}</Text>
-          </Pressable>
-        );
-      })}
-    </View>
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      style={styles.scroll}
+      contentContainerStyle={styles.container}
+    >
+      <View accessibilityRole="tablist" style={styles.tabList}>
+        {routes.map((route) => {
+          const active = route.id === activeRoute;
+          return (
+            <Pressable
+              accessibilityLabel={route.label}
+              accessibilityRole="tab"
+              accessibilityState={{ selected: active }}
+              key={route.id}
+              onPress={() => onChange(route.id)}
+              style={[styles.tab, active && styles.activeTab]}
+            >
+              <Text style={[styles.tabText, active && styles.activeTabText]}>{route.shortLabel}</Text>
+            </Pressable>
+          );
+        })}
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scroll: {
+    flexGrow: 0,
+  },
   container: {
+    minWidth: '100%',
+  },
+  tabList: {
     backgroundColor: '#e8edf3',
     borderColor: '#cbd5e1',
     borderRadius: 8,
     borderWidth: 1,
     flexDirection: 'row',
+    gap: 4,
     padding: 4,
   },
   tab: {
     alignItems: 'center',
     borderRadius: 6,
-    flex: 1,
+    flexGrow: 1,
     minHeight: 42,
+    minWidth: 82,
     justifyContent: 'center',
-    paddingHorizontal: 8,
+    paddingHorizontal: 12,
   },
   activeTab: {
     backgroundColor: '#ffffff',
