@@ -12,6 +12,7 @@ const requiredStoreTokens = [
   'DRAFT_STORAGE_VERSION = 2',
   'DraftStorageEnvelope',
   'loadDraftState',
+  'Geçersiz taslak kayıtları temizlendi.',
   'AsyncStorage.getItem',
   'AsyncStorage.setItem',
   'createDraft',

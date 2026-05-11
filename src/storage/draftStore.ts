@@ -74,7 +74,10 @@ function normalizeDrafts(value: unknown): { readonly drafts: LocalDraft[]; reado
   let invalidRecordCount = 0;
   const drafts = value
     .filter((item): item is LocalDraft => {
-      if (!item || typeof item !== 'object') return false;
+      if (!item || typeof item !== 'object') {
+        invalidRecordCount += 1;
+        return false;
+      }
       const draft = item as Partial<LocalDraft>;
       const valid =
         typeof draft.id === 'string' &&
@@ -128,9 +131,13 @@ function readEnvelope(value: unknown): DraftLoadResult {
         draftCount: normalized.drafts.length,
         invalidRecordCount: normalized.invalidRecordCount,
         messages:
-          version === DRAFT_STORAGE_VERSION
+          version === DRAFT_STORAGE_VERSION && normalized.invalidRecordCount === 0
             ? ['Taslak saklama zarfı güncel.']
-            : [`Taslak saklama zarfı ${version} sürümünden ${DRAFT_STORAGE_VERSION} sürümüne yükseltildi.`],
+            : [
+                version === DRAFT_STORAGE_VERSION
+                  ? 'Geçersiz taslak kayıtları temizlendi.'
+                  : `Taslak saklama zarfı ${version} sürümünden ${DRAFT_STORAGE_VERSION} sürümüne yükseltildi.`,
+              ],
       },
     };
   }

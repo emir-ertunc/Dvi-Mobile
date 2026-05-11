@@ -7,6 +7,7 @@ const files = [
   join('src', 'components', 'RouteTabs.tsx'),
   join('src', 'components', 'StatusPanel.tsx'),
   join('src', 'config', 'buildInfo.ts'),
+  join('src', 'config', 'diagnostics.ts'),
   join('src', 'data', 'dashboard.ts'),
   join('src', 'hooks', 'useLocalDrafts.ts'),
 ];
