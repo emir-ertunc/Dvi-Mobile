@@ -33,7 +33,7 @@ const EDITABLE_AM_SECTION_IDS = new Set([
   'am.other',
 ]);
 
-const PHASE_4D_PM_SECTION_IDS = new Set([
+const EDITABLE_PM_SECTION_IDS = new Set([
   'pm.header',
   'pm.checklist',
   'pm.100.kayit-ve-buluntu',
@@ -41,22 +41,25 @@ const PHASE_4D_PM_SECTION_IDS = new Set([
   'pm.400.fiziksel-tanim',
   'pm.500.tibbi-patoloji',
   'pm.600.odontoloji',
+  'pm.700.destek',
+  'pm.800.dna-ekler-imza',
+  'pm.other',
 ]);
 
 function sectionStatusText(section: FormSectionSummary): string {
   return `${section.fieldCount} alan ve ${section.widgetCount} PDF bileşeni bu bölümde temsil edilir.`;
 }
 
-function isEditableInPhase4D(formType: FormType, sectionId: string): boolean {
+function isEditableInPhase4E(formType: FormType, sectionId: string): boolean {
   if (formType === 'AM') return EDITABLE_AM_SECTION_IDS.has(sectionId);
-  return PHASE_4D_PM_SECTION_IDS.has(sectionId);
+  return EDITABLE_PM_SECTION_IDS.has(sectionId);
 }
 
 function workspaceDetailText(formType: FormType): string {
   if (formType === 'AM') {
     return 'AM genel, klinik, destek, ek ve imza blokları çevrimdışı taslak kaydına bağlıdır.';
   }
-  return 'PM buluntu, kalıntı, patoloji, odontoloji ve bulgu blokları çevrimdışı taslak kaydına bağlıdır.';
+  return 'PM buluntu, patoloji, odontoloji, destek, DNA, ek ve imza blokları çevrimdışı taslak kaydına bağlıdır.';
 }
 
 function sectionStateText(formType: FormType, editable: boolean): string {
@@ -76,7 +79,7 @@ export function FormWorkspace({ draft, onFieldValueChange }: FormWorkspaceProps)
 
   const activeSection = sections.find((section) => section.id === activeSectionId) ?? sections[0];
   const activeFields = activeSection ? getSectionFields(formType, activeSection.id) : [];
-  const editableSection = activeSection ? isEditableInPhase4D(formType, activeSection.id) : false;
+  const editableSection = activeSection ? isEditableInPhase4E(formType, activeSection.id) : false;
   const activeSectionIndex = sections.findIndex((section) => section.id === activeSection?.id);
   const previousSection = activeSectionIndex > 0 ? sections[activeSectionIndex - 1] : null;
   const nextSection = activeSectionIndex >= 0 && activeSectionIndex < sections.length - 1 ? sections[activeSectionIndex + 1] : null;

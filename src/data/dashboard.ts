@@ -56,8 +56,8 @@ export const FORM_READINESS: readonly FormReadiness[] = [
     title: 'Ölüm Sonrası Kaydı',
     fieldCount: 1693,
     widgetCount: 2026,
-    status: 'PM buluntu, patoloji ve odontoloji blokları düzenlenebilir.',
-    nextAction: 'Buluntu, kalıntı, eşya, fiziksel tanım, patoloji ve odontoloji alanları yerel taslağa kaydedilir.',
+    status: 'PM uzmanlık, destek, DNA, ek ve imza blokları düzenlenebilir.',
+    nextAction: 'Buluntu, kalıntı, patoloji, odontoloji, destek, DNA, ek ve imza alanları yerel taslağa kaydedilir.',
   },
 ] as const;
 
@@ -114,7 +114,12 @@ export const WORKFLOW_STEPS: readonly WorkflowStep[] = [
   },
   {
     title: 'PM buluntu ve patoloji',
-    status: 'sürüyor',
+    status: 'tamamlandı',
     detail: 'PM buluntu, kalıntı, eşya, fiziksel tanım, patoloji ve odontoloji blokları düzenlenebilir hale getirilir.',
+  },
+  {
+    title: 'PM uzmanlık blokları',
+    status: 'sürüyor',
+    detail: 'PM destek, DNA, ek, imza, iletişim ve kalan uzmanlık alanları düzenlenebilir hale getirilir.',
   },
 ] as const;

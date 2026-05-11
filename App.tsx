@@ -56,7 +56,7 @@ function OverviewScreen({ draftState }: { readonly draftState: LocalDraftState }
     <View style={styles.screen}>
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Operasyon Özeti</Text>
-        <Text style={styles.sectionDetail}>PM buluntu, patoloji ve odontoloji blokları yerel taslaklara bağlandı.</Text>
+        <Text style={styles.sectionDetail}>PM uzmanlık, destek, DNA, ek ve imza blokları yerel taslaklara bağlandı.</Text>
       </View>
 
       <View style={styles.metricGrid}>
@@ -73,8 +73,8 @@ function OverviewScreen({ draftState }: { readonly draftState: LocalDraftState }
       <View style={styles.panel}>
         <Text style={styles.panelTitle}>Hızlı Durum</Text>
         <Text style={styles.bodyText}>
-          Bu faz, seçili PM taslağında buluntu, kalıntı, eşya, fiziksel tanım, patoloji ve odontoloji alanlarını
-          çevrimdışı kaydedilebilir hale getirir.
+          Bu faz, seçili PM taslağında destek, DNA, ek, imza ve kalan uzmanlık alanlarını çevrimdışı
+          kaydedilebilir hale getirir.
         </Text>
         {activeDraft && <Text style={styles.mutedText}>Aktif taslak: {activeDraft.title}</Text>}
       </View>
@@ -277,7 +277,7 @@ function DraftDetailPanel({
         <Text style={styles.statText}>Güncelleme: {formatDraftDate(draft.updatedAt)}</Text>
       </View>
       <Text style={styles.bodyText}>
-        Bu panel, taslağın seçilmesini, üst veri düzenlemesini ve bu fazda açılan AM alan değerlerinin
+        Bu panel, taslağın seçilmesini, üst veri düzenlemesini ve bu fazda açılan AM/PM alan değerlerinin
         saklanmasını doğrular.
       </Text>
       <FormWorkspace draft={draft} onFieldValueChange={onFieldValueChange} />
