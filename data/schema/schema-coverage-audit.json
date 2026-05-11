@@ -1,0 +1,105 @@
+{
+  "phase": "Phase 2D",
+  "version": "0.2.3",
+  "buildId": "phase-2d-v0.2.3-20260511",
+  "passed": true,
+  "failures": [],
+  "totals": {
+    "fieldCount": 3380,
+    "widgetInstanceCount": 4032,
+    "exactWidgetBindingCount": 3380,
+    "exactExportBindingCount": 3380,
+    "defaultValueValidatedCount": 3380
+  },
+  "forms": [
+    {
+      "formType": "AM",
+      "passed": true,
+      "failures": [],
+      "metrics": {
+        "fieldCount": 1687,
+        "inventoryFieldCount": 1687,
+        "widgetInstanceCount": 2006,
+        "inventoryWidgetInstanceCount": 2006,
+        "uniqueSchemaFieldCount": 1687,
+        "uniqueInventoryFieldCount": 1687,
+        "uniqueWidgetInstanceCount": 2006,
+        "exactFieldCoverageCount": 1687,
+        "exactWidgetBindingCount": 1687,
+        "exactExportBindingCount": 1687,
+        "exactValidationRuleCount": 1687,
+        "defaultValueValidatedCount": 1687,
+        "primitiveCounts": {
+          "text": 984,
+          "email": 62,
+          "checkbox": 610,
+          "datePart": 24,
+          "phone": 6,
+          "number": 1
+        },
+        "valueTypeCounts": {
+          "string": 984,
+          "email": 62,
+          "boolean": 610,
+          "datePart": 24,
+          "phone": 6,
+          "number": 1
+        },
+        "validationRuleCounts": {
+          "optional": 1687,
+          "string": 984,
+          "email": 62,
+          "boolean": 610,
+          "datePart.day": 6,
+          "datePart.month": 6,
+          "datePart.year": 12,
+          "phone": 6,
+          "number": 1
+        }
+      }
+    },
+    {
+      "formType": "PM",
+      "passed": true,
+      "failures": [],
+      "metrics": {
+        "fieldCount": 1693,
+        "inventoryFieldCount": 1693,
+        "widgetInstanceCount": 2026,
+        "inventoryWidgetInstanceCount": 2026,
+        "uniqueSchemaFieldCount": 1693,
+        "uniqueInventoryFieldCount": 1693,
+        "uniqueWidgetInstanceCount": 2026,
+        "exactFieldCoverageCount": 1693,
+        "exactWidgetBindingCount": 1693,
+        "exactExportBindingCount": 1693,
+        "exactValidationRuleCount": 1693,
+        "defaultValueValidatedCount": 1693,
+        "primitiveCounts": {
+          "checkbox": 755,
+          "text": 879,
+          "email": 47,
+          "phone": 4,
+          "datePart": 8
+        },
+        "valueTypeCounts": {
+          "boolean": 755,
+          "string": 879,
+          "email": 47,
+          "phone": 4,
+          "datePart": 8
+        },
+        "validationRuleCounts": {
+          "optional": 1693,
+          "boolean": 755,
+          "string": 879,
+          "email": 47,
+          "phone": 4,
+          "datePart.day": 2,
+          "datePart.month": 2,
+          "datePart.year": 4
+        }
+      }
+    }
+  ]
+}

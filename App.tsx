@@ -60,10 +60,10 @@ export default function App() {
         </View>
 
         <View style={styles.notice}>
-          <Text style={styles.noticeTitle}>Faz 2C PM şeması</Text>
+          <Text style={styles.noticeTitle}>Faz 2D şema kapsam denetimi</Text>
           <Text style={styles.noticeBody}>
-            Bu derleme PM envanterini canonical schema kayıtlarına dönüştürür; default değer,
-            validasyon kuralı, readiness ve PDF binding sözleşmesini birlikte denetler.
+            Bu derleme AM ve PM schema kapsamını envanter, widget binding, validasyon ve PDF
+            aktarım sözleşmesiyle birlikte denetler.
           </Text>
         </View>
       </ScrollView>

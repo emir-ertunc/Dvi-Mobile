@@ -1,6 +1,6 @@
 {
   "name": "dvi-mobile",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": true,
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,8 @@
     "schema:am:verify": "node scripts/build_am_schema.js",
     "schema:pm": "node scripts/build_pm_schema.js --write",
     "schema:pm:verify": "node scripts/build_pm_schema.js",
+    "schema:coverage": "node scripts/audit_schema_coverage.js --write",
+    "schema:coverage:verify": "node scripts/audit_schema_coverage.js",
     "rebaseline:verify": "node scripts/verify_rebaseline.js",
     "text:verify-tr": "node scripts/verify_ui_text_tr.js",
     "ios": "expo run:ios"

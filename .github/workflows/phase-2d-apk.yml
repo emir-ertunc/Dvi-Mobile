@@ -1,4 +1,4 @@
-name: Phase 2C APK
+name: Phase 2D APK
 
 on:
   push:
@@ -53,6 +53,9 @@ jobs:
       - name: PM schema doğrulaması
         run: npm run schema:pm:verify
 
+      - name: Schema coverage doğrulaması
+        run: npm run schema:coverage:verify
+
       - name: Android proje dosyalarını üret
         run: CI=1 npx expo prebuild --platform android --clean
 
@@ -65,10 +68,10 @@ jobs:
       - name: APK dosyasını adlandır
         run: |
           mkdir -p artifacts
-          cp android/app/build/outputs/apk/release/app-release.apk artifacts/DviMobile-phase-2c-v0.2.2-20260510.apk
+          cp android/app/build/outputs/apk/release/app-release.apk artifacts/DviMobile-phase-2d-v0.2.3-20260511.apk
 
       - name: APK artifact yükle
         uses: actions/upload-artifact@v4
         with:
-          name: DviMobile-phase-2c-v0.2.2-20260510.apk
-          path: artifacts/DviMobile-phase-2c-v0.2.2-20260510.apk
+          name: DviMobile-phase-2d-v0.2.3-20260511.apk
+          path: artifacts/DviMobile-phase-2d-v0.2.3-20260511.apk
