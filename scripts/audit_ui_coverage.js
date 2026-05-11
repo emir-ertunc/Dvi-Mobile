@@ -1,12 +1,12 @@
 const { mkdirSync, readFileSync, writeFileSync } = require('node:fs');
 const { dirname, join } = require('node:path');
 
-const PHASE = 'Phase 5A-Fix6';
-const VERSION = '0.5.6';
-const BUILD_ID = 'phase-5a-fix6-v0.5.6-20260512';
+const PHASE = 'Phase 5A-Fix7';
+const VERSION = '0.5.7';
+const BUILD_ID = 'phase-5a-fix7-v0.5.7-20260512';
 const ROOT = process.cwd();
 const OUTPUT_AUDIT = join(ROOT, 'data', 'ui-coverage', 'ui-coverage-audit.json');
-const OUTPUT_MATRIX = join(ROOT, 'docs', 'app', 'phase-5a-fix6-ui-coverage-matrix.md');
+const OUTPUT_MATRIX = join(ROOT, 'docs', 'app', 'phase-5a-fix7-ui-coverage-matrix.md');
 
 const FORM_CONFIGS = [
   {
@@ -14,12 +14,14 @@ const FORM_CONFIGS = [
     schemaPath: join(ROOT, 'data', 'schema', 'am-schema.json'),
     expectedFields: 1687,
     expectedWidgets: 2006,
+    expectedVisibleFields: 1243,
   },
   {
     formType: 'PM',
     schemaPath: join(ROOT, 'data', 'schema', 'pm-schema.json'),
     expectedFields: 1693,
     expectedWidgets: 2026,
+    expectedVisibleFields: 1246,
   },
 ];
 
@@ -78,6 +80,11 @@ function sectionCoverage(schema) {
   }));
 }
 
+function isHiddenFormEntryField(field) {
+  if (/\.[ABC]$/.test(field.pdfFieldName)) return true;
+  return /\.(302|304|306)$/.test(field.pdfFieldName);
+}
+
 function extractSet(source, constName) {
   const match = source.match(new RegExp(`const\\s+${constName}\\s*=\\s*new Set\\(\\[([\\s\\S]*?)\\]\\)`));
   if (!match) return null;
@@ -98,6 +105,8 @@ function auditForm(config, editableSectionIds, failures) {
   const staleEditableSections = sorted(editableSectionIds.filter((sectionId) => !sectionIds.includes(sectionId)));
   const fieldCount = sections.reduce((sum, section) => sum + section.fieldCount, 0);
   const widgetCount = sections.reduce((sum, section) => sum + section.widgetCount, 0);
+  const visibleFields = schema.fields.filter((field) => !isHiddenFormEntryField(field));
+  const hiddenFields = schema.fields.filter((field) => isHiddenFormEntryField(field));
 
   if (schema.formType !== config.formType) {
     fail(failures, 'schema.formType', `${config.formType} schema form tipi hatalı.`, { actual: schema.formType });
@@ -112,6 +121,12 @@ function auditForm(config, editableSectionIds, failures) {
     fail(failures, 'ui.widgetCount', `${config.formType} UI kapsam widget sayısı beklenen değerle uyuşmuyor.`, {
       expected: config.expectedWidgets,
       actual: widgetCount,
+    });
+  }
+  if (visibleFields.length !== config.expectedVisibleFields) {
+    fail(failures, 'ui.visibleFieldCount', `${config.formType} görünür giriş alanı sayısı beklenen değerle uyuşmuyor.`, {
+      expected: config.expectedVisibleFields,
+      actual: visibleFields.length,
     });
   }
   if (missingEditableSections.length > 0) {
@@ -132,6 +147,8 @@ function auditForm(config, editableSectionIds, failures) {
       sectionCount: sections.length,
       fieldCount,
       widgetCount,
+      visibleFieldCount: visibleFields.length,
+      hiddenFieldCount: hiddenFields.length,
       editableSectionCount: editableSectionIds.length,
       missingEditableSectionCount: missingEditableSections.length,
       staleEditableSectionCount: staleEditableSections.length,
@@ -168,6 +185,8 @@ Bu matris, AM ve PM canonical schema bölümlerinin uygulamadaki form gezgini ve
 - PM section kapsamı: ${audit.forms.find((form) => form.formType === 'PM').metrics.editableSectionCount} / ${audit.forms.find((form) => form.formType === 'PM').metrics.sectionCount}
 - UI field kapsamı: ${audit.totals.fieldCount} / 3380
 - UI widget kapsamı: ${audit.totals.widgetCount} / 4032
+- Görünür giriş alanı: ${audit.totals.visibleFieldCount} / 2489
+- UI'dan gizlenen teknik A/B/C ve devam alanı: ${audit.totals.hiddenFieldCount}
 - Sonuç: ${audit.passed ? 'Geçti' : 'Kaldı'}
 
 ## Bölüm Matrisi
@@ -228,6 +247,8 @@ function run({ write }) {
       editableSectionCount: forms.reduce((sum, form) => sum + form.metrics.editableSectionCount, 0),
       fieldCount: forms.reduce((sum, form) => sum + form.metrics.fieldCount, 0),
       widgetCount: forms.reduce((sum, form) => sum + form.metrics.widgetCount, 0),
+      visibleFieldCount: forms.reduce((sum, form) => sum + form.metrics.visibleFieldCount, 0),
+      hiddenFieldCount: forms.reduce((sum, form) => sum + form.metrics.hiddenFieldCount, 0),
     },
     forms,
   };

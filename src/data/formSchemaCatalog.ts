@@ -18,6 +18,15 @@ const SCHEMAS: Readonly<Record<FormType, CanonicalSchemaDocument>> = {
   PM: pmSchemaJson as unknown as CanonicalSchemaDocument,
 };
 
+export function isHiddenFormEntryField(field: CanonicalSchemaField): boolean {
+  if (/\.[ABC]$/.test(field.pdfFieldName)) return true;
+  return /\.(302|304|306)$/.test(field.pdfFieldName);
+}
+
+function visibleFormEntryFields(fields: readonly CanonicalSchemaField[]): readonly CanonicalSchemaField[] {
+  return fields.filter((field) => !isHiddenFormEntryField(field));
+}
+
 export function getFormSchema(formType: FormType): CanonicalSchemaDocument {
   return SCHEMAS[formType];
 }
@@ -30,7 +39,7 @@ export function getFormSections(formType: FormType): readonly FormSectionSummary
   const schema = getFormSchema(formType);
   const sections = new Map<string, FormSectionSummary>();
 
-  for (const field of schema.fields) {
+  for (const field of visibleFormEntryFields(schema.fields)) {
     const current = sections.get(field.officialSection.id);
     const fieldPages = field.widgetInstances.map((widget) => widget.pageNumber);
     const mergedPages = new Set([...(current?.pageNumbers ?? []), ...fieldPages]);
@@ -54,8 +63,8 @@ export function getInitialSectionId(formType: FormType): string {
 }
 
 export function getSectionFields(formType: FormType, sectionId: string): readonly CanonicalSchemaField[] {
-  return getFormSchema(formType)
-    .fields.filter((field) => field.officialSection.id === sectionId)
+  return visibleFormEntryFields(getFormSchema(formType).fields)
+    .filter((field) => field.officialSection.id === sectionId)
     .sort((left, right) => {
       const leftWidget = left.widgetInstances[0];
       const rightWidget = right.widgetInstances[0];

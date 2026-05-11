@@ -26,7 +26,7 @@ const workspaceSource = read(join('src', 'components', 'FormWorkspace.tsx'));
 const fieldControlSource = read(join('src', 'components', 'FormFieldControl.tsx'));
 const buildInfoSource = read(join('src', 'config', 'buildInfo.ts'));
 
-requireToken(buildInfoSource, 'phase-5a-fix6-v0.5.6-20260512', 'buildInfo.ts');
+requireToken(buildInfoSource, 'phase-5a-fix7-v0.5.7-20260512', 'buildInfo.ts');
 requireToken(appSource, 'onFieldValueChange={(fieldId, value) => void draftState.updateDraftFieldValue(activeDraft.id, fieldId, value)}', 'App.tsx');
 requireToken(appSource, 'readonly onFieldValueChange: (fieldId: string, value:', 'App.tsx');
 requireToken(workspaceSource, 'readonly onFieldValueChange: (fieldId: string, value: DraftFieldValue | null) => void;', 'FormWorkspace.tsx');

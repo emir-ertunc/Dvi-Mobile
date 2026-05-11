@@ -1,14 +1,16 @@
 {
-  "phase": "Phase 5A-Fix6",
-  "version": "0.5.6",
-  "buildId": "phase-5a-fix6-v0.5.6-20260512",
+  "phase": "Phase 5A-Fix7",
+  "version": "0.5.7",
+  "buildId": "phase-5a-fix7-v0.5.7-20260512",
   "passed": true,
   "failures": [],
   "totals": {
     "sectionCount": 21,
     "editableSectionCount": 21,
     "fieldCount": 3380,
-    "widgetCount": 4032
+    "widgetCount": 4032,
+    "visibleFieldCount": 2489,
+    "hiddenFieldCount": 891
   },
   "forms": [
     {
@@ -18,6 +20,8 @@
         "sectionCount": 11,
         "fieldCount": 1687,
         "widgetCount": 2006,
+        "visibleFieldCount": 1243,
+        "hiddenFieldCount": 444,
         "editableSectionCount": 11,
         "missingEditableSectionCount": 0,
         "staleEditableSectionCount": 0
@@ -224,6 +228,8 @@
         "sectionCount": 10,
         "fieldCount": 1693,
         "widgetCount": 2026,
+        "visibleFieldCount": 1246,
+        "hiddenFieldCount": 447,
         "editableSectionCount": 10,
         "missingEditableSectionCount": 0,
         "staleEditableSectionCount": 0

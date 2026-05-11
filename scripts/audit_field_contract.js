@@ -1,12 +1,12 @@
 const { mkdirSync, readFileSync, writeFileSync } = require('node:fs');
 const { dirname, join } = require('node:path');
 
-const PHASE = 'Phase 5A-Fix6';
-const VERSION = '0.5.6';
-const BUILD_ID = 'phase-5a-fix6-v0.5.6-20260512';
+const PHASE = 'Phase 5A-Fix7';
+const VERSION = '0.5.7';
+const BUILD_ID = 'phase-5a-fix7-v0.5.7-20260512';
 const ROOT = process.cwd();
 const OUTPUT_AUDIT = join(ROOT, 'data', 'field-contract', 'field-contract-audit.json');
-const OUTPUT_REPORT = join(ROOT, 'docs', 'app', 'phase-5a-fix6-field-contract.md');
+const OUTPUT_REPORT = join(ROOT, 'docs', 'app', 'phase-5a-fix7-field-contract.md');
 
 const FORM_CONFIGS = [
   {

@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "data" / "pdf-field-prompts" / "pdf-field-prompts.json"
-REPORT = ROOT / "docs" / "app" / "phase-5a-fix6-pdf-prompts.md"
+REPORT = ROOT / "docs" / "app" / "phase-5a-fix7-pdf-prompts.md"
 
 FORMS = {
     "AM": {
@@ -245,9 +245,9 @@ def prompt_for_widget(widget, words, lines):
 def build_prompts():
     fitz = import_fitz()
     result = {
-        "phase": "Phase 5A-Fix6",
-        "version": "0.5.6",
-        "buildId": "phase-5a-fix6-v0.5.6-20260512",
+        "phase": "Phase 5A-Fix7",
+        "version": "0.5.7",
+        "buildId": "phase-5a-fix7-v0.5.7-20260512",
         "forms": [],
         "fields": {},
     }
@@ -304,7 +304,7 @@ def report_markdown(data):
         f"| {item['formType']} | {item['fieldCount']} | {item['widgetCount']} | {item['promptCount']} |"
         for item in data["forms"]
     )
-    return f"""# Phase 5A-Fix6 PDF Alan Prompt Denetimi
+    return f"""# Phase 5A-Fix7 PDF Alan Prompt Denetimi
 
 Bu rapor, fillable AM/PM PDF'lerdeki widget konumları ile görünür PDF metni yeniden okunarak üretilen alan promptlarını özetler.
 

@@ -29,6 +29,8 @@ for (const [label, actual, expected] of checks) {
 }
 
 assertContains(join('src', 'data', 'formSchemaCatalog.ts'), "getFormSections");
+assertContains(join('src', 'data', 'formSchemaCatalog.ts'), "isHiddenFormEntryField");
+assertContains(join('src', 'data', 'formSchemaCatalog.ts'), "visibleFormEntryFields");
 assertContains(join('src', 'components', 'FormWorkspace.tsx'), "EDITABLE_AM_SECTION_IDS");
 assertContains(join('src', 'components', 'FormWorkspace.tsx'), "EDITABLE_PM_SECTION_IDS");
 assertContains(join('src', 'components', 'FormWorkspace.tsx'), "am.100.kayit-ve-basvuru");
@@ -66,7 +68,7 @@ assertContains(join('App.tsx'), "animationType=\"fade\"");
 assertContains(join('App.tsx'), "accessibilityRole=\"alert\"");
 assertContains(join('App.tsx'), "updateDraftFieldValue");
 assertContains(join('src', 'storage', 'draftStore.ts'), "updateDraftFieldValue");
-assertContains(join('src', 'config', 'buildInfo.ts'), "phase-5a-fix6-v0.5.6-20260512");
+assertContains(join('src', 'config', 'buildInfo.ts'), "phase-5a-fix7-v0.5.7-20260512");
 assertContains(join('src', 'config', 'pdfTemplates.ts'), "PDF_TEMPLATE_MANIFEST");
 assertContains(join('src', 'config', 'diagnostics.ts'), "PDF şablonları");
 assertContains(join('src', 'navigation', 'appRoutes.ts'), "'saved' | 'forms' | 'form' | 'status' | 'system'");
@@ -92,6 +94,8 @@ assertContains(join('App.tsx'), "Tamamlanma: %");
 assertContains(join('App.tsx'), "Formu kapat");
 assertContains(join('src', 'components', 'FormWorkspace.tsx'), "onActiveSectionChange");
 assertContains(join('src', 'components', 'FormWorkspace.tsx'), "onValueChange={(fieldId, value) => onFieldValueChange(fieldId, value)}");
+assertContains(join('src', 'components', 'FormWorkspace.tsx'), "isHiddenFormEntryField");
+assertContains(join('src', 'components', 'FormWorkspace.tsx'), "visibleFieldCount");
 assertContains(join('src', 'components', 'FormFieldControl.tsx'), "İstenen bilgiyi yazın");
 assertContains(join('src', 'components', 'FormFieldControl.tsx'), "checkboxOptionLabel");
 assertContains(join('src', 'components', 'FormFieldControl.tsx'), "{checkboxLabel}");

@@ -1,13 +1,13 @@
 const { existsSync, mkdirSync, readFileSync, writeFileSync } = require('node:fs');
 const { dirname, join } = require('node:path');
 
-const PHASE = 'Phase 5A-Fix6';
-const VERSION = '0.5.6';
-const BUILD_ID = 'phase-5a-fix6-v0.5.6-20260512';
+const PHASE = 'Phase 5A-Fix7';
+const VERSION = '0.5.7';
+const BUILD_ID = 'phase-5a-fix7-v0.5.7-20260512';
 const ROOT = process.cwd();
 const OUTPUT = join(ROOT, 'data', 'ui-labels', 'field-ui-labels.json');
 const AUDIT_OUTPUT = join(ROOT, 'data', 'ui-labels', 'field-ui-labels-audit.json');
-const REPORT = join(ROOT, 'docs', 'app', 'phase-5a-fix6-label-coverage.md');
+const REPORT = join(ROOT, 'docs', 'app', 'phase-5a-fix7-label-coverage.md');
 const PDF_PROMPTS_PATH = join(ROOT, 'data', 'pdf-field-prompts', 'pdf-field-prompts.json');
 
 const SCHEMAS = [
@@ -423,8 +423,34 @@ function fullLabel(sectionLabel, topic, specific) {
   return `${sectionLabel} - ${topic} - ${specific}`;
 }
 
+function isHiddenFormEntryField(field) {
+  if (/\.[ABC]$/.test(field.pdfFieldName)) return true;
+  return /\.(302|304|306)$/.test(field.pdfFieldName);
+}
+
+function hiddenFieldLabel(sectionLabel, field) {
+  const hiddenObject =
+    field.controlType === 'checkbox'
+      ? 'teknik PDF işareti'
+      : field.controlType === 'phone'
+        ? 'teknik telefon PDF alanı'
+        : field.controlType === 'email'
+          ? 'teknik e-posta PDF alanı'
+          : field.controlType === 'date-part'
+            ? 'teknik tarih PDF alanı'
+            : 'teknik PDF alanı';
+  return {
+    labelTr: `${sectionLabel} - Kullanıcıdan istenmeyen ${hiddenObject}`,
+    shortLabelTr: hiddenObject,
+    helpTextTr: `${sectionLabel} bölümünde bu ${hiddenObject} kullanıcıdan istenmez; veri boş ise PDF alanı boş bırakılır.`,
+    reviewStatus: 'hidden_from_form_entry',
+  };
+}
+
 function buildLabel(field, sectionIndex) {
   const sectionLabel = SECTION_LABELS[field.officialSection.id] || field.officialSection.title || `${field.formType} bölümü`;
+  if (isHiddenFormEntryField(field)) return hiddenFieldLabel(sectionLabel, field);
+
   const visible = translatedVisibleLabel(field.visibleLabel);
   const series = seriesFromPdfName(field.pdfFieldName);
   const control = CONTROL_LABELS[field.controlType] || 'alan';
@@ -590,7 +616,7 @@ function build({ write }) {
     )
     .join('\n');
 
-  const report = `# Phase 5A-Fix6 Label Coverage
+  const report = `# Phase 5A-Fix7 Label Coverage
 
 Bu rapor, kullanıcıya görünen alan etiketlerinin fillable PDF widget konumu ve görünür PDF promptlarıyla hizalandığını; teknik PDF field id, satır/parça ifadesi, sıra numarası, belirsiz resmi blok numarası ve input tipiyle çelişen adres/e-posta başlıklarından ayrıldığını denetler.
 

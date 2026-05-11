@@ -736,6 +736,34 @@ Kapsam dışı:
 - `DviMobile-phase-5a-fix6-v0.5.6-20260512.apk` üretilmeli.
 - Commit ve push tamamlanmalı.
 
+### Phase 5A-Fix7 - Gereksiz A/B/C ve Devam Alanlarını UI'dan Kaldırma
+
+Phase 5A-Fix6 PDF sıralı alan etiketlerini netleştirdi; ancak kullanıcı akışında INTERPOL PDF'lerdeki teknik `A/B/C` seçenekleri ve iletişim/adres devam alanları hâlâ ayrı doldurulabilir kartlar gibi görünüyordu. Uygulama davranışı bundan sonra şu kuralı izler: veri yoksa alan boş kalır, ek belge ve ek bilgi sayfasında devam seçenekleri kullanıcıdan istenmez, tek bir veri girişi için ayrıca "devamı" kutusu açılmaz.
+
+Hedef:
+
+- `A`, `B`, `C` suffix'li PDF teknik seçim alanları form giriş UI'ından gizlenir.
+- `302`, `304`, `306` suffix'li devam/ek satır kutuları form giriş UI'ından gizlenir.
+- Boş veri, uygulamada ayrı bir "veri mevcut değil" seçeneğiyle temsil edilmez; ilgili alan boş bırakılır.
+- Schema, inventory ve AcroForm export binding sözleşmesi korunur; PDF export fazında bu alanlar boş bırakılabilir veya gerekiyorsa otomatik doldurma/satır bölme mantığıyla ele alınır.
+- AM/PM görünür giriş alanı sayısı denetlenir: AM `1243`, PM `1246`, toplam `2489`.
+- Uygulama içi build bilgisi `0.5.7` / `phase-5a-fix7-v0.5.7-20260512` olarak görünür.
+
+Kapsam dışı:
+
+- PDF export motoru başlatılmaz.
+- Resmi PDF şablonları veya AcroForm field adları değiştirilmez.
+- Inventory/schema kapsamı azaltılmaz; 3380 canonical field ve 4032 widget sözleşmesi korunur.
+
+Çıkış kriterleri:
+
+- `npm run forms:visible:verify` geçmeli.
+- `npm run ui:coverage:verify` görünür alan sayısını ve gizlenen teknik alan sayısını raporlamalı.
+- `npm run field:contract:verify` toplam schema/export binding kapsamının bozulmadığını doğrulamalı.
+- TypeScript, Türkçe metin, renderer, input, label, schema, inventory, PDF template ve draft storage doğrulamaları geçmeli.
+- `DviMobile-phase-5a-fix7-v0.5.7-20260512.apk` üretilmeli.
+- Commit ve push tamamlanmalı.
+
 ### Phase 5B - Binding Manifest
 
 Canonical field id ile PDF field name/button state eşleşmeleri manifest içinde tutulur.

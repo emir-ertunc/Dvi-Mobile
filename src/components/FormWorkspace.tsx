@@ -7,6 +7,7 @@ import {
   getFormTitleTr,
   getInitialSectionId,
   getSectionFields,
+  isHiddenFormEntryField,
   type FormSectionSummary,
 } from '../data/formSchemaCatalog';
 import { getFieldUiText } from '../data/fieldUiLabels';
@@ -103,6 +104,10 @@ export function FormWorkspace({ draft, onActiveSectionChange, onFieldValueChange
   const [fieldFilter, setFieldFilter] = useState<FieldFilterId>('all');
   const [fieldSearch, setFieldSearch] = useState('');
   const schema = getFormSchema(formType);
+  const visibleFieldCount = schema.fields.filter((field) => !isHiddenFormEntryField(field)).length;
+  const visibleWidgetCount = schema.fields
+    .filter((field) => !isHiddenFormEntryField(field))
+    .reduce((sum, field) => sum + field.widgetInstances.length, 0);
 
   useEffect(() => {
     setActiveSectionId(getInitialSectionId(formType));
@@ -158,12 +163,12 @@ export function FormWorkspace({ draft, onActiveSectionChange, onFieldValueChange
 
       <View style={styles.summaryGrid}>
         <View style={styles.summaryTile}>
-          <Text style={styles.summaryValue}>{schema.totals.fieldCount}</Text>
-          <Text style={styles.summaryLabel}>Resmi alan</Text>
+          <Text style={styles.summaryValue}>{visibleFieldCount}</Text>
+          <Text style={styles.summaryLabel}>Giriş alanı</Text>
         </View>
         <View style={styles.summaryTile}>
-          <Text style={styles.summaryValue}>{schema.totals.widgetInstanceCount}</Text>
-          <Text style={styles.summaryLabel}>PDF bileşeni</Text>
+          <Text style={styles.summaryValue}>{visibleWidgetCount}</Text>
+          <Text style={styles.summaryLabel}>Doldurulacak bileşen</Text>
         </View>
         <View style={styles.summaryTile}>
           <Text style={styles.summaryValue}>{sections.length}</Text>
