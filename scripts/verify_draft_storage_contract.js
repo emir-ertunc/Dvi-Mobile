@@ -47,6 +47,7 @@ const requiredHookTokens = [
   'Alan değeri kaydedilemedi.',
   'Taslak kopyalanamadı.',
   'Taslak silinemedi.',
+  'Promise<string | null>',
 ];
 
 const requiredDiagnosticsTokens = [
@@ -59,8 +60,9 @@ const requiredDiagnosticsTokens = [
 
 const requiredAppTokens = [
   'useLocalDrafts',
-  'Yeni AM taslağı',
-  'Yeni PM taslağı',
+  'Ölüm Öncesi Kaydı Başlat',
+  'Ölüm Sonrası Kaydı Başlat',
+  'Basınca yeni taslak açılır.',
   'Taslak Listesi',
   'Taslak arama',
   'DRAFT_LIST_FILTERS',

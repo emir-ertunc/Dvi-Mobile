@@ -48,7 +48,7 @@ export default function App() {
 
         <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
           {activeRoute === 'saved' && <SavedScreen draftState={draftState} onNavigate={setActiveRoute} />}
-          {activeRoute === 'forms' && <FormsScreen draftState={draftState} />}
+          {activeRoute === 'forms' && <FormsScreen draftState={draftState} onNavigate={setActiveRoute} />}
           {activeRoute === 'form' && <ActiveFormScreen draftState={draftState} onNavigate={setActiveRoute} />}
           {activeRoute === 'status' && <StatusScreen draftState={draftState} />}
           {activeRoute === 'system' && <SystemScreen draftState={draftState} />}
@@ -231,65 +231,54 @@ function ActiveFormScreen({
   );
 }
 
-function FormsScreen({ draftState }: { readonly draftState: LocalDraftState }) {
-  const [selectedForm, setSelectedForm] = useState<'AM' | 'PM'>('AM');
-  const selected = FORM_READINESS.find((form) => form.code === selectedForm) ?? FORM_READINESS[0];
+function FormsScreen({
+  draftState,
+  onNavigate,
+}: {
+  readonly draftState: LocalDraftState;
+  readonly onNavigate: (route: AppRouteId) => void;
+}) {
+  const startDraft = async (formType: 'AM' | 'PM') => {
+    const createdDraftId = await draftState.createDraft(formType);
+    if (createdDraftId) onNavigate('form');
+  };
 
   return (
     <View style={styles.screen}>
       <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Form İşlemleri</Text>
-        <Text style={styles.sectionDetail}>AM ve PM kayıt akışları ayrı tutulur.</Text>
+        <Text style={styles.sectionTitle}>Formlar</Text>
+        <Text style={styles.sectionDetail}>Yeni kayıt türünü seçin; taslak oluşturulup doğrudan form ekranı açılır.</Text>
       </View>
 
-      <View style={styles.formSelector}>
-        {FORM_READINESS.map((form) => {
-          const active = form.code === selectedForm;
-          return (
-            <Pressable
-              accessibilityRole="button"
-              key={form.code}
-              onPress={() => setSelectedForm(form.code)}
-              style={[styles.formButton, active && styles.activeFormButton]}
-            >
-              <Text style={[styles.formButtonCode, active && styles.activeFormButtonText]}>{form.code}</Text>
-              <Text style={[styles.formButtonTitle, active && styles.activeFormButtonText]}>{form.title}</Text>
-            </Pressable>
-          );
-        })}
-      </View>
+      {draftState.errorMessage && <Text style={styles.errorText}>{draftState.errorMessage}</Text>}
 
-      <View style={styles.panel}>
-        <View style={styles.formSummaryHeader}>
-          <View style={styles.formBadge}>
-            <Text style={styles.formBadgeText}>{selected.code}</Text>
-          </View>
-          <View style={styles.formSummaryText}>
-            <Text style={styles.panelTitle}>{selected.title}</Text>
-            <Text style={styles.mutedText}>{selected.status}</Text>
-          </View>
-        </View>
-        <View style={styles.statsRow}>
-          <Text style={styles.statText}>{selected.fieldCount} resmi alan</Text>
-          <Text style={styles.statText}>{selected.widgetCount} alan bileşeni</Text>
-        </View>
-        <Text style={styles.bodyText}>{selected.nextAction}</Text>
-        <View style={styles.actionRow}>
+      <View style={styles.formStartGrid}>
+        {FORM_READINESS.map((form) => (
           <Pressable
             accessibilityRole="button"
-            onPress={() => void draftState.createDraft('AM')}
-            style={[styles.primaryAction, selectedForm === 'AM' && styles.activeAction]}
+            key={form.code}
+            onPress={() => void startDraft(form.code)}
+            style={styles.formStartCard}
           >
-            <Text style={styles.primaryActionText}>Yeni AM taslağı</Text>
+            <View style={styles.formSummaryHeader}>
+              <View style={styles.formBadge}>
+                <Text style={styles.formBadgeText}>{form.code}</Text>
+              </View>
+              <View style={styles.formSummaryText}>
+                <Text style={styles.panelTitle}>
+                  {form.code === 'AM' ? 'Ölüm Öncesi Kaydı Başlat' : 'Ölüm Sonrası Kaydı Başlat'}
+                </Text>
+                <Text style={styles.mutedText}>{form.title}</Text>
+              </View>
+            </View>
+            <View style={styles.statsRow}>
+              <Text style={styles.statText}>{form.fieldCount} resmi alan</Text>
+              <Text style={styles.statText}>{form.widgetCount} alan bileşeni</Text>
+            </View>
+            <Text style={styles.bodyText}>{form.nextAction}</Text>
+            <Text style={styles.startHintText}>Basınca yeni taslak açılır.</Text>
           </Pressable>
-          <Pressable
-            accessibilityRole="button"
-            onPress={() => void draftState.createDraft('PM')}
-            style={[styles.primaryAction, selectedForm === 'PM' && styles.activeAction]}
-          >
-            <Text style={styles.primaryActionText}>Yeni PM taslağı</Text>
-          </Pressable>
-        </View>
+        ))}
       </View>
 
       <View style={styles.panel}>
@@ -605,35 +594,22 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
   },
-  formSelector: {
-    gap: 10,
+  formStartGrid: {
+    gap: 12,
   },
-  formButton: {
+  formStartCard: {
     backgroundColor: '#ffffff',
     borderColor: '#d8dee8',
     borderRadius: 8,
     borderWidth: 1,
-    minHeight: 68,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    gap: 3,
+    gap: 12,
+    minHeight: 168,
+    padding: 16,
   },
-  activeFormButton: {
-    backgroundColor: '#0f766e',
-    borderColor: '#0f766e',
-  },
-  formButtonCode: {
+  startHintText: {
     color: '#0f766e',
     fontSize: 13,
     fontWeight: '900',
-  },
-  formButtonTitle: {
-    color: '#111827',
-    fontSize: 16,
-    fontWeight: '800',
-  },
-  activeFormButtonText: {
-    color: '#ffffff',
   },
   formSummaryHeader: {
     alignItems: 'center',
@@ -727,24 +703,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 14,
   },
-  activeAction: {
-    backgroundColor: '#0f766e',
-  },
   primaryActionText: {
     color: '#ffffff',
     fontSize: 14,
     fontWeight: '900',
   },
   draftRow: {
-    borderColor: '#e2e8f0',
-    borderRadius: 8,
-    borderWidth: 1,
-    flexDirection: 'row',
-    gap: 12,
-    padding: 12,
-  },
-  savedSummaryRow: {
-    alignItems: 'center',
     borderColor: '#e2e8f0',
     borderRadius: 8,
     borderWidth: 1,

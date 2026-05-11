@@ -25,7 +25,7 @@ export interface LocalDraftState {
   readonly pmDraftCount: number;
   readonly activeDraftId: string | null;
   readonly reload: () => Promise<void>;
-  readonly createDraft: (formType: DraftFormType) => Promise<void>;
+  readonly createDraft: (formType: DraftFormType) => Promise<string | null>;
   readonly resumeDraft: (draftId: string) => Promise<void>;
   readonly updateDraftTitle: (draftId: string, title: string) => Promise<void>;
   readonly updateDraftFieldValue: (draftId: string, fieldId: string, value: DraftFieldValue | null) => Promise<void>;
@@ -66,10 +66,13 @@ export function useLocalDrafts(): LocalDraftState {
       try {
         const currentDrafts = await loadDrafts();
         const nextDrafts = await persistCreatedDraft(formType, currentDrafts);
+        const createdDraftId = nextDrafts[0]?.id ?? null;
         setDrafts(nextDrafts);
-        setActiveDraftId(nextDrafts[0]?.id ?? null);
+        setActiveDraftId(createdDraftId);
+        return createdDraftId;
       } catch {
         setErrorMessage('Taslak oluşturulamadı.');
+        return null;
       }
     },
     [],
