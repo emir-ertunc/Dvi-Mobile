@@ -56,7 +56,7 @@ function OverviewScreen({ draftState }: { readonly draftState: LocalDraftState }
     <View style={styles.screen}>
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Operasyon Özeti</Text>
-        <Text style={styles.sectionDetail}>PM uzmanlık, destek, DNA, ek ve imza blokları yerel taslaklara bağlandı.</Text>
+        <Text style={styles.sectionDetail}>AM/PM kullanıcı arayüzü kapsamı ve erişilebilirlik sözleşmesi denetlendi.</Text>
       </View>
 
       <View style={styles.metricGrid}>
@@ -73,8 +73,8 @@ function OverviewScreen({ draftState }: { readonly draftState: LocalDraftState }
       <View style={styles.panel}>
         <Text style={styles.panelTitle}>Hızlı Durum</Text>
         <Text style={styles.bodyText}>
-          Bu faz, seçili PM taslağında destek, DNA, ek, imza ve kalan uzmanlık alanlarını çevrimdışı
-          kaydedilebilir hale getirir.
+          Bu faz, AM ve PM bölümlerinin form gezgini üzerinden erişilebilir olduğunu ve temel alan kontrollerinin
+          doğru erişilebilirlik sözleşmesini taşıdığını doğrular.
         </Text>
         {activeDraft && <Text style={styles.mutedText}>Aktif taslak: {activeDraft.title}</Text>}
       </View>

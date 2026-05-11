@@ -24,7 +24,9 @@ export function FormSectionNavigator({ activeSectionId, onChange, sections }: Fo
             const active = section.id === activeSectionId;
             return (
               <Pressable
+                accessibilityLabel={`${section.title}, ${section.fieldCount} alan, ${pageLabel(section)}`}
                 accessibilityRole="button"
+                accessibilityState={{ selected: active }}
                 key={section.id}
                 onPress={() => onChange(section.id)}
                 style={[styles.sectionButton, active && styles.activeSectionButton]}

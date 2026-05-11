@@ -24,5 +24,6 @@ export const DIAGNOSTICS_INFO = {
     'AM/PM şema',
     'Şema kapsamı',
     'Taslak saklama',
+    'UI kapsamı',
   ],
 } as const;

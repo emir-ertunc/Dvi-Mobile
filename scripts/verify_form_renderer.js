@@ -56,6 +56,6 @@ assertContains(join('src', 'components', 'FormFieldControl.tsx'), "onValueChange
 assertContains(join('src', 'components', 'FormFieldControl.tsx'), "validateSchemaValue");
 assertContains(join('App.tsx'), "updateDraftFieldValue");
 assertContains(join('src', 'storage', 'draftStore.ts'), "updateDraftFieldValue");
-assertContains(join('src', 'config', 'buildInfo.ts'), "phase-4e-v0.4.4-20260511");
+assertContains(join('src', 'config', 'buildInfo.ts'), "phase-4f-v0.4.5-20260511");
 
 console.log('Ortak form renderer doğrulaması geçti.');

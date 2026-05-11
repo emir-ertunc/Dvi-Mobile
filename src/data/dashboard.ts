@@ -119,7 +119,12 @@ export const WORKFLOW_STEPS: readonly WorkflowStep[] = [
   },
   {
     title: 'PM uzmanlık blokları',
-    status: 'sürüyor',
+    status: 'tamamlandı',
     detail: 'PM destek, DNA, ek, imza, iletişim ve kalan uzmanlık alanları düzenlenebilir hale getirilir.',
+  },
+  {
+    title: 'UI kapsamı',
+    status: 'sürüyor',
+    detail: 'AM/PM bölüm kapsamı, alan kontrol erişimi ve temel erişilebilirlik sözleşmesi denetlenir.',
   },
 ] as const;

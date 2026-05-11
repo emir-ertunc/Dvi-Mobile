@@ -2,7 +2,7 @@
   "expo": {
     "name": "DVI Mobil",
     "slug": "dvi-mobile",
-    "version": "0.4.4",
+    "version": "0.4.5",
     "orientation": "portrait",
     "newArchEnabled": false,
     "assetBundlePatterns": [
@@ -14,7 +14,7 @@
     },
     "android": {
       "package": "com.emirertunc.dvimobile",
-      "versionCode": 21,
+      "versionCode": 22,
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },

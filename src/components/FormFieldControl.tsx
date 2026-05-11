@@ -84,6 +84,7 @@ export function FormFieldControl({ editable, field, index, onValueChange, value 
 
       {field.controlType === 'checkbox' ? (
         <Pressable
+          accessibilityLabel={field.uiLabelTr}
           accessibilityRole="checkbox"
           accessibilityState={{ checked, disabled: !editable }}
           disabled={!editable}

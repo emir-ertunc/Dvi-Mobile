@@ -1,0 +1,409 @@
+{
+  "phase": "Phase 4F",
+  "version": "0.4.5",
+  "buildId": "phase-4f-v0.4.5-20260511",
+  "passed": true,
+  "failures": [],
+  "totals": {
+    "sectionCount": 21,
+    "editableSectionCount": 21,
+    "fieldCount": 3380,
+    "widgetCount": 4032
+  },
+  "forms": [
+    {
+      "formType": "AM",
+      "passed": true,
+      "metrics": {
+        "sectionCount": 11,
+        "fieldCount": 1687,
+        "widgetCount": 2006,
+        "editableSectionCount": 11,
+        "missingEditableSectionCount": 0,
+        "staleEditableSectionCount": 0
+      },
+      "sections": [
+        {
+          "id": "am.100.kayit-ve-basvuru",
+          "title": "100 serisi - kayıt, başvuru ve ilk temas bilgileri",
+          "fieldCount": 59,
+          "widgetCount": 61,
+          "pages": [
+            1
+          ],
+          "controlCounts": {
+            "text": 31,
+            "email": 12,
+            "checkbox": 16
+          },
+          "editable": true
+        },
+        {
+          "id": "am.200.kayip-kisi",
+          "title": "200 serisi - kayıp kişi kimlik ve olay bilgileri",
+          "fieldCount": 85,
+          "widgetCount": 86,
+          "pages": [
+            2
+          ],
+          "controlCounts": {
+            "text": 38,
+            "email": 5,
+            "checkbox": 32,
+            "date-part": 8,
+            "phone": 2
+          },
+          "editable": true
+        },
+        {
+          "id": "am.300.kisisel-esyalar",
+          "title": "300 serisi - kişisel eşyalar ve etkiler",
+          "fieldCount": 670,
+          "widgetCount": 675,
+          "pages": [
+            3,
+            4,
+            5
+          ],
+          "controlCounts": {
+            "text": 468,
+            "checkbox": 189,
+            "email": 9,
+            "phone": 4
+          },
+          "editable": true
+        },
+        {
+          "id": "am.400.fiziksel-tanim",
+          "title": "400 serisi - fiziksel tanım ve ayırt edici özellikler",
+          "fieldCount": 276,
+          "widgetCount": 298,
+          "pages": [
+            6,
+            7
+          ],
+          "controlCounts": {
+            "text": 89,
+            "checkbox": 181,
+            "email": 6
+          },
+          "editable": true
+        },
+        {
+          "id": "am.500.tibbi",
+          "title": "500 serisi - tıbbi bilgiler",
+          "fieldCount": 256,
+          "widgetCount": 259,
+          "pages": [
+            8,
+            9,
+            10
+          ],
+          "controlCounts": {
+            "text": 154,
+            "email": 12,
+            "checkbox": 90
+          },
+          "editable": true
+        },
+        {
+          "id": "am.600.odontoloji",
+          "title": "600 serisi - diş ve odontoloji bilgileri",
+          "fieldCount": 162,
+          "widgetCount": 162,
+          "pages": [
+            11,
+            12
+          ],
+          "controlCounts": {
+            "checkbox": 73,
+            "text": 77,
+            "email": 12
+          },
+          "editable": true
+        },
+        {
+          "id": "am.700.destek",
+          "title": "700 serisi - ek kayıt ve destek bilgileri",
+          "fieldCount": 6,
+          "widgetCount": 12,
+          "pages": [
+            13,
+            14,
+            15,
+            16
+          ],
+          "controlCounts": {
+            "text": 4,
+            "checkbox": 2
+          },
+          "editable": true
+        },
+        {
+          "id": "am.800.ekler-imza",
+          "title": "800 serisi - ekler, temas ve imza bilgileri",
+          "fieldCount": 130,
+          "widgetCount": 130,
+          "pages": [
+            17
+          ],
+          "controlCounts": {
+            "text": 109,
+            "email": 6,
+            "checkbox": 15
+          },
+          "editable": true
+        },
+        {
+          "id": "am.checklist",
+          "title": "Sayfa 1 bölüm kontrol listesi",
+          "fieldCount": 16,
+          "widgetCount": 24,
+          "pages": [
+            1
+          ],
+          "controlCounts": {
+            "checkbox": 8,
+            "text": 8
+          },
+          "editable": true
+        },
+        {
+          "id": "am.header",
+          "title": "Sayfa üst bilgisi",
+          "fieldCount": 26,
+          "widgetCount": 298,
+          "pages": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18
+          ],
+          "controlCounts": {
+            "text": 5,
+            "number": 1,
+            "checkbox": 4,
+            "date-part": 16
+          },
+          "editable": true
+        },
+        {
+          "id": "am.other",
+          "title": "Diğer AM alanları",
+          "fieldCount": 1,
+          "widgetCount": 1,
+          "pages": [
+            1
+          ],
+          "controlCounts": {
+            "text": 1
+          },
+          "editable": true
+        }
+      ]
+    },
+    {
+      "formType": "PM",
+      "passed": true,
+      "metrics": {
+        "sectionCount": 10,
+        "fieldCount": 1693,
+        "widgetCount": 2026,
+        "editableSectionCount": 10,
+        "missingEditableSectionCount": 0,
+        "staleEditableSectionCount": 0
+      },
+      "sections": [
+        {
+          "id": "pm.100.kayit-ve-buluntu",
+          "title": "100 serisi - kayıt, buluntu ve ilk inceleme bilgileri",
+          "fieldCount": 70,
+          "widgetCount": 85,
+          "pages": [
+            1
+          ],
+          "controlCounts": {
+            "checkbox": 32,
+            "text": 30,
+            "email": 8
+          },
+          "editable": true
+        },
+        {
+          "id": "pm.300.esyalar",
+          "title": "300 serisi - eşya, giysi ve bulgu bilgileri",
+          "fieldCount": 670,
+          "widgetCount": 675,
+          "pages": [
+            2,
+            3,
+            4
+          ],
+          "controlCounts": {
+            "text": 468,
+            "checkbox": 189,
+            "email": 9,
+            "phone": 4
+          },
+          "editable": true
+        },
+        {
+          "id": "pm.400.fiziksel-tanim",
+          "title": "400 serisi - fiziksel tanım ve ayırt edici özellikler",
+          "fieldCount": 346,
+          "widgetCount": 369,
+          "pages": [
+            5,
+            6,
+            7
+          ],
+          "controlCounts": {
+            "checkbox": 245,
+            "text": 92,
+            "email": 9
+          },
+          "editable": true
+        },
+        {
+          "id": "pm.500.tibbi-patoloji",
+          "title": "500 serisi - tıbbi ve patoloji bilgileri",
+          "fieldCount": 230,
+          "widgetCount": 234,
+          "pages": [
+            8,
+            9
+          ],
+          "controlCounts": {
+            "checkbox": 139,
+            "text": 85,
+            "email": 6
+          },
+          "editable": true
+        },
+        {
+          "id": "pm.600.odontoloji",
+          "title": "600 serisi - diş ve odontoloji bilgileri",
+          "fieldCount": 157,
+          "widgetCount": 157,
+          "pages": [
+            10,
+            11
+          ],
+          "controlCounts": {
+            "checkbox": 79,
+            "text": 72,
+            "email": 6
+          },
+          "editable": true
+        },
+        {
+          "id": "pm.700.destek",
+          "title": "700 serisi - ek kayıt ve destek bilgileri",
+          "fieldCount": 5,
+          "widgetCount": 6,
+          "pages": [
+            12,
+            13,
+            14,
+            15
+          ],
+          "controlCounts": {
+            "text": 4,
+            "checkbox": 1
+          },
+          "editable": true
+        },
+        {
+          "id": "pm.800.dna-ekler-imza",
+          "title": "800 serisi - DNA, ekler, temas ve imza bilgileri",
+          "fieldCount": 185,
+          "widgetCount": 193,
+          "pages": [
+            16,
+            19
+          ],
+          "controlCounts": {
+            "text": 117,
+            "email": 9,
+            "checkbox": 59
+          },
+          "editable": true
+        },
+        {
+          "id": "pm.checklist",
+          "title": "Bölüm kontrol listesi",
+          "fieldCount": 14,
+          "widgetCount": 21,
+          "pages": [
+            1
+          ],
+          "controlCounts": {
+            "checkbox": 7,
+            "text": 7
+          },
+          "editable": true
+        },
+        {
+          "id": "pm.header",
+          "title": "Sayfa üst bilgisi",
+          "fieldCount": 15,
+          "widgetCount": 285,
+          "pages": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "controlCounts": {
+            "text": 3,
+            "checkbox": 4,
+            "date-part": 8
+          },
+          "editable": true
+        },
+        {
+          "id": "pm.other",
+          "title": "Diğer PM alanları",
+          "fieldCount": 1,
+          "widgetCount": 1,
+          "pages": [
+            1
+          ],
+          "controlCounts": {
+            "text": 1
+          },
+          "editable": true
+        }
+      ]
+    }
+  ]
+}
