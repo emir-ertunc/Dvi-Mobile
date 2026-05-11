@@ -1,4 +1,4 @@
-name: Phase 4A APK
+name: Phase 4B APK
 
 on:
   push:
@@ -74,10 +74,10 @@ jobs:
       - name: APK dosyasını adlandır
         run: |
           mkdir -p artifacts
-          cp android/app/build/outputs/apk/release/app-release.apk artifacts/DviMobile-phase-4a-v0.4.0-20260511.apk
+          cp android/app/build/outputs/apk/release/app-release.apk artifacts/DviMobile-phase-4b-v0.4.1-20260511.apk
 
       - name: APK artifact yükle
         uses: actions/upload-artifact@v4
         with:
-          name: DviMobile-phase-4a-v0.4.0-20260511.apk
-          path: artifacts/DviMobile-phase-4a-v0.4.0-20260511.apk
+          name: DviMobile-phase-4b-v0.4.1-20260511.apk
+          path: artifacts/DviMobile-phase-4b-v0.4.1-20260511.apk

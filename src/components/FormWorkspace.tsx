@@ -10,19 +10,26 @@ import {
   type FormSectionSummary,
 } from '../data/formSchemaCatalog';
 import type { FormType } from '../domain/fieldPrimitives';
-import type { LocalDraft } from '../storage/draftStore';
+import type { DraftFieldValue, LocalDraft } from '../storage/draftStore';
 import { FormFieldControl } from './FormFieldControl';
 import { FormSectionNavigator } from './FormSectionNavigator';
 
 interface FormWorkspaceProps {
   readonly draft: LocalDraft;
+  readonly onFieldValueChange: (draftId: string, fieldId: string, value: DraftFieldValue | null) => void;
 }
+
+const PHASE_4B_AM_SECTION_IDS = new Set(['am.header', 'am.checklist', 'am.100.kayit-ve-basvuru', 'am.200.kayip-kisi']);
 
 function sectionStatusText(section: FormSectionSummary): string {
   return `${section.fieldCount} alan ve ${section.widgetCount} PDF bileşeni bu bölümde temsil edilir.`;
 }
 
-export function FormWorkspace({ draft }: FormWorkspaceProps) {
+function isEditableInPhase4B(formType: FormType, sectionId: string): boolean {
+  return formType === 'AM' && PHASE_4B_AM_SECTION_IDS.has(sectionId);
+}
+
+export function FormWorkspace({ draft, onFieldValueChange }: FormWorkspaceProps) {
   const formType = draft.formType as FormType;
   const sections = useMemo(() => getFormSections(formType), [formType]);
   const [activeSectionId, setActiveSectionId] = useState(getInitialSectionId(formType));
@@ -34,6 +41,7 @@ export function FormWorkspace({ draft }: FormWorkspaceProps) {
 
   const activeSection = sections.find((section) => section.id === activeSectionId) ?? sections[0];
   const activeFields = activeSection ? getSectionFields(formType, activeSection.id) : [];
+  const editableSection = activeSection ? isEditableInPhase4B(formType, activeSection.id) : false;
   const activeSectionIndex = sections.findIndex((section) => section.id === activeSection?.id);
   const previousSection = activeSectionIndex > 0 ? sections[activeSectionIndex - 1] : null;
   const nextSection = activeSectionIndex >= 0 && activeSectionIndex < sections.length - 1 ? sections[activeSectionIndex + 1] : null;
@@ -47,7 +55,7 @@ export function FormWorkspace({ draft }: FormWorkspaceProps) {
         <View style={styles.workspaceTitleGroup}>
           <Text style={styles.workspaceTitle}>{getFormTitleTr(formType)}</Text>
           <Text style={styles.workspaceDetail}>
-            Ortak form gezgini aktif. Alan değerlerinin kalıcı kaydı sonraki alt fazlarda bağlanacak.
+            AM kimlik, olay, kişi, iletişim ve genel bilgi alanları çevrimdışı taslak kaydına bağlıdır.
           </Text>
         </View>
       </View>
@@ -73,6 +81,9 @@ export function FormWorkspace({ draft }: FormWorkspaceProps) {
         <View style={styles.sectionPanel}>
           <Text style={styles.sectionTitle}>{activeSection.title}</Text>
           <Text style={styles.sectionDetail}>{sectionStatusText(activeSection)}</Text>
+          <Text style={[styles.sectionStateText, editableSection ? styles.editableStateText : styles.lockedStateText]}>
+            {editableSection ? 'Bu bölümde alan girişi aktiftir.' : 'Bu bölüm sonraki alt fazlarda düzenlemeye açılacak.'}
+          </Text>
           <View style={styles.sectionActions}>
             <Pressable
               accessibilityRole="button"
@@ -96,7 +107,14 @@ export function FormWorkspace({ draft }: FormWorkspaceProps) {
 
       <View style={styles.fieldList}>
         {activeFields.map((field, index) => (
-          <FormFieldControl field={field} index={index} key={field.schemaFieldId} />
+          <FormFieldControl
+            editable={editableSection}
+            field={field}
+            index={index}
+            key={field.schemaFieldId}
+            onValueChange={(fieldId, value) => onFieldValueChange(draft.id, fieldId, value)}
+            value={draft.fieldValues[field.schemaFieldId]}
+          />
         ))}
       </View>
     </View>
@@ -182,6 +200,24 @@ const styles = StyleSheet.create({
     color: '#475569',
     fontSize: 13,
     lineHeight: 19,
+  },
+  sectionStateText: {
+    borderRadius: 6,
+    borderWidth: 1,
+    fontSize: 13,
+    fontWeight: '900',
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+  },
+  editableStateText: {
+    backgroundColor: '#eef6f5',
+    borderColor: '#b8d8d4',
+    color: '#134e4a',
+  },
+  lockedStateText: {
+    backgroundColor: '#f8fafc',
+    borderColor: '#cbd5e1',
+    color: '#475569',
   },
   sectionActions: {
     flexDirection: 'row',

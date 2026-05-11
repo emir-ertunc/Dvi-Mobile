@@ -4,12 +4,14 @@ import {
   createDraft as persistCreatedDraft,
   deleteDraft as persistDeletedDraft,
   duplicateDraft as persistDuplicatedDraft,
+  type DraftFieldValue,
   type DraftFormType,
   type DraftMigrationReport,
   type LocalDraft,
   loadDrafts,
   loadDraftState,
   resumeDraft as persistResumedDraft,
+  updateDraftFieldValue as persistUpdatedDraftFieldValue,
   updateDraftTitle as persistUpdatedDraftTitle,
 } from '../storage/draftStore';
 
@@ -26,6 +28,7 @@ export interface LocalDraftState {
   readonly createDraft: (formType: DraftFormType) => Promise<void>;
   readonly resumeDraft: (draftId: string) => Promise<void>;
   readonly updateDraftTitle: (draftId: string, title: string) => Promise<void>;
+  readonly updateDraftFieldValue: (draftId: string, fieldId: string, value: DraftFieldValue | null) => Promise<void>;
   readonly duplicateDraft: (draftId: string) => Promise<void>;
   readonly deleteDraft: (draftId: string) => Promise<void>;
   readonly selectDraft: (draftId: string | null) => void;
@@ -94,6 +97,17 @@ export function useLocalDrafts(): LocalDraftState {
     }
   }, []);
 
+  const updateDraftFieldValue = useCallback(async (draftId: string, fieldId: string, value: DraftFieldValue | null) => {
+    setErrorMessage(null);
+    try {
+      const currentDrafts = await loadDrafts();
+      setDrafts(await persistUpdatedDraftFieldValue(draftId, fieldId, value, currentDrafts));
+      setActiveDraftId(draftId);
+    } catch {
+      setErrorMessage('Alan değeri kaydedilemedi.');
+    }
+  }, []);
+
   const duplicateDraft = useCallback(async (draftId: string) => {
     setErrorMessage(null);
     try {
@@ -135,6 +149,7 @@ export function useLocalDrafts(): LocalDraftState {
       createDraft,
       resumeDraft,
       updateDraftTitle,
+      updateDraftFieldValue,
       duplicateDraft,
       deleteDraft,
       selectDraft: setActiveDraftId,
@@ -150,6 +165,7 @@ export function useLocalDrafts(): LocalDraftState {
       migrationReport,
       reload,
       resumeDraft,
+      updateDraftFieldValue,
       updateDraftTitle,
     ],
   );

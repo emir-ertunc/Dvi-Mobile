@@ -48,8 +48,8 @@ export const FORM_READINESS: readonly FormReadiness[] = [
     title: 'Ölüm Öncesi Kaydı',
     fieldCount: 1687,
     widgetCount: 2006,
-    status: 'Şema hazır, bölüm gezgini aktif.',
-    nextAction: 'Alan kontrol iskeleti açıktır; kalıcı değer kaydı sonraki alt fazlarda bağlanacaktır.',
+    status: 'AM genel bilgi alanları düzenlenebilir.',
+    nextAction: 'Kimlik, olay, kişi, iletişim ve genel bilgi alanları yerel taslağa kaydedilir.',
   },
   {
     code: 'PM',
@@ -99,7 +99,12 @@ export const WORKFLOW_STEPS: readonly WorkflowStep[] = [
   },
   {
     title: 'Ortak form gezgini',
+    status: 'tamamlandı',
+    detail: 'AM/PM şemalarından bölüm gezgini ve alan kontrol iskeleti üretildi.',
+  },
+  {
+    title: 'AM genel bilgi girişi',
     status: 'sürüyor',
-    detail: 'AM/PM şemalarından bölüm gezgini ve alan kontrol iskeleti üretilir.',
+    detail: 'AM kimlik, olay, kişi, iletişim ve genel bilgi alanları yerel taslak değerlerine bağlanır.',
   },
 ] as const;

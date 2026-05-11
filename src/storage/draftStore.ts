@@ -1,6 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type DraftFormType = 'AM' | 'PM';
+export type DraftFieldValue = string | boolean | number;
+export type DraftFieldValues = Readonly<Record<string, DraftFieldValue>>;
 
 export interface LocalDraft {
   readonly id: string;
@@ -14,10 +16,11 @@ export interface LocalDraft {
   readonly savedFieldCount: number;
   readonly completionPercent: number;
   readonly revision: number;
+  readonly fieldValues: DraftFieldValues;
 }
 
 export const DRAFT_STORAGE_KEY = '@dvi-mobile/local-drafts/v1';
-export const DRAFT_STORAGE_VERSION = 2;
+export const DRAFT_STORAGE_VERSION = 3;
 
 export interface DraftMigrationReport {
   readonly storageVersion: number;
@@ -66,6 +69,36 @@ function createId(formType: DraftFormType, createdAt: string): string {
   return `${formType.toLowerCase()}-${Date.parse(createdAt)}-${randomPart}`;
 }
 
+function normalizeFieldValues(value: unknown): DraftFieldValues {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    return {};
+  }
+
+  return Object.fromEntries(
+    Object.entries(value as Record<string, unknown>).filter(
+      ([fieldId, fieldValue]) =>
+        fieldId.length > 0 &&
+        (typeof fieldValue === 'string' || typeof fieldValue === 'boolean' || typeof fieldValue === 'number'),
+    ),
+  ) as DraftFieldValues;
+}
+
+function completionPercent(savedFieldCount: number, schemaFieldCount: number): number {
+  if (schemaFieldCount <= 0) return 0;
+  return Math.min(100, Math.round((savedFieldCount / schemaFieldCount) * 100));
+}
+
+function withComputedDraftState(draft: LocalDraft): LocalDraft {
+  const fieldValues = normalizeFieldValues(draft.fieldValues);
+  const savedFieldCount = Object.keys(fieldValues).length;
+  return {
+    ...draft,
+    fieldValues,
+    savedFieldCount,
+    completionPercent: completionPercent(savedFieldCount, draft.schemaFieldCount),
+  };
+}
+
 function normalizeDrafts(value: unknown): { readonly drafts: LocalDraft[]; readonly invalidRecordCount: number } {
   if (!Array.isArray(value)) {
     return { drafts: [], invalidRecordCount: 0 };
@@ -96,9 +129,11 @@ function normalizeDrafts(value: unknown): { readonly drafts: LocalDraft[]; reado
     })
     .map((draft) => ({
       ...draft,
+      fieldValues: normalizeFieldValues(draft.fieldValues),
       lastOpenedAt: typeof draft.lastOpenedAt === 'string' ? draft.lastOpenedAt : null,
       revision: typeof draft.revision === 'number' ? draft.revision : 1,
     }))
+    .map(withComputedDraftState)
     .sort((left, right) => Date.parse(right.updatedAt) - Date.parse(left.updatedAt));
 
   return { drafts, invalidRecordCount };
@@ -209,6 +244,7 @@ export async function createDraft(formType: DraftFormType, existingDrafts: reado
     savedFieldCount: 0,
     completionPercent: 0,
     revision: 1,
+    fieldValues: {},
   };
   const nextDrafts = normalizeDrafts([draft, ...existingDrafts]).drafts;
   await saveDrafts(nextDrafts);
@@ -256,6 +292,39 @@ export async function updateDraftTitle(
   return nextDrafts;
 }
 
+export async function updateDraftFieldValue(
+  draftId: string,
+  fieldId: string,
+  value: DraftFieldValue | null,
+  existingDrafts: readonly LocalDraft[],
+): Promise<LocalDraft[]> {
+  const updatedAt = new Date().toISOString();
+  const nextDrafts = normalizeDrafts(
+    existingDrafts.map((draft) => {
+      if (draft.id !== draftId) return draft;
+
+      const fieldValues: Record<string, DraftFieldValue> = { ...draft.fieldValues };
+      const blankString = typeof value === 'string' && value.trim().length === 0;
+      const unchecked = value === false;
+
+      if (value === null || blankString || unchecked) {
+        delete fieldValues[fieldId];
+      } else {
+        fieldValues[fieldId] = value;
+      }
+
+      return {
+        ...draft,
+        fieldValues,
+        updatedAt,
+        revision: draft.revision + 1,
+      };
+    }),
+  ).drafts;
+  await saveDrafts(nextDrafts);
+  return nextDrafts;
+}
+
 export async function duplicateDraft(draftId: string, existingDrafts: readonly LocalDraft[]): Promise<LocalDraft[]> {
   const source = existingDrafts.find((draft) => draft.id === draftId);
   if (!source) {
@@ -271,6 +340,7 @@ export async function duplicateDraft(draftId: string, existingDrafts: readonly L
     updatedAt: createdAt,
     lastOpenedAt: null,
     revision: 1,
+    fieldValues: { ...source.fieldValues },
   };
   const nextDrafts = normalizeDrafts([duplicate, ...existingDrafts]).drafts;
   await saveDrafts(nextDrafts);

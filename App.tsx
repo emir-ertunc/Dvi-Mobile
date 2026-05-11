@@ -56,7 +56,7 @@ function OverviewScreen({ draftState }: { readonly draftState: LocalDraftState }
     <View style={styles.screen}>
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Operasyon Özeti</Text>
-        <Text style={styles.sectionDetail}>Şema kapsamı tamamlandı, uygulama kabuğu aktif.</Text>
+        <Text style={styles.sectionDetail}>AM genel bilgi girişi yerel taslaklara bağlandı.</Text>
       </View>
 
       <View style={styles.metricGrid}>
@@ -73,8 +73,8 @@ function OverviewScreen({ draftState }: { readonly draftState: LocalDraftState }
       <View style={styles.panel}>
         <Text style={styles.panelTitle}>Hızlı Durum</Text>
         <Text style={styles.bodyText}>
-          Bu faz, seçili AM/PM taslağı için ortak bölüm gezgini ve alan kontrol iskeletini cihaz üzerinde
-          görünür hale getirir.
+          Bu faz, seçili AM taslağında kimlik, olay, kişi, iletişim ve genel bilgi alanlarını çevrimdışı
+          kaydedilebilir hale getirir.
         </Text>
         {activeDraft && <Text style={styles.mutedText}>Aktif taslak: {activeDraft.title}</Text>}
       </View>
@@ -174,6 +174,7 @@ function FormsScreen({ draftState }: { readonly draftState: LocalDraftState }) {
           draft={activeDraft}
           key={activeDraft.id}
           onClose={() => draftState.selectDraft(null)}
+          onFieldValueChange={(fieldId, value) => void draftState.updateDraftFieldValue(activeDraft.id, fieldId, value)}
           onTitleChange={(title) => void draftState.updateDraftTitle(activeDraft.id, title)}
         />
       )}
@@ -240,10 +241,12 @@ function DraftRow({
 function DraftDetailPanel({
   draft,
   onClose,
+  onFieldValueChange,
   onTitleChange,
 }: {
   readonly draft: LocalDraft;
   readonly onClose: () => void;
+  readonly onFieldValueChange: (fieldId: string, value: LocalDraft['fieldValues'][string] | null) => void;
   readonly onTitleChange: (title: string) => void;
 }) {
   const [title, setTitle] = useState(draft.title);
@@ -274,10 +277,10 @@ function DraftDetailPanel({
         <Text style={styles.statText}>Güncelleme: {formatDraftDate(draft.updatedAt)}</Text>
       </View>
       <Text style={styles.bodyText}>
-        Bu panel, tam alan editörü bağlanmadan önce taslağın seçilmesini, geri dönülmesini ve üst veri
-        düzenlemesini doğrular.
+        Bu panel, taslağın seçilmesini, üst veri düzenlemesini ve bu fazda açılan AM alan değerlerinin
+        saklanmasını doğrular.
       </Text>
-      <FormWorkspace draft={draft} />
+      <FormWorkspace draft={draft} onFieldValueChange={onFieldValueChange} />
     </View>
   );
 }
