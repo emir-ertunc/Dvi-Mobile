@@ -56,8 +56,8 @@ export const FORM_READINESS: readonly FormReadiness[] = [
     title: 'Ölüm Sonrası Kaydı',
     fieldCount: 1693,
     widgetCount: 2026,
-    status: 'Şema hazır, bölüm gezgini aktif.',
-    nextAction: 'Alan kontrol iskeleti açıktır; kalıcı değer kaydı sonraki alt fazlarda bağlanacaktır.',
+    status: 'PM buluntu, patoloji ve odontoloji blokları düzenlenebilir.',
+    nextAction: 'Buluntu, kalıntı, eşya, fiziksel tanım, patoloji ve odontoloji alanları yerel taslağa kaydedilir.',
   },
 ] as const;
 
@@ -109,7 +109,12 @@ export const WORKFLOW_STEPS: readonly WorkflowStep[] = [
   },
   {
     title: 'AM klinik ve destek blokları',
+    status: 'tamamlandı',
+    detail: 'AM eşya, fiziksel tanım, tıbbi, odontoloji, destek, ek ve imza blokları düzenlenebilir hale getirildi.',
+  },
+  {
+    title: 'PM buluntu ve patoloji',
     status: 'sürüyor',
-    detail: 'AM eşya, fiziksel tanım, tıbbi, odontoloji, destek, ek ve imza blokları düzenlenebilir hale getirilir.',
+    detail: 'PM buluntu, kalıntı, eşya, fiziksel tanım, patoloji ve odontoloji blokları düzenlenebilir hale getirilir.',
   },
 ] as const;

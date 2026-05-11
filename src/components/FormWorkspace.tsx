@@ -19,7 +19,7 @@ interface FormWorkspaceProps {
   readonly onFieldValueChange: (draftId: string, fieldId: string, value: DraftFieldValue | null) => void;
 }
 
-const PHASE_4C_AM_SECTION_IDS = new Set([
+const EDITABLE_AM_SECTION_IDS = new Set([
   'am.header',
   'am.checklist',
   'am.100.kayit-ve-basvuru',
@@ -33,12 +33,35 @@ const PHASE_4C_AM_SECTION_IDS = new Set([
   'am.other',
 ]);
 
+const PHASE_4D_PM_SECTION_IDS = new Set([
+  'pm.header',
+  'pm.checklist',
+  'pm.100.kayit-ve-buluntu',
+  'pm.300.esyalar',
+  'pm.400.fiziksel-tanim',
+  'pm.500.tibbi-patoloji',
+  'pm.600.odontoloji',
+]);
+
 function sectionStatusText(section: FormSectionSummary): string {
   return `${section.fieldCount} alan ve ${section.widgetCount} PDF bileşeni bu bölümde temsil edilir.`;
 }
 
-function isEditableInPhase4C(formType: FormType, sectionId: string): boolean {
-  return formType === 'AM' && PHASE_4C_AM_SECTION_IDS.has(sectionId);
+function isEditableInPhase4D(formType: FormType, sectionId: string): boolean {
+  if (formType === 'AM') return EDITABLE_AM_SECTION_IDS.has(sectionId);
+  return PHASE_4D_PM_SECTION_IDS.has(sectionId);
+}
+
+function workspaceDetailText(formType: FormType): string {
+  if (formType === 'AM') {
+    return 'AM genel, klinik, destek, ek ve imza blokları çevrimdışı taslak kaydına bağlıdır.';
+  }
+  return 'PM buluntu, kalıntı, patoloji, odontoloji ve bulgu blokları çevrimdışı taslak kaydına bağlıdır.';
+}
+
+function sectionStateText(formType: FormType, editable: boolean): string {
+  if (editable) return `Bu ${formType} bölümünde alan girişi aktiftir.`;
+  return 'Bu bölüm sonraki alt fazlarda düzenlemeye açılacak.';
 }
 
 export function FormWorkspace({ draft, onFieldValueChange }: FormWorkspaceProps) {
@@ -53,7 +76,7 @@ export function FormWorkspace({ draft, onFieldValueChange }: FormWorkspaceProps)
 
   const activeSection = sections.find((section) => section.id === activeSectionId) ?? sections[0];
   const activeFields = activeSection ? getSectionFields(formType, activeSection.id) : [];
-  const editableSection = activeSection ? isEditableInPhase4C(formType, activeSection.id) : false;
+  const editableSection = activeSection ? isEditableInPhase4D(formType, activeSection.id) : false;
   const activeSectionIndex = sections.findIndex((section) => section.id === activeSection?.id);
   const previousSection = activeSectionIndex > 0 ? sections[activeSectionIndex - 1] : null;
   const nextSection = activeSectionIndex >= 0 && activeSectionIndex < sections.length - 1 ? sections[activeSectionIndex + 1] : null;
@@ -66,9 +89,7 @@ export function FormWorkspace({ draft, onFieldValueChange }: FormWorkspaceProps)
         </View>
         <View style={styles.workspaceTitleGroup}>
           <Text style={styles.workspaceTitle}>{getFormTitleTr(formType)}</Text>
-          <Text style={styles.workspaceDetail}>
-            AM klinik, eşya, odontoloji, destek, ek ve imza blokları çevrimdışı taslak kaydına bağlıdır.
-          </Text>
+          <Text style={styles.workspaceDetail}>{workspaceDetailText(formType)}</Text>
         </View>
       </View>
 
@@ -94,7 +115,7 @@ export function FormWorkspace({ draft, onFieldValueChange }: FormWorkspaceProps)
           <Text style={styles.sectionTitle}>{activeSection.title}</Text>
           <Text style={styles.sectionDetail}>{sectionStatusText(activeSection)}</Text>
           <Text style={[styles.sectionStateText, editableSection ? styles.editableStateText : styles.lockedStateText]}>
-            {editableSection ? 'Bu AM bölümünde alan girişi aktiftir.' : 'Bu bölüm sonraki PM alt fazlarında düzenlemeye açılacak.'}
+            {sectionStateText(formType, editableSection)}
           </Text>
           <View style={styles.sectionActions}>
             <Pressable
