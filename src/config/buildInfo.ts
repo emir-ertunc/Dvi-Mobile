@@ -1,7 +1,7 @@
 export const BUILD_INFO = {
   appName: 'DVI Mobil',
-  phase: 'Faz 3D',
-  version: '0.3.3',
-  buildId: 'phase-3d-v0.3.3-20260511',
-  androidVersionCode: 16,
+  phase: 'Faz 4A',
+  version: '0.4.0',
+  buildId: 'phase-4a-v0.4.0-20260511',
+  androidVersionCode: 17,
 } as const;

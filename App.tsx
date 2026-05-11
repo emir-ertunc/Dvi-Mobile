@@ -8,6 +8,7 @@ import { DIAGNOSTICS_INFO } from './src/config/diagnostics';
 import { MetricTile } from './src/components/MetricTile';
 import { RouteTabs } from './src/components/RouteTabs';
 import { StatusPanel } from './src/components/StatusPanel';
+import { FormWorkspace } from './src/components/FormWorkspace';
 import { DASHBOARD_METRICS, FORM_READINESS, WORKFLOW_STEPS } from './src/data/dashboard';
 import { useLocalDrafts, type LocalDraftState } from './src/hooks/useLocalDrafts';
 import { APP_ROUTES, type AppRouteId } from './src/navigation/appRoutes';
@@ -72,8 +73,8 @@ function OverviewScreen({ draftState }: { readonly draftState: LocalDraftState }
       <View style={styles.panel}>
         <Text style={styles.panelTitle}>Hızlı Durum</Text>
         <Text style={styles.bodyText}>
-          Bu faz, taslak oluşturma, devam etme, başlık düzenleme, kopyalama ve onaylı silme akışını
-          cihaz üzerinde çalışır hale getirir.
+          Bu faz, seçili AM/PM taslağı için ortak bölüm gezgini ve alan kontrol iskeletini cihaz üzerinde
+          görünür hale getirir.
         </Text>
         {activeDraft && <Text style={styles.mutedText}>Aktif taslak: {activeDraft.title}</Text>}
       </View>
@@ -276,6 +277,7 @@ function DraftDetailPanel({
         Bu panel, tam alan editörü bağlanmadan önce taslağın seçilmesini, geri dönülmesini ve üst veri
         düzenlemesini doğrular.
       </Text>
+      <FormWorkspace draft={draft} />
     </View>
   );
 }

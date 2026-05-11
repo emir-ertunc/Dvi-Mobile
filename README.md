@@ -2,11 +2,11 @@
 
 DVI Mobil, Türkçe kullanıcı arayüzüne sahip çevrimdışı öncelikli bir mobil uygulama olarak geliştirilecektir. Resmi PDF aktarımı için kaynak şablonlar 2018 INTERPOL fillable AM ve PM formlarıdır.
 
-## Faz 3D
+## Faz 4A
 
-- Uygulama sürümü: `0.3.3`
-- Uygulama içinde görünür derleme kimliği: `phase-3d-v0.3.3-20260511`
-- Resmi form kaynağı artık fillable INTERPOL AM/PM PDF dosyalarıdır.
+- Uygulama sürümü: `0.4.0`
+- Uygulama içinde görünür derleme kimliği: `phase-4a-v0.4.0-20260511`
+- Resmi form kaynağı fillable INTERPOL AM/PM PDF dosyalarıdır.
 - AM fillable PDF: 18 sayfa, 2006 widget, 1687 unique field name.
 - PM fillable PDF: 19 sayfa, 2026 widget, 1693 unique field name.
 - AM canonical AcroForm envanteri `data/form-inventory/am-acroform-inventory.json` içindedir.
@@ -18,7 +18,7 @@ DVI Mobil, Türkçe kullanıcı arayüzüne sahip çevrimdışı öncelikli bir 
 - AM/PM schema coverage denetimi `data/schema/schema-coverage-audit.json` içindedir.
 - Uygulama kabuğu, navigasyon ve dashboard temeli `App.tsx`, `src/navigation` ve `src/data` altında kuruludur.
 - Yerel taslak saklama katmanı `src/storage/draftStore.ts` ve `src/hooks/useLocalDrafts.ts` içindedir.
-- AM/PM taslak yaşam döngüsü devam etme, başlık düzenleme, kopyalama ve onaylı silme akışlarını içerir.
+- Ortak form gezgini ve alan kontrol iskeleti `src/components/FormWorkspace.tsx`, `src/components/FormSectionNavigator.tsx` ve `src/components/FormFieldControl.tsx` içindedir.
 - Tanılama ve veri geçişi bilgileri `src/config/diagnostics.ts` ve Sistem ekranı içinde görünürdür.
 - Widget manifestleri `data/acroform-forensics/generated` altında tutulur.
 - Ana proje planı `docs/project-plan.md` içindedir.
@@ -47,12 +47,13 @@ npm run schema:pm:verify
 npm run schema:coverage
 npm run schema:coverage:verify
 npm run drafts:storage:verify
+npm run forms:renderer:verify
 ```
 
-Android APK GitHub Actions üzerinde `Phase 3D APK` workflow'u ile üretilir. Beklenen artifact adı:
+Android APK GitHub Actions üzerinde `Phase 4A APK` workflow'u ile üretilir. Beklenen artifact adı:
 
 ```text
-DviMobile-phase-3d-v0.3.3-20260511.apk
+DviMobile-phase-4a-v0.4.0-20260511.apk
 ```
 
 ## Kaynak Sınırı

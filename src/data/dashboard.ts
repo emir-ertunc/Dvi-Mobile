@@ -48,16 +48,16 @@ export const FORM_READINESS: readonly FormReadiness[] = [
     title: 'Ölüm Öncesi Kaydı',
     fieldCount: 1687,
     widgetCount: 2006,
-    status: 'Şema hazır, yerel taslak saklama aktif.',
-    nextAction: 'Tam veri giriş ekranı sonraki fazlarda bağlanacaktır.',
+    status: 'Şema hazır, bölüm gezgini aktif.',
+    nextAction: 'Alan kontrol iskeleti açıktır; kalıcı değer kaydı sonraki alt fazlarda bağlanacaktır.',
   },
   {
     code: 'PM',
     title: 'Ölüm Sonrası Kaydı',
     fieldCount: 1693,
     widgetCount: 2026,
-    status: 'Şema hazır, yerel taslak saklama aktif.',
-    nextAction: 'Tam veri giriş ekranı sonraki fazlarda bağlanacaktır.',
+    status: 'Şema hazır, bölüm gezgini aktif.',
+    nextAction: 'Alan kontrol iskeleti açıktır; kalıcı değer kaydı sonraki alt fazlarda bağlanacaktır.',
   },
 ] as const;
 
@@ -94,7 +94,12 @@ export const WORKFLOW_STEPS: readonly WorkflowStep[] = [
   },
   {
     title: 'Tanılama ve veri geçişi',
+    status: 'tamamlandı',
+    detail: 'Derleme bilgisi, saklama sürümü ve kalite kapıları görünürdür.',
+  },
+  {
+    title: 'Ortak form gezgini',
     status: 'sürüyor',
-    detail: 'Build bilgisi, saklama sürümü ve kalite kapıları bu fazda görünür hale getirilir.',
+    detail: 'AM/PM şemalarından bölüm gezgini ve alan kontrol iskeleti üretilir.',
   },
 ] as const;

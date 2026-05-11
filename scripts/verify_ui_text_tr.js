@@ -4,6 +4,9 @@ const { join } = require('node:path');
 const files = [
   'App.tsx',
   join('src', 'components', 'MetricTile.tsx'),
+  join('src', 'components', 'FormFieldControl.tsx'),
+  join('src', 'components', 'FormSectionNavigator.tsx'),
+  join('src', 'components', 'FormWorkspace.tsx'),
   join('src', 'components', 'RouteTabs.tsx'),
   join('src', 'components', 'StatusPanel.tsx'),
   join('src', 'config', 'buildInfo.ts'),

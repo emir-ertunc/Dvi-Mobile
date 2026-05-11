@@ -3,12 +3,14 @@
   "compilerOptions": {
     "strict": true,
     "noEmit": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true
   },
   "include": [
     "App.tsx",
     "index.js",
     "src/**/*.ts",
-    "src/**/*.tsx"
+    "src/**/*.tsx",
+    "data/schema/*.json"
   ]
 }
