@@ -1,13 +1,13 @@
 const { mkdirSync, readFileSync, writeFileSync } = require('node:fs');
 const { dirname, join } = require('node:path');
 
-const PHASE = 'Phase 5A-Fix2';
-const VERSION = '0.5.2';
-const BUILD_ID = 'phase-5a-fix2-v0.5.2-20260512';
+const PHASE = 'Phase 5A-Fix3';
+const VERSION = '0.5.3';
+const BUILD_ID = 'phase-5a-fix3-v0.5.3-20260512';
 const ROOT = process.cwd();
 const OUTPUT = join(ROOT, 'data', 'ui-labels', 'field-ui-labels.json');
 const AUDIT_OUTPUT = join(ROOT, 'data', 'ui-labels', 'field-ui-labels-audit.json');
-const REPORT = join(ROOT, 'docs', 'app', 'phase-5a-fix2-label-coverage.md');
+const REPORT = join(ROOT, 'docs', 'app', 'phase-5a-fix3-label-coverage.md');
 
 const SCHEMAS = [
   { formType: 'AM', path: join(ROOT, 'data', 'schema', 'am-schema.json'), expectedFields: 1687 },
@@ -291,6 +291,11 @@ function seriesFromPdfName(pdfFieldName) {
   return match ? match[1] : null;
 }
 
+function fieldNameLastPart(pdfFieldName) {
+  const parts = String(pdfFieldName).split('.');
+  return parts[parts.length - 1] || '';
+}
+
 function semanticTopic(field) {
   const series = seriesFromPdfName(field.pdfFieldName);
   return SERIES_DESCRIPTIONS[field.formType]?.[series] || null;
@@ -328,19 +333,52 @@ function actionInstruction(field) {
   return 'açık ve okunur şekilde yazın';
 }
 
+function specificFieldLabel(field, visible) {
+  const lastPart = fieldNameLastPart(field.pdfFieldName);
+
+  if (field.controlType === 'email') {
+    if (lastPart === '306' || lastPart === '308' || /additional/i.test(field.visibleLabel || '')) return 'Ek e-posta adresi';
+    return 'E-posta adresi';
+  }
+
+  if (field.controlType === 'phone') return 'Telefon numarası';
+
+  if (lastPart === '301') return 'Açık adres satırı 1';
+  if (lastPart === '302') return 'Açık adres satırı 2';
+  if (lastPart === '303') return 'İl veya ilçe';
+  if (lastPart === '304') return 'Posta kodu, ülke veya yer ayrıntısı';
+  if (lastPart === '305') return 'Ek iletişim veya adres bilgisi';
+  if (lastPart === '306') return 'Ek iletişim bilgisi';
+  if (lastPart === '307') return 'Ülke veya e-posta bilgisi';
+  if (lastPart === '308') return 'Ek ülke veya e-posta bilgisi';
+
+  return visible;
+}
+
+function fullLabel(sectionLabel, topic, specific) {
+  if (!specific) return `${sectionLabel} - ${topic}`;
+  const normalizedTopic = topic.toLocaleLowerCase('tr-TR');
+  const normalizedSpecific = specific.toLocaleLowerCase('tr-TR');
+  if (normalizedTopic === normalizedSpecific || normalizedTopic.includes(normalizedSpecific)) {
+    return `${sectionLabel} - ${specific}`;
+  }
+  return `${sectionLabel} - ${topic} - ${specific}`;
+}
+
 function buildLabel(field, sectionIndex) {
   const sectionLabel = SECTION_LABELS[field.officialSection.id] || field.officialSection.title || `${field.formType} bölümü`;
   const visible = translatedVisibleLabel(field.visibleLabel);
   const series = seriesFromPdfName(field.pdfFieldName);
   const control = CONTROL_LABELS[field.controlType] || 'alan';
   const topic = semanticTopic(field) || fallbackTopic(field);
+  const specific = specificFieldLabel(field, visible);
 
-  if (visible) {
+  if (specific) {
     const sequence = `${sectionIndex + 1}. alan`;
     return {
-      labelTr: `${sectionLabel} - ${visible}`,
-      shortLabelTr: `${visible} (${sequence})`,
-      helpTextTr: `${sectionLabel} bölümünde ${topic} için ${visible.toLocaleLowerCase('tr-TR')} bilgisini ${actionInstruction(field)}.`,
+      labelTr: fullLabel(sectionLabel, topic, specific),
+      shortLabelTr: `${specific} (${sequence})`,
+      helpTextTr: `${sectionLabel} bölümünde ${topic} için ${specific.toLocaleLowerCase('tr-TR')} bilgisini ${actionInstruction(field)}.`,
       reviewStatus: 'human_readable_contextual',
     };
   }
@@ -362,6 +400,13 @@ function hasTechnicalRuntimeLabel(text, formType) {
   if (/\b\d+\.\s*satır\b/i.test(text)) return true;
   if (/\bbilgi parçası\b/i.test(text)) return true;
   if (/\bnumaralı resmi form bloğu\b/i.test(text)) return true;
+  return false;
+}
+
+function hasMismatchedRuntimeLabel(text, field) {
+  const lower = text.toLocaleLowerCase('tr-TR');
+  if (field.controlType === 'email' && !lower.includes('e-posta')) return true;
+  if (field.controlType === 'phone' && !lower.includes('telefon')) return true;
   return false;
 }
 
@@ -402,6 +447,15 @@ function build({ write }) {
           code: 'label.technicalRuntimeText',
           message: 'Kullanıcı etiketi teknik PDF alanı gibi görünüyor.',
           fieldId: field.schemaFieldId,
+          labelTr: label.labelTr,
+        });
+      }
+      if (hasMismatchedRuntimeLabel(`${label.labelTr} ${label.shortLabelTr}`, field)) {
+        failures.push({
+          code: 'label.controlTypeMismatch',
+          message: 'Kullanıcı etiketi input tipiyle çelişiyor.',
+          fieldId: field.schemaFieldId,
+          controlType: field.controlType,
           labelTr: label.labelTr,
         });
       }
@@ -474,9 +528,9 @@ function build({ write }) {
     )
     .join('\n');
 
-  const report = `# Phase 5A-Fix2 Label Coverage
+  const report = `# Phase 5A-Fix3 Label Coverage
 
-Bu rapor, kullanıcıya görünen alan etiketlerinin teknik PDF field id, satır/parça ifadesi ve belirsiz resmi blok numarası değerlerinden ayrıldığını denetler.
+Bu rapor, kullanıcıya görünen alan etiketlerinin teknik PDF field id, satır/parça ifadesi, belirsiz resmi blok numarası ve input tipiyle çelişen adres/e-posta başlıklarından ayrıldığını denetler.
 
 ## Sonuç
 

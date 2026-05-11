@@ -605,6 +605,39 @@ Kapsam dışı:
 - `DviMobile-phase-5a-fix2-v0.5.2-20260512.apk` üretilmeli.
 - Commit ve push tamamlanmalı.
 
+### Phase 5A-Fix3 - Tekrarlı İletişim ve Adres Label Netleştirme
+
+Phase 5A-Fix2 teknik blok/satır ifadelerini temizledi; ancak bazı AM/PM adres-iletişim bloklarında PDF'den yakalanan `Town` veya `Country` etiketi e-posta inputlarına taşınabiliyordu. Bu nedenle kullanıcı üst üste aynı `İl, ilçe veya yerleşim yeri` alanını görüyor, e-posta alanları ise yanlış başlıkla açılıyordu.
+
+Hedef:
+
+- Input tipi e-posta olan hiçbir alan `İl, ilçe veya yerleşim yeri` veya `Ülke` ana başlığıyla görünmez.
+- Adres/iletişim alt alanları net ayrılır:
+  - açık adres satırı 1
+  - açık adres satırı 2
+  - il veya ilçe
+  - posta kodu, ülke veya yer ayrıntısı
+  - e-posta adresi
+  - ek e-posta adresi
+- Ana label, bölüm ve konu bağlamını da içerir; kullanıcı `Ne doldurulacak?` yardımına bakmadan temel olarak ne gireceğini anlayabilmelidir.
+- `Ne doldurulacak?` ara başlığı kaldırılır; açıklama metni ikincil rehber olarak kalır.
+- Label doğrulaması input tipiyle çelişen kullanıcı metinlerini hata sayar.
+
+Kapsam dışı:
+
+- PDF export başlatılmaz.
+- Choice group/radio davranışı başlatılmaz.
+- Resmi PDF alan koordinatı veya widget mapping değiştirilmez.
+
+Çıkış kriterleri:
+
+- AM ilk bloktaki 305/306 e-posta alanları e-posta olarak görünmeli.
+- PM kayıt/buluntu iletişim bloklarındaki e-posta alanları e-posta olarak görünmeli.
+- UI label doğrulaması input tipi çelişkisi olmadan geçmeli.
+- UI coverage 3380 field / 4032 widget kapsamını korumalı.
+- `DviMobile-phase-5a-fix3-v0.5.3-20260512.apk` üretilmeli.
+- Commit ve push tamamlanmalı.
+
 ### Phase 5B - Binding Manifest
 
 Canonical field id ile PDF field name/button state eşleşmeleri manifest içinde tutulur.

@@ -89,7 +89,6 @@ export function FormFieldControl({ editable, field, index, onValueChange, value 
           <Text style={styles.fieldIndex}>{index + 1}</Text>
           <View style={styles.fieldLabelGroup}>
             <Text style={styles.fieldLabel}>{uiText.labelTr}</Text>
-            <Text style={styles.instructionTitle}>Ne doldurulacak?</Text>
             <Text style={styles.fieldHelp}>{uiText.helpTextTr}</Text>
             <Text style={styles.fieldMeta}>Sayfa {fieldPageSummary(field)} · {controlLabel}</Text>
           </View>
@@ -205,13 +204,6 @@ const styles = StyleSheet.create({
     color: '#334155',
     fontSize: 13,
     lineHeight: 18,
-  },
-  instructionTitle: {
-    color: '#0f766e',
-    fontSize: 12,
-    fontWeight: '900',
-    lineHeight: 16,
-    marginTop: 2,
   },
   typeBadge: {
     backgroundColor: '#f8fafc',

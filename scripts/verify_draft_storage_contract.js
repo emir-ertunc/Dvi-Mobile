@@ -96,8 +96,12 @@ for (const token of requiredAppTokens) {
   if (!app.includes(token)) failures.push(`App.tsx içinde eksik taslak arayüz parçası: ${token}`);
 }
 
-if (!fieldControl.includes('Ne doldurulacak?')) {
-  failures.push('FormFieldControl.tsx içinde eksik doldurma rehberi başlığı: Ne doldurulacak?');
+if (!fieldControl.includes('fieldHelp')) {
+  failures.push('FormFieldControl.tsx içinde eksik ikincil yardım metni alanı: fieldHelp');
+}
+
+if (fieldControl.includes('Ne doldurulacak?')) {
+  failures.push('FormFieldControl.tsx içinde kaldırılması gereken ara başlık var: Ne doldurulacak?');
 }
 
 if (failures.length > 0) {
