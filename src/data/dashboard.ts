@@ -48,16 +48,16 @@ export const FORM_READINESS: readonly FormReadiness[] = [
     title: 'Ölüm Öncesi Kaydı',
     fieldCount: 1687,
     widgetCount: 2006,
-    status: 'Şema hazır, veri giriş ekranı bekliyor.',
-    nextAction: 'Taslak oluşturma Phase 3B kapsamındadır.',
+    status: 'Şema hazır, yerel taslak saklama aktif.',
+    nextAction: 'Tam veri giriş ekranı sonraki fazlarda bağlanacaktır.',
   },
   {
     code: 'PM',
     title: 'Ölüm Sonrası Kaydı',
     fieldCount: 1693,
     widgetCount: 2026,
-    status: 'Şema hazır, veri giriş ekranı bekliyor.',
-    nextAction: 'Taslak oluşturma Phase 3B kapsamındadır.',
+    status: 'Şema hazır, yerel taslak saklama aktif.',
+    nextAction: 'Tam veri giriş ekranı sonraki fazlarda bağlanacaktır.',
   },
 ] as const;
 
@@ -79,12 +79,12 @@ export const WORKFLOW_STEPS: readonly WorkflowStep[] = [
   },
   {
     title: 'Uygulama kabuğu',
-    status: 'sürüyor',
-    detail: 'Navigasyon ve dashboard temeli bu fazda kuruluyor.',
+    status: 'tamamlandı',
+    detail: 'Navigasyon ve dashboard temeli kuruldu.',
   },
   {
     title: 'Yerel taslaklar',
-    status: 'bekliyor',
-    detail: 'Çevrimdışı kayıt yaşam döngüsü Phase 3B kapsamındadır.',
+    status: 'sürüyor',
+    detail: 'Cihazda kalıcı AM/PM taslak saklama bu fazda kuruluyor.',
   },
 ] as const;

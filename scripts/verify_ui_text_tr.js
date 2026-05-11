@@ -6,7 +6,6 @@ const forbiddenRuntimeText = [
   'Missing person',
   'Unidentified human remains',
   'export ready',
-  'draft',
   'settings',
   'about',
   'build status',

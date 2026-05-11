@@ -1,6 +1,6 @@
 {
   "name": "dvi-mobile",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "main": "index.js",
   "scripts": {
@@ -23,11 +23,13 @@
     "schema:pm:verify": "node scripts/build_pm_schema.js",
     "schema:coverage": "node scripts/audit_schema_coverage.js --write",
     "schema:coverage:verify": "node scripts/audit_schema_coverage.js",
+    "drafts:storage:verify": "node scripts/verify_draft_storage_contract.js",
     "rebaseline:verify": "node scripts/verify_rebaseline.js",
     "text:verify-tr": "node scripts/verify_ui_text_tr.js",
     "ios": "expo run:ios"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "~2.2.0",
     "expo": "~54.0.33",
     "expo-status-bar": "~3.0.9",
     "react": "19.1.0",

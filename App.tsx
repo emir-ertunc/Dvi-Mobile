@@ -8,7 +8,9 @@ import { MetricTile } from './src/components/MetricTile';
 import { RouteTabs } from './src/components/RouteTabs';
 import { StatusPanel } from './src/components/StatusPanel';
 import { DASHBOARD_METRICS, FORM_READINESS, WORKFLOW_STEPS } from './src/data/dashboard';
+import { useLocalDrafts, type LocalDraftState } from './src/hooks/useLocalDrafts';
 import { APP_ROUTES, type AppRouteId } from './src/navigation/appRoutes';
+import { formatDraftDate, type LocalDraft } from './src/storage/draftStore';
 
 const statusColor: Record<string, string> = {
   tamamlandı: '#0f766e',
@@ -18,6 +20,7 @@ const statusColor: Record<string, string> = {
 
 export default function App() {
   const [activeRoute, setActiveRoute] = useState<AppRouteId>('overview');
+  const draftState = useLocalDrafts();
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -34,17 +37,17 @@ export default function App() {
         <RouteTabs routes={APP_ROUTES} activeRoute={activeRoute} onChange={setActiveRoute} />
 
         <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-          {activeRoute === 'overview' && <OverviewScreen />}
-          {activeRoute === 'forms' && <FormsScreen />}
+          {activeRoute === 'overview' && <OverviewScreen draftState={draftState} />}
+          {activeRoute === 'forms' && <FormsScreen draftState={draftState} />}
           {activeRoute === 'workflow' && <WorkflowScreen />}
-          {activeRoute === 'system' && <SystemScreen />}
+          {activeRoute === 'system' && <SystemScreen draftState={draftState} />}
         </ScrollView>
       </View>
     </SafeAreaView>
   );
 }
 
-function OverviewScreen() {
+function OverviewScreen({ draftState }: { readonly draftState: LocalDraftState }) {
   return (
     <View style={styles.screen}>
       <View style={styles.sectionHeader}>
@@ -53,6 +56,11 @@ function OverviewScreen() {
       </View>
 
       <View style={styles.metricGrid}>
+        <MetricTile
+          label="Yerel taslak"
+          value={String(draftState.draftCount)}
+          detail="Cihazda kalıcı olarak saklanan AM/PM taslakları."
+        />
         {DASHBOARD_METRICS.map((metric) => (
           <MetricTile key={metric.label} label={metric.label} value={metric.value} detail={metric.detail} />
         ))}
@@ -61,17 +69,18 @@ function OverviewScreen() {
       <View style={styles.panel}>
         <Text style={styles.panelTitle}>Hızlı Durum</Text>
         <Text style={styles.bodyText}>
-          Bu faz, kayıt listesi ve taslak yönetimine geçmeden önce ana ekran düzenini, ekran geçişlerini
-          ve sistem görünürlüğünü hazırlar.
+          Bu faz, AM/PM taslaklarının cihazda kalıcı tutulmasını ekler. Tam veri giriş ekranı ve
+          ayrıntılı düzenleme sonraki fazlarda bağlanacaktır.
         </Text>
       </View>
     </View>
   );
 }
 
-function FormsScreen() {
+function FormsScreen({ draftState }: { readonly draftState: LocalDraftState }) {
   const [selectedForm, setSelectedForm] = useState<'AM' | 'PM'>('AM');
   const selected = FORM_READINESS.find((form) => form.code === selectedForm) ?? FORM_READINESS[0];
+  const selectedDrafts = draftState.drafts.filter((draft) => draft.formType === selectedForm);
 
   return (
     <View style={styles.screen}>
@@ -112,6 +121,54 @@ function FormsScreen() {
           <Text style={styles.statText}>{selected.widgetCount} alan bileşeni</Text>
         </View>
         <Text style={styles.bodyText}>{selected.nextAction}</Text>
+        <View style={styles.actionRow}>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => void draftState.createDraft('AM')}
+            style={[styles.primaryAction, selectedForm === 'AM' && styles.activeAction]}
+          >
+            <Text style={styles.primaryActionText}>Yeni AM taslağı</Text>
+          </Pressable>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => void draftState.createDraft('PM')}
+            style={[styles.primaryAction, selectedForm === 'PM' && styles.activeAction]}
+          >
+            <Text style={styles.primaryActionText}>Yeni PM taslağı</Text>
+          </Pressable>
+        </View>
+      </View>
+
+      <View style={styles.panel}>
+        <Text style={styles.panelTitle}>Kalıcı taslak listesi</Text>
+        {draftState.loading && <Text style={styles.mutedText}>Taslaklar yükleniyor.</Text>}
+        {draftState.errorMessage && <Text style={styles.errorText}>{draftState.errorMessage}</Text>}
+        {!draftState.loading && selectedDrafts.length === 0 && (
+          <Text style={styles.mutedText}>Bu form türü için yerel taslak bulunmuyor.</Text>
+        )}
+        {selectedDrafts.map((draft) => (
+          <DraftRow key={draft.id} draft={draft} onDelete={() => void draftState.deleteDraft(draft.id)} />
+        ))}
+      </View>
+    </View>
+  );
+}
+
+function DraftRow({ draft, onDelete }: { readonly draft: LocalDraft; readonly onDelete: () => void }) {
+  return (
+    <View style={styles.draftRow}>
+      <View style={styles.draftMain}>
+        <Text style={styles.draftTitle}>{draft.title}</Text>
+        <Text style={styles.mutedText}>Son kayıt: {formatDraftDate(draft.updatedAt)}</Text>
+        <Text style={styles.mutedText}>
+          {draft.savedFieldCount} / {draft.schemaFieldCount} alan kaydedildi
+        </Text>
+      </View>
+      <View style={styles.draftActions}>
+        <Text style={styles.progressText}>%{draft.completionPercent}</Text>
+        <Pressable accessibilityRole="button" onPress={onDelete} style={styles.deleteButton}>
+          <Text style={styles.deleteButtonText}>Sil</Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -144,7 +201,7 @@ function WorkflowScreen() {
   );
 }
 
-function SystemScreen() {
+function SystemScreen({ draftState }: { readonly draftState: LocalDraftState }) {
   return (
     <View style={styles.screen}>
       <StatusPanel
@@ -162,6 +219,16 @@ function SystemScreen() {
         <Text style={styles.bodyText}>
           TypeScript, Türkçe arayüz metni, yeniden baz alma, teknik PDF incelemesi, envanter,
           şema ve kapsam denetimleri APK üretiminden önce çalıştırılır.
+        </Text>
+      </View>
+
+      <View style={styles.panel}>
+        <Text style={styles.panelTitle}>Yerel Saklama</Text>
+        <Text style={styles.bodyText}>
+          AM taslak: {draftState.amDraftCount} · PM taslak: {draftState.pmDraftCount}
+        </Text>
+        <Text style={styles.mutedText}>
+          Taslak metadata kayıtları cihaz depolamasında tutulur ve uygulama yeniden açıldığında okunur.
         </Text>
       </View>
     </View>
@@ -315,6 +382,73 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     paddingHorizontal: 10,
     paddingVertical: 7,
+  },
+  actionRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  primaryAction: {
+    alignItems: 'center',
+    backgroundColor: '#134e4a',
+    borderRadius: 7,
+    flexGrow: 1,
+    minHeight: 46,
+    justifyContent: 'center',
+    paddingHorizontal: 14,
+  },
+  activeAction: {
+    backgroundColor: '#0f766e',
+  },
+  primaryActionText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '900',
+  },
+  draftRow: {
+    borderColor: '#e2e8f0',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 12,
+    padding: 12,
+  },
+  draftMain: {
+    flex: 1,
+    gap: 3,
+  },
+  draftTitle: {
+    color: '#111827',
+    fontSize: 15,
+    fontWeight: '900',
+  },
+  draftActions: {
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    minWidth: 56,
+  },
+  progressText: {
+    color: '#0f766e',
+    fontSize: 14,
+    fontWeight: '900',
+  },
+  deleteButton: {
+    borderColor: '#b91c1c',
+    borderRadius: 6,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+  },
+  deleteButtonText: {
+    color: '#b91c1c',
+    fontSize: 13,
+    fontWeight: '900',
+  },
+  errorText: {
+    color: '#b91c1c',
+    fontSize: 14,
+    fontWeight: '800',
+    lineHeight: 20,
   },
   timeline: {
     gap: 0,

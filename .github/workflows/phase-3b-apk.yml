@@ -1,4 +1,4 @@
-name: Phase 3A APK
+name: Phase 3B APK
 
 on:
   push:
@@ -56,6 +56,9 @@ jobs:
       - name: Schema coverage doğrulaması
         run: npm run schema:coverage:verify
 
+      - name: Yerel taslak saklama doğrulaması
+        run: npm run drafts:storage:verify
+
       - name: Android proje dosyalarını üret
         run: CI=1 npx expo prebuild --platform android --clean
 
@@ -68,10 +71,10 @@ jobs:
       - name: APK dosyasını adlandır
         run: |
           mkdir -p artifacts
-          cp android/app/build/outputs/apk/release/app-release.apk artifacts/DviMobile-phase-3a-v0.3.0-20260511.apk
+          cp android/app/build/outputs/apk/release/app-release.apk artifacts/DviMobile-phase-3b-v0.3.1-20260511.apk
 
       - name: APK artifact yükle
         uses: actions/upload-artifact@v4
         with:
-          name: DviMobile-phase-3a-v0.3.0-20260511.apk
-          path: artifacts/DviMobile-phase-3a-v0.3.0-20260511.apk
+          name: DviMobile-phase-3b-v0.3.1-20260511.apk
+          path: artifacts/DviMobile-phase-3b-v0.3.1-20260511.apk
