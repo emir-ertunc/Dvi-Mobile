@@ -67,7 +67,7 @@ assertContains(join('App.tsx'), "animationType=\"fade\"");
 assertContains(join('App.tsx'), "accessibilityRole=\"alert\"");
 assertContains(join('App.tsx'), "updateDraftFieldValue");
 assertContains(join('src', 'storage', 'draftStore.ts'), "updateDraftFieldValue");
-assertContains(join('src', 'config', 'buildInfo.ts'), "phase-5a-fix3-v0.5.3-20260512");
+assertContains(join('src', 'config', 'buildInfo.ts'), "phase-5a-fix4-v0.5.4-20260512");
 assertContains(join('src', 'config', 'pdfTemplates.ts'), "PDF_TEMPLATE_MANIFEST");
 assertContains(join('src', 'config', 'diagnostics.ts'), "PDF şablonları");
 assertContains(join('src', 'navigation', 'appRoutes.ts'), "'saved' | 'forms' | 'form' | 'status' | 'system'");
@@ -108,5 +108,6 @@ assertContains(join('scripts', 'build_ui_labels.js'), "label.controlTypeMismatch
 assertContains(join('scripts', 'build_ui_labels.js'), "Ek e-posta adresi");
 assertContains(join('scripts', 'build_ui_labels.js'), "İşlemi yapan görevli veya memur");
 assertContains(join('scripts', 'build_ui_labels.js'), "SERIES_DESCRIPTIONS");
+assertContains(join('scripts', 'audit_field_contract.js'), "Alan sözleşmesi doğrulaması geçti");
 
 console.log('Ortak form renderer doğrulaması geçti.');

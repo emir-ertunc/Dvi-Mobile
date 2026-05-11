@@ -638,6 +638,44 @@ Kapsam dışı:
 - `DviMobile-phase-5a-fix3-v0.5.3-20260512.apk` üretilmeli.
 - Commit ve push tamamlanmalı.
 
+### Phase 5A-Fix4 - Alan Sözleşmesi ve Label Netlik Denetimi
+
+Phase 5A-Fix3 alan başlıklarını belirgin biçimde iyileştirdi; ancak bu güvence UI label üreticisinin kendi doğrulamasıyla sınırlıydı. Bu ara fix, PDF manifest, envanter, schema, export binding ve Türkçe UI label katmanını tek sözleşme denetimine bağlar. Amaç, her kutucuğun PDF'de karşılığı olduğunu ve PDF'deki her alanın uygulamada doğru formatta, anlaşılır Türkçe metinle temsil edildiğini build aşamasında kanıtlamaktır.
+
+Hedef:
+
+- AM 1687 alan / 2006 widget ve PM 1693 alan / 2026 widget kapsamı tek denetimde doğrulanır.
+- Her PDF widget instance anahtarı inventory ve schema içinde bire bir temsil edilir.
+- Her schema alanı AcroForm field name export binding'i taşır.
+- Her schema alanının Türkçe UI label, kısa label ve yardım metni bulunur.
+- Kullanıcıya görünen metinde `gerekli metin`, `gerekli seçim`, `1. alan`, `1. satır`, teknik PDF field id veya belirsiz blok numarası kalmaz.
+- E-posta, telefon, tarih parçası ve checkbox alanları kendi input tipini kullanıcıya açıkça yansıtır.
+- Kısa alan adlarında sıra numarası gösterilmez; sıra ve widget bilgisi yalnızca audit/coverage çıktılarında kalır.
+
+Kapsam dışı:
+
+- PDF export motoru başlatılmaz.
+- Choice group/radio state export davranışı değiştirilmez.
+- 3380 alanın manuel adli terminoloji redaksiyonu bu fazda yapılmaz; ancak belirsiz otomatik kalıplar build gate ile engellenir.
+
+Implementation dosya grupları:
+
+- `scripts/audit_field_contract.js`: PDF widget, inventory, schema, AcroForm binding ve Türkçe UI label sözleşmesi.
+- `scripts/build_ui_labels.js`: Sıra numarasız, placeholder içermeyen label/help üretimi.
+- `data/field-contract/field-contract-audit.json`: Makine okunur sözleşme denetimi.
+- `docs/app/phase-5a-fix4-field-contract.md`: İnsan okunur sözleşme raporu.
+- `docs/app/phase-5a-fix4-summary.md`: Faz raporu.
+- Build metadata ve workflow: `0.5.4` / `phase-5a-fix4-v0.5.4-20260512`.
+
+Çıkış kriterleri:
+
+- `npm run field:contract:verify` geçmeli.
+- `npm run ui:labels:verify` placeholder ve sıra numarası üretmeden geçmeli.
+- UI coverage 3380 field / 4032 widget kapsamını korumalı.
+- TypeScript, Türkçe metin, schema, inventory, PDF template ve draft storage doğrulamaları geçmeli.
+- `DviMobile-phase-5a-fix4-v0.5.4-20260512.apk` üretilmeli.
+- Commit ve push tamamlanmalı.
+
 ### Phase 5B - Binding Manifest
 
 Canonical field id ile PDF field name/button state eşleşmeleri manifest içinde tutulur.

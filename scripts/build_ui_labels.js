@@ -1,13 +1,13 @@
 const { mkdirSync, readFileSync, writeFileSync } = require('node:fs');
 const { dirname, join } = require('node:path');
 
-const PHASE = 'Phase 5A-Fix3';
-const VERSION = '0.5.3';
-const BUILD_ID = 'phase-5a-fix3-v0.5.3-20260512';
+const PHASE = 'Phase 5A-Fix4';
+const VERSION = '0.5.4';
+const BUILD_ID = 'phase-5a-fix4-v0.5.4-20260512';
 const ROOT = process.cwd();
 const OUTPUT = join(ROOT, 'data', 'ui-labels', 'field-ui-labels.json');
 const AUDIT_OUTPUT = join(ROOT, 'data', 'ui-labels', 'field-ui-labels-audit.json');
-const REPORT = join(ROOT, 'docs', 'app', 'phase-5a-fix3-label-coverage.md');
+const REPORT = join(ROOT, 'docs', 'app', 'phase-5a-fix4-label-coverage.md');
 
 const SCHEMAS = [
   { formType: 'AM', path: join(ROOT, 'data', 'schema', 'am-schema.json'), expectedFields: 1687 },
@@ -98,6 +98,30 @@ const VISIBLE_LABEL_TRANSLATIONS = new Map(
     weight: 'Kilo',
     height: 'Boy',
     'residence/workplace/': 'İkamet veya iş yeri bilgisi',
+    items: 'Eşya adı veya tanımı',
+    item: 'Eşya adı veya tanımı',
+    material: 'Malzeme',
+    'brand/make': 'Marka veya üretici',
+    brand: 'Marka',
+    make: 'Üretici',
+    model: 'Model',
+    colour: 'Renk',
+    color: 'Renk',
+    size: 'Beden veya ölçü',
+    type: 'Tip',
+    style: 'Stil',
+    other: 'Diğer açıklama',
+    details: 'Ayrıntılı açıklama',
+    'details:': 'Ayrıntılı açıklama',
+    description: 'Açıklama',
+    'description:': 'Açıklama',
+    sample: 'Örnek bilgisi',
+    reference: 'Referans bilgisi',
+    location: 'Konum veya yer bilgisi',
+    condition: 'Durum bilgisi',
+    notes: 'Notlar',
+    comment: 'Açıklama',
+    comments: 'Açıklamalar',
   }),
 );
 
@@ -333,6 +357,29 @@ function actionInstruction(field) {
   return 'açık ve okunur şekilde yazın';
 }
 
+function actionObject(text) {
+  const value = String(text || '').trim();
+  const lower = value.toLocaleLowerCase('tr-TR');
+  if (lower.endsWith('bilgisi')) return `${value.slice(0, -7)}bilgisini`;
+  if (lower.endsWith('açıklaması')) return `${value.slice(0, -10)}açıklamasını`;
+  if (lower.endsWith('seçeneği')) return `${value.slice(0, -8)}seçeneğini`;
+  if (lower.endsWith('adresi')) return `${value.slice(0, -6)}adresini`;
+  if (lower.endsWith('numarası')) return `${value.slice(0, -8)}numarasını`;
+  if (lower.endsWith('tanımı')) return `${value.slice(0, -6)}tanımını`;
+  if (lower.endsWith('durumu')) return `${value.slice(0, -6)}durumunu`;
+  if (lower.endsWith('tarihi')) return `${value.slice(0, -6)}tarihini`;
+  if (lower.endsWith('yeri')) return `${value.slice(0, -4)}yerini`;
+  if (lower.endsWith('notu')) return `${value.slice(0, -4)}notunu`;
+  if (lower.endsWith('imza')) return 'imzayı';
+  return `${value} bilgisini`;
+}
+
+function checkboxActionObject(text) {
+  const value = String(text || '').trim();
+  if (/seçeneği$/i.test(value)) return actionObject(value);
+  return `${value} seçeneğini`;
+}
+
 function specificFieldLabel(field, visible) {
   const lastPart = fieldNameLastPart(field.pdfFieldName);
 
@@ -374,22 +421,26 @@ function buildLabel(field, sectionIndex) {
   const specific = specificFieldLabel(field, visible);
 
   if (specific) {
-    const sequence = `${sectionIndex + 1}. alan`;
     return {
       labelTr: fullLabel(sectionLabel, topic, specific),
-      shortLabelTr: `${specific} (${sequence})`,
-      helpTextTr: `${sectionLabel} bölümünde ${topic} için ${specific.toLocaleLowerCase('tr-TR')} bilgisini ${actionInstruction(field)}.`,
+      shortLabelTr: specific,
+      helpTextTr: `${sectionLabel} bölümünde ${topic} için ${
+        field.controlType === 'checkbox' ? checkboxActionObject(specific).toLocaleLowerCase('tr-TR') : actionObject(specific).toLocaleLowerCase('tr-TR')
+      } ${actionInstruction(field)}.`,
       reviewStatus: 'human_readable_contextual',
     };
   }
 
-  const fieldTopic = topic || (series ? `${sectionLabel.toLocaleLowerCase('tr-TR')} ek bilgisi` : `${sectionIndex + 1}. alan`);
-  const shortLabelTr = `${fieldTopic} ${control}`;
+  const fieldTopic = topic || (series ? `${sectionLabel.toLocaleLowerCase('tr-TR')} ek bilgisi` : 'resmi formdaki ilgili bilgi');
+  const shortLabelTr = fieldTopic;
 
   return {
     labelTr: `${sectionLabel} - ${fieldTopic}`,
     shortLabelTr,
-    helpTextTr: `${sectionLabel} bölümünde ${fieldTopic.toLocaleLowerCase('tr-TR')} için gerekli ${control} bilgisini ${actionInstruction(field)}.`,
+    helpTextTr:
+      field.controlType === 'checkbox'
+        ? `${sectionLabel} bölümünde ${fieldTopic.toLocaleLowerCase('tr-TR')} için uygun seçeneği işaretleyin.`
+        : `${sectionLabel} bölümünde ${actionObject(fieldTopic).toLocaleLowerCase('tr-TR')} ${actionInstruction(field)}.`,
     reviewStatus: topic ? 'contextual_generated' : 'needs_human_review',
   };
 }
@@ -528,9 +579,9 @@ function build({ write }) {
     )
     .join('\n');
 
-  const report = `# Phase 5A-Fix3 Label Coverage
+  const report = `# Phase 5A-Fix4 Label Coverage
 
-Bu rapor, kullanıcıya görünen alan etiketlerinin teknik PDF field id, satır/parça ifadesi, belirsiz resmi blok numarası ve input tipiyle çelişen adres/e-posta başlıklarından ayrıldığını denetler.
+Bu rapor, kullanıcıya görünen alan etiketlerinin teknik PDF field id, satır/parça ifadesi, sıra numarası, belirsiz resmi blok numarası ve input tipiyle çelişen adres/e-posta başlıklarından ayrıldığını denetler.
 
 ## Sonuç
 
